@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Businesses extends Migration
+class Currentqueues extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class Businesses extends Migration
      */
     public function up()
     {
-        Schema::create('businesses', function (Blueprint $table) {
+        Schema::create('currentqueues', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('location');
+            $table->integer('fixed_capacity');
+            $table->integer('average_time');
+            $table->string('password_verification');
             $table->timestamps();
-            //more to add in future
+
+            //foreing key
+            $table->foreign('commerce_id')->references('id')->on('commerces')->onDelete('CASCADE');
+            $table->unsignedInteger('commerce_id');
         });
     }
 

@@ -40,4 +40,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //colas que el usuario esta actualmente
+    //public function currentqueues(){
+    //    return $this->hasMany('App\Models\Currentqueue');
+    //}
 }

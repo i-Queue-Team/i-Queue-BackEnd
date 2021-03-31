@@ -22,7 +22,7 @@ class QueueVerifiedUsers extends Migration
             //default
             $table->timestamps();
             //foreing key queue
-            $table->foreign('queue_id')->references('id')->on('queues')->onDelete('CASCADE');
+            $table->foreign('queue_id')->references('id')->on('currentqueues')->onDelete('CASCADE');
             $table->unsignedInteger('queue_id');
 
             //foreing key user
