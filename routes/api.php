@@ -18,7 +18,8 @@ use App\Http\Controllers\UserController;
 
 
 //Secure middleware
-//Route::group(['middleware' => 'auth:sanctum'], function () {
+// --not disabled :O
+Route::middleware('auth:api')->group(function() {
     //All secure URL's
     //Header Autorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
     //Listado negocios
@@ -26,11 +27,12 @@ use App\Http\Controllers\UserController;
     Route::get('comerce/list/{id?}', [CommerceController::class, 'list']);
     //Cola del negocio
     //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
-    Route::get('comerce/queue/{id}', [CommerceController::class, 'CurrentQueue']);
+    Route::get('comerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
 
 
 
-//});
+});
 
-
-Route::post("login", [UserController::class, 'index']);
+//AUTH login/register
+Route::post("login", [UserController::class, 'login']);
+Route::post("register", [UserController::class, 'register']);

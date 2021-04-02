@@ -14,13 +14,13 @@ class CommerceController extends Controller
         //return Commerce::all();
         return $id ? Commerce::find($id) : Commerce::all();
     }
-    function CurrentQueue($id)
+    function CurrentQueue($id=null)
     {
         $commerce = Commerce::find($id);
         if ($commerce) {
             return $commerce->Queue;
         } else {
-            return "Error";
+            return response()->json(["status" => "Failed", "message" => "Bussiness Not found :("]);
         }
     }
 }
