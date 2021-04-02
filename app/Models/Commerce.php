@@ -12,6 +12,7 @@ class Commerce extends Model
     public function Queue()
     {
         return $this->belongsTo('App\Models\Currentqueue', 'id');
+
     }
 
 

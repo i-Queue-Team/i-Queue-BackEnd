@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-class UsersTableSeeder extends Seeder
+class CurrentqueuesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'felix',
-            'email' => 'felix@gmail.com',
-            'password' => Hash::make('password')
+        DB::table('currentqueues')->insert([
+            'fixed_capacity' => '40',
+            'average_time' => '5',
+            'password_verification' => '12345',
+            'commerce_id' => '1',
         ]);
     }
 }

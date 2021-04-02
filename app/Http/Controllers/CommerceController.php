@@ -9,15 +9,16 @@ use App\Models\Currentqueue;
 class CommerceController extends Controller
 {
 
-    function list()
+    function list($id = null)
     {
-        return Commerce::all();
+        //return Commerce::all();
+        return $id ? Commerce::find($id) : Commerce::all();
     }
-    function CurrentQueue()
+    function CurrentQueue($id)
     {
-        $CurrentQueue = Currentqueue::find(3);
-        if ($CurrentQueue) {
-            return $CurrentQueue->Commerce;
+        $commerce = Commerce::find($id);
+        if ($commerce) {
+            return $commerce->Queue;
         } else {
             return "Error";
         }
