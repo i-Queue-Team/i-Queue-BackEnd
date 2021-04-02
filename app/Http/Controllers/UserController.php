@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,28 +10,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    /*
-    function login(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
-        // print_r($data);
-        //return $request->email."hola";
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response([
-                'message' => ['These credentials do not match our records.']
-            ], 404);
-        }
 
-        $token = $user->createToken('User_token')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
-    }
-    */
 
     // User Register
     public function register(Request $request)
@@ -60,30 +40,30 @@ class UserController extends Controller
 
 
     // User login
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             "email" =>  "required|email",
             "password" =>  "required",
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         }
 
         $user           =       User::where("email", $request->email)->first();
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             return response()->json(["status" => "failed", "message" => "Failed! email not found"]);
         }
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user       =       Auth::user();
             $token      =       $user->createToken('token')->plainTextToken;
 
             return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
-        }
-        else {
+        } else {
             return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! invalid password"]);
         }
     }

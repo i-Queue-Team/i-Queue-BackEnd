@@ -29,8 +29,6 @@ Route::middleware('auth:api')->group(function() {
     //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
     Route::get('comerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
 
-
-
 });
 
 //AUTH login/register
