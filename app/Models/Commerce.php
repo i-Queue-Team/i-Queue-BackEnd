@@ -5,24 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
+
 class Commerce extends Model
 {
     use HasFactory;
 
-/*
+    /*
 //HASHED ID !!!!!!!!!!!!!!! TODO
     //Hide predictable iD
-    protected $hidden = [
-        'id',
-    ];
-    //Hash Id function
-    public function getHashedIdAttribute()
-    {
-        return $this->attributes['id'] =  Hashids::encode($this->attributes['id']);
 
+public function getIdAttribute($value)
+    {
+        return Hashids::encode($value);
     }
-    //append hashed id to model
-    protected $appends = ['Hashed_id'];
 
 */
 
