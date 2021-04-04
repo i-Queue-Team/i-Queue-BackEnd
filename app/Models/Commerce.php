@@ -20,6 +20,11 @@ public function getIdAttribute($value)
     }
 
 */
+protected $fillable = [
+    'name',
+    'location',
+
+];
 
 
     public function Queue()
