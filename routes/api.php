@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function () {
 
     //http://localhost/i-Queue-BackEnd/public/api/comerce
     Route::post('comerce', [CommerceController::class, 'store']);
-    
+
 });
 
 //AUTH login/register
