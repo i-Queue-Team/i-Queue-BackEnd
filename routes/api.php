@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CurrentqueueController;
-
+use App\Http\Controllers\Queue_verified_users_controller;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,10 +33,13 @@ Route::middleware('auth:api')->group(function () {
     //http://localhost/i-Queue-BackEnd/public/api/comerce
     Route::post('comerces', [CommerceController::class, 'store']);
 
-
+    //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
     Route::post('currentqueues', [CurrentqueueController::class, 'store']);
 
+    //add user to queue
+    //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
+    Route::post('queue_verified_users', [Queue_verified_users_controller::class, 'store']);
 });
 
 //AUTH login/register
