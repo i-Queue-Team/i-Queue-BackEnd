@@ -8,6 +8,7 @@ use App\Models\Currentqueue;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Validator;
 
+
 class CommerceController extends Controller
 {
     function index($id = null)
@@ -49,9 +50,11 @@ class CommerceController extends Controller
         }
 
         $inputs = $request->all();
-        //$inputs["password"] = Hash::make($request->password);
+
 
         $commerce   =   Commerce::create($inputs);
+
+
 
         if (!is_null($commerce)) {
             return response()->json(["status" => "success", "message" => "Success! Commerce Stored", "data" => $commerce]);

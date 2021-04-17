@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CurrentqueueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,12 @@ Route::middleware('auth:api')->group(function () {
     //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
     Route::get('comerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
 
-
     //http://localhost/i-Queue-BackEnd/public/api/comerce
     Route::post('comerces', [CommerceController::class, 'store']);
+
+
+    //http://localhost/i-Queue-BackEnd/public/api/currentqueues
+    Route::post('currentqueues', [CurrentqueueController::class, 'store']);
 
 });
 

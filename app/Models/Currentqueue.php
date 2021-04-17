@@ -29,7 +29,11 @@ class Currentqueue extends Model
     //append hashed id to model
     protected $appends = ['Hashed_commerce_id', 'Hashed_id'];
     */
+    protected $fillable = [
+        'fixed_capacity',
+        'average_time',
 
+    ];
 
 
 
