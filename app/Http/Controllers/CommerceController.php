@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CommerceController extends Controller
 {
-    function list($id = null)
+    function index($id = null)
     {
         //// Recuperar el entero
         //$decode = Hashids::decode($id);

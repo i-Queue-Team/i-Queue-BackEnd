@@ -24,14 +24,14 @@ Route::middleware('auth:api')->group(function () {
     //Header Autorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
     //Listado negocios "/id para un negocio en concreto"
     //http://localhost/i-Queue-BackEnd/public/api/comerce/list
-    Route::get('comerce/list/{id?}', [CommerceController::class, 'list']);
+    Route::get('comerces/{id?}', [CommerceController::class, 'index']);
     //Cola del negocio
     //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
     Route::get('comerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
 
 
     //http://localhost/i-Queue-BackEnd/public/api/comerce
-    Route::post('comerce', [CommerceController::class, 'store']);
+    Route::post('comerces', [CommerceController::class, 'store']);
 
 });
 
