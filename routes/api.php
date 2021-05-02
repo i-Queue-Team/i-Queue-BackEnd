@@ -37,9 +37,19 @@ Route::middleware('auth:api')->group(function () {
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
     Route::post('currentqueues', [CurrentqueueController::class, 'store']);
 
+    //for testing purposes
+    //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
+    Route::get('queue_verified_users', [Queue_verified_users_controller::class, 'index']);
+
     //add user to queue
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
     Route::post('queue_verified_users', [Queue_verified_users_controller::class, 'store']);
+
+    //delete user to queue
+    //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
+    Route::delete('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'delete']);
+
+
 });
 
 //AUTH login/register
