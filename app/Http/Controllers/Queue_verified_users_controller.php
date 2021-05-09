@@ -17,7 +17,7 @@ class Queue_verified_users_controller extends Controller
         return Queue_verified_user::all()->where('queue_id', '=', $queue_id)->count() + 1;
     }
     //
-    // store queue
+    // store user in queue
     public function store(Request $request)
     {
         //validate queue
@@ -58,10 +58,8 @@ class Queue_verified_users_controller extends Controller
     }
     public function delete($user_id)
     {
-
         // delete function
         $user = Queue_verified_user::where('user_id', $user_id)->first();
-
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
@@ -72,6 +70,28 @@ class Queue_verified_users_controller extends Controller
             return response()->json(["status" => "success", "message" => "Success! user deleted", "data" => $user]);
         } else {
             return response()->json(["status" => "failed", "message" => "delete failed!"]);
+        }
+    }
+    // entry function that checks whether a user can enter the establisment and does so if posible
+    public function entry($user_id)
+    {
+        $user = Queue_verified_user::where('user_id', $user_id)->first();
+        if ($user) {
+            $position = $user->position;
+            $queue_id = $user->queue_id;
+            if ($position == 1) {
+                // delete user from queue
+                self::refresh_position($queue_id, $position);
+                $user->delete();
+                return response()->json(["status" => "success", "message" => "User has entered", "data" => $user]);
+            } else {
+                return response()->json(["status" => "success", "message" => "User cant enter", "data" => $user]);
+            }
+        }
+        if (!is_null($user)) {
+            return response()->json(["status" => "success", "message" => "User", "data" => $user]);
+        } else {
+            return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
         }
     }
     private static function refresh_position($queue_id, $user_position)

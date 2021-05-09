@@ -49,6 +49,8 @@ Route::middleware('auth:api')->group(function () {
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
     Route::delete('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'delete']);
 
+    Route::get('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'entry']);
+
 
 });
 
