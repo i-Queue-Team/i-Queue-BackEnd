@@ -18,7 +18,7 @@ class QueueVerifiedUsers extends Migration
 
             $table->integer('position');
             // date where user is estimated to enter bussisenes
-            $table->date('estimated_time');
+            $table->dateTime('estimated_time');
             //default
             $table->timestamps();
             //foreing key queue

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Queue_verified_user extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'estimated_time'
+
+    ];
 }

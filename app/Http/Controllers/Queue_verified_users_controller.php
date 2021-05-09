@@ -5,18 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Queue_verified_user;
-use QueueVerifiedUsers;
+use App\Models\Currentqueue;
 use Illuminate\Support\Facades\DB;
 
 class Queue_verified_users_controller extends Controller
 {
-    //
-    // recuperar la posicion
-    private static function position($queue_id)
-    {
-        return Queue_verified_user::all()->where('queue_id', '=', $queue_id)->count() + 1;
-    }
-    //
+
     // store user in queue
     public function store(Request $request)
     {
@@ -40,9 +34,9 @@ class Queue_verified_users_controller extends Controller
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $Queue_verified_user->estimated_time = date('Y-m-d H:i:s');
 
-
-
         $Queue_verified_user->save();
+
+        self::refresh_estimated_time($request->queue_id);
         if (!is_null($Queue_verified_user)) {
             return response()->json(["status" => "success", "message" => "Success! user Stored", "data" => $Queue_verified_user]);
         } else {
@@ -58,13 +52,15 @@ class Queue_verified_users_controller extends Controller
     }
     public function delete($user_id)
     {
-        // delete function
+        //delete function
         $user = Queue_verified_user::where('user_id', $user_id)->first();
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
             self::refresh_position($queue_id, $position);
+            self::refresh_estimated_time($queue_id);
             $user->delete();
+
         }
         if (!is_null($user)) {
             return response()->json(["status" => "success", "message" => "Success! user deleted", "data" => $user]);
@@ -72,7 +68,7 @@ class Queue_verified_users_controller extends Controller
             return response()->json(["status" => "failed", "message" => "delete failed!"]);
         }
     }
-    // entry function that checks whether a user can enter the establisment and does so if posible
+    //entry function that checks whether a user can enter the establisment and does so if posible
     public function entry($user_id)
     {
         $user = Queue_verified_user::where('user_id', $user_id)->first();
@@ -82,7 +78,9 @@ class Queue_verified_users_controller extends Controller
             if ($position == 1) {
                 // delete user from queue
                 self::refresh_position($queue_id, $position);
+                self::refresh_estimated_time($queue_id);
                 $user->delete();
+
                 return response()->json(["status" => "success", "message" => "User has entered", "data" => $user]);
             } else {
                 return response()->json(["status" => "success", "message" => "User cant enter", "data" => $user]);
@@ -94,6 +92,7 @@ class Queue_verified_users_controller extends Controller
             return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
         }
     }
+    //function to give the corresponding position to users depending on where they are in the queue
     private static function refresh_position($queue_id, $user_position)
     {
         Queue_verified_user::where('queue_id', $queue_id)
@@ -101,6 +100,26 @@ class Queue_verified_users_controller extends Controller
             ->update(
                 ['position' => DB::raw('position-1')],
             );
+    }
+    //function to give the corresponding position to users depending on where they are in the queue
+    private static function refresh_estimated_time($queue_id)
+    {
+        $queue = Currentqueue::find($queue_id);
+        $average_time = $queue->average_time;
+        $users = Queue_verified_user::all()->where('queue_id', $queue_id);
+        foreach ($users as $user) {
+            date_default_timezone_set('Europe/Madrid');
+            $position = $user->position;
+            $currentDate =  date('Y-m-d H:i:s');
+            $newDate = date("Y-m-d H:i:s", strtotime($currentDate . " +".$average_time*$position." minutes"));
+            $user->update(['estimated_time' => $newDate]);
+        }
+    }
+
+    // recuperar la posicion
+    private static function position($queue_id)
+    {
+        return Queue_verified_user::all()->where('queue_id', '=', $queue_id)->count() + 1;
     }
 }
 

@@ -16,6 +16,7 @@ class Currentqueues extends Migration
         Schema::create('currentqueues', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fixed_capacity');
+            $table->integer('current_capacity')->default('0');;
             $table->integer('average_time');
             $table->string('password_verification');
             $table->timestamps();

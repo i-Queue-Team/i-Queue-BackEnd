@@ -52,8 +52,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'entry']);
 
 
-});
 
+
+});
+Route::get('queue_verified_users_test', [Queue_verified_users_controller::class, 'refresh_estimated_time']);
 //AUTH login/register
 Route::post("login", [UserController::class, 'login'])->name('login');
 Route::post("register", [UserController::class, 'register']);
