@@ -21,10 +21,9 @@ class Statistics extends Migration
             $table->dateTime('estimated_time');
             //default
             $table->timestamps();
-
-            //foreing key commerces
-            $table->foreign('commerce_id')->references('id')->on('commerces')->onDelete('CASCADE');
-            $table->unsignedInteger('commerce_id');
+            //foreing key queue
+            $table->foreign('queue_id')->references('id')->on('currentqueues')->onDelete('CASCADE')->unique();
+            $table->unsignedInteger('queue_id');
 
             //foreing key user
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');

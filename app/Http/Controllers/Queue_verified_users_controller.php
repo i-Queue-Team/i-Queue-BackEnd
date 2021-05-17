@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Queue_verified_user;
 use App\Models\Currentqueue;
+use App\Models\Statistic;
 use Illuminate\Support\Facades\DB;
 
 class Queue_verified_users_controller extends Controller
@@ -37,13 +38,31 @@ class Queue_verified_users_controller extends Controller
         $Queue_verified_user->save();
 
         self::refresh_estimated_time($request->queue_id);
+        self::store_statistic($request);
         if (!is_null($Queue_verified_user)) {
             return response()->json(["status" => "success", "message" => "Success! user Stored", "data" => $Queue_verified_user]);
         } else {
             return response()->json(["status" => "failed", "message" => "Registration failed!"]);
         }
     }
+    // store user in queue
+   private static  function store_statistic(Request $request)
+    {
+        //validate queue
 
+
+        //queue instance
+        $Queue_verified_user = new Statistic();
+        $Queue_verified_user->queue_id = $request->queue_id;
+        $Queue_verified_user->user_id = $request->user_id;
+        //posicion es igual a la funcion posicion
+        $Queue_verified_user->position = self::position($request->queue_id);
+        //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
+        $Queue_verified_user->estimated_time = date('Y-m-d H:i:s');
+
+        $Queue_verified_user->save();
+
+    }
 
     public function index()
     {
@@ -68,7 +87,7 @@ class Queue_verified_users_controller extends Controller
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
-    public function entry($user_id)
+    public function entry_check($user_id)
     {
         $user = Queue_verified_user::where('user_id', $user_id)->first();
         if ($user) {
@@ -91,6 +110,7 @@ class Queue_verified_users_controller extends Controller
             return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
         }
     }
+     //function to get user info from queue
     public function info($user_id)
     {
         $user = Queue_verified_user::where('user_id', $user_id)->first();
@@ -129,7 +149,7 @@ class Queue_verified_users_controller extends Controller
             $user->update(['estimated_time' => $newDate]);
         }
     }
-    // recuperar la posicion
+    // retrieve position
     private static function position($queue_id)
     {
         return Queue_verified_user::all()->where('queue_id', '=', $queue_id)->count() + 1;
