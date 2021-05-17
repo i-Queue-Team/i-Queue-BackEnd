@@ -60,7 +60,6 @@ class Queue_verified_users_controller extends Controller
             self::refresh_position($queue_id, $position);
             self::refresh_estimated_time($queue_id);
             $user->delete();
-
         }
         if (!is_null($user)) {
             return response()->json(["status" => "success", "message" => "Success! user deleted", "data" => $user]);
@@ -92,6 +91,21 @@ class Queue_verified_users_controller extends Controller
             return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
         }
     }
+    public function info($user_id)
+    {
+        $user = Queue_verified_user::where('user_id', $user_id)->first();
+        if ($user) {
+            $position = $user->position;
+            $queue_id = $user->queue_id;
+            // delete user from queue
+            return response()->json(["status" => "success", "message" => "User info", "data" => $user]);
+        }
+        if (!is_null($user)) {
+            return response()->json(["status" => "success", "message" => "User", "data" => $user]);
+        } else {
+            return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
+        }
+    }
     //function to give the corresponding position to users depending on where they are in the queue
     private static function refresh_position($queue_id, $user_position)
     {
@@ -111,11 +125,10 @@ class Queue_verified_users_controller extends Controller
             date_default_timezone_set('Europe/Madrid');
             $position = $user->position;
             $currentDate =  date('Y-m-d H:i:s');
-            $newDate = date("Y-m-d H:i:s", strtotime($currentDate . " +".$average_time*$position." minutes"));
+            $newDate = date("Y-m-d H:i:s", strtotime($currentDate . " +" . $average_time * $position . " minutes"));
             $user->update(['estimated_time' => $newDate]);
         }
     }
-
     // recuperar la posicion
     private static function position($queue_id)
     {
