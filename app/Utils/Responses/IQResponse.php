@@ -4,14 +4,18 @@ namespace App\Utils\Responses;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class ErrorResponse{
+class IQResponse{
 
-    public $code;
-    public $message;
+    public int $code;
+    public string $message;
+    public mixed $data;
 
-    public function __construct(int $code = Response::HTTP_NOT_FOUND){
+    public function __construct(int $code = Response::HTTP_NOT_FOUND, mixed $data = null){
         $this->code = $code;
-        $this->message = array_key_exists($code,ErrorResponse::$messageDescriptions) ? ErrorResponse::$messageDescriptions[$code] : "Unknown Error";
+        $this->message = array_key_exists($code,IQResponse::$messageDescriptions) ? IQResponse::$messageDescriptions[$code] : "No Message";
+        if (isset($data)){
+            $this->data = $data;
+        }
     }
 
     public static array $messageDescriptions = [
@@ -35,7 +39,10 @@ class ErrorResponse{
      * @return  \Illuminate\Contracts\Routing\ResponseFactory
      */
     public static function errorResponse(int $code){
-        return response()->json(new ErrorResponse($code),$code);
+        return response()->json(new IQResponse($code,null),$code);
+    }
+    public static function response(int $code, $data){
+        return response()->json(new IQResponse($code,$data),$code);
     }
 }
 ?>

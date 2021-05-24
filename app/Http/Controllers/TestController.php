@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Utils\Responses\ErrorResponse;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Utils\Responses\IQResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class TestController extends Controller
@@ -37,7 +38,8 @@ class TestController extends Controller
      */
     public function show($id)
     {
-
+        $user = User::all()->first();
+        return IQResponse::response(Response::HTTP_NOT_FOUND,$user);
     }
 
     /**
