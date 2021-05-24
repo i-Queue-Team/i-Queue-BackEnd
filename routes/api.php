@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CurrentqueueController;
 use App\Http\Controllers\Queue_verified_users_controller;
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,3 +61,6 @@ Route::middleware('auth:api')->group(function () {
 //AUTH login/register
 Route::post("login", [UserController::class, 'login'])->name('login');
 Route::post("register", [UserController::class, 'register']);
+
+Route::apiResource("testing",TestController::class);
+
