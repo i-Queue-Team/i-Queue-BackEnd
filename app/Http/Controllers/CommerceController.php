@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Commerce;
 use App\Models\Currentqueue;
+use Illuminate\Http\Request;
+use App\Utils\Responses\IQResponse;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class CommerceController extends Controller
@@ -29,7 +31,7 @@ class CommerceController extends Controller
         if ($commerce) {
             return response()->json(["status" => "Success", "commerce" => $commerce->Queue]);
         } else {
-            return response()->json(["status" => "Failed", "message" => "Bussiness Not found :("]);
+            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -46,20 +48,16 @@ class CommerceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()]);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
 
         $inputs = $request->all();
-
-
         $commerce   =   Commerce::create($inputs);
-
-
-
         if (!is_null($commerce)) {
-            return response()->json(["status" => "success", "message" => "Success! Commerce Stored", "data" => $commerce]);
+            return IQResponse::response(Response::HTTP_OK,$commerce);
         } else {
-            return response()->json(["status" => "failed", "message" => "Registration failed!"]);
+
+            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

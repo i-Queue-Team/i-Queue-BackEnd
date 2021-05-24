@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Utils\Responses\IQResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()]);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
 
         $inputs = $request->all();
@@ -31,9 +33,9 @@ class UserController extends Controller
         $user   =   User::create($inputs);
 
         if (!is_null($user)) {
-            return response()->json(["status" => "success", "message" => "Success! registration completed", "data" => $user]);
+            return IQResponse::response(Response::HTTP_OK,$user);
         } else {
-            return response()->json(["status" => "failed", "message" => "Registration failed!"]);
+            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -49,22 +51,21 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["validation_errors" => $validator->errors()]);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
 
-        $user           =       User::where("email", $request->email)->first();
+        $user = User::where("email", $request->email)->first();
 
         if (is_null($user)) {
-            return response()->json(["status" => "failed", "message" => "Failed! email not found"]);
+            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user       =       Auth::user();
-            $token      =       $user->createToken('token')->plainTextToken;
-
+            $user   = Auth::user();
+            $token  = $user->createToken('token')->plainTextToken;
             return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
         } else {
-            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! invalid password"]);
+            return IQResponse::errorResponse(Response::HTTP_UNAUTHORIZED);
         }
     }
 }

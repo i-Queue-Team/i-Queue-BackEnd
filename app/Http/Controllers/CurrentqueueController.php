@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Currentqueue;
+use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CurrentqueueController extends Controller
 {
@@ -21,7 +23,7 @@ class CurrentqueueController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()]);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
         //queue instance
         $queue = new Currentqueue();
@@ -31,9 +33,9 @@ class CurrentqueueController extends Controller
         $queue->password_verification = Str::random(10);
         $queue->save();
         if (!is_null($queue)) {
-            return response()->json(["status" => "success", "message" => "Success! Queue Stored", "data" => $queue]);
+            return IQResponse::response(Response::HTTP_CREATED,$queue);
         } else {
-            return response()->json(["status" => "failed", "message" => "Registration failed!"]);
+            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Queue_verified_user;
-use App\Models\Currentqueue;
 use App\Models\Statistic;
+use App\Models\Currentqueue;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Queue_verified_user;
+use App\Utils\Responses\IQResponse;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class Queue_verified_users_controller extends Controller
 {
@@ -23,7 +25,7 @@ class Queue_verified_users_controller extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()]);
+            IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
 
         //queue instance
@@ -40,9 +42,9 @@ class Queue_verified_users_controller extends Controller
         self::refresh_estimated_time($request->queue_id);
         self::store_statistic($request);
         if (!is_null($Queue_verified_user)) {
-            return response()->json(["status" => "success", "message" => "Success! user Stored", "data" => $Queue_verified_user]);
+            return IQResponse::response(Response::HTTP_CREATED,$Queue_verified_user);
         } else {
-            return response()->json(["status" => "failed", "message" => "Registration failed!"]);
+            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     // store user in queue
@@ -59,9 +61,8 @@ class Queue_verified_users_controller extends Controller
         $Queue_verified_user->position = self::position($request->queue_id);
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $Queue_verified_user->estimated_time = date('Y-m-d H:i:s');
-
         $Queue_verified_user->save();
-
+        return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
     }
 
     public function index()
@@ -81,9 +82,9 @@ class Queue_verified_users_controller extends Controller
             $user->delete();
         }
         if (!is_null($user)) {
-            return response()->json(["status" => "success", "message" => "Success! user deleted", "data" => $user]);
+            return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
         } else {
-            return response()->json(["status" => "failed", "message" => "delete failed!"]);
+            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
@@ -98,16 +99,15 @@ class Queue_verified_users_controller extends Controller
                 self::refresh_position($queue_id, $position);
                 self::refresh_estimated_time($queue_id);
                 $user->delete();
-
-                return response()->json(["status" => "success", "message" => "User has entered", "data" => $user]);
+                return IQResponse::response(Response::HTTP_OK,$user);
             } else {
-                return response()->json(["status" => "success", "message" => "User cant enter", "data" => $user]);
+                return IQResponse::errorResponse(Response::HTTP_CONFLICT);
             }
         }
         if (!is_null($user)) {
-            return response()->json(["status" => "success", "message" => "User", "data" => $user]);
+            return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
         } else {
-            return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
+            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
         }
     }
      //function to get user info from queue
@@ -123,7 +123,7 @@ class Queue_verified_users_controller extends Controller
         if (!is_null($user)) {
             return response()->json(["status" => "success", "message" => "User", "data" => $user]);
         } else {
-            return response()->json(["status" => "failed", "message" => "user may not exist in queue!"]);
+            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
         }
     }
     //function to give the corresponding position to users depending on where they are in the queue
