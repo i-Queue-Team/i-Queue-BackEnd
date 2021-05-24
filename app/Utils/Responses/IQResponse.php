@@ -20,8 +20,15 @@ class IQResponse{
 
     public static array $messageDescriptions = [
         //TODO Add more code messages
-        404 => 'Not Found',
+        200 => 'OK',
+        201 => 'Resource Created',
         202 => 'Accepted',
+        204 => 'No Content',
+        400 => 'Bad Request',
+        401 => 'Invalid Credentials',
+        404 => 'Not Found',
+        409 => 'Conflict',
+        500 => 'Internal Server Error',
     ];
 
     /**
