@@ -55,6 +55,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
 
+    Route::apiResource('users',UserController::class)->only(['show','destroy']);
 
 });
 
