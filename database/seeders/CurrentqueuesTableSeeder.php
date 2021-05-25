@@ -14,7 +14,7 @@ class CurrentqueuesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('currentqueues')->insert([
+        DB::table('current_queues')->insert([
             'fixed_capacity' => '40',
             'average_time' => '5',
             'password_verification' => '12345',
