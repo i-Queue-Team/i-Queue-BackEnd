@@ -9,12 +9,16 @@ class IQResponse{
     public int $code;
     public string $message;
     public mixed $data;
+    public mixed $debugInfo;
 
-    public function __construct(int $code = Response::HTTP_NOT_FOUND, mixed $data = null){
+    public function __construct(int $code = Response::HTTP_NOT_FOUND, mixed $data = null, mixed $debugInfo = null){
         $this->code = $code;
         $this->message = array_key_exists($code,IQResponse::$messageDescriptions) ? IQResponse::$messageDescriptions[$code] : "No Message";
         if (isset($data)){
             $this->data = $data;
+        }
+        if (config('app.debug') == true && isset($debugInfo)){
+            $this->debugInfo = $debugInfo;
         }
     }
 
@@ -45,10 +49,13 @@ class IQResponse{
      * @param   int  $code
      * @return  \Illuminate\Contracts\Routing\ResponseFactory
      */
-    public static function errorResponse(int $code){
-        return response()->json(new IQResponse($code,null),$code);
+    public static function emptyResponse($code){
+        return response()->json(new IQResponse($code));
     }
-    public static function response(int $code, $data){
+    public static function errorResponse(int $code,$debugInfo = null){
+        return response()->json(new IQResponse($code,null,$debugInfo),$code);
+    }
+    public static function response(int $code, mixed $data = null){
         return response()->json(new IQResponse($code,$data),$code);
     }
 }
