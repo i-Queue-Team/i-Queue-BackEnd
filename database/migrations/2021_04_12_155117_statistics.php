@@ -22,7 +22,7 @@ class Statistics extends Migration
             //default
             $table->timestamps();
             //foreing key queue
-            $table->foreign('queue_id')->references('id')->on('currentqueues')->onDelete('CASCADE')->unique();
+            $table->foreign('queue_id')->references('id')->on('current_queues')->onDelete('CASCADE')->unique();
             $table->unsignedInteger('queue_id');
 
             //foreing key user
