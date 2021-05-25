@@ -30,6 +30,7 @@ class IQResponse{
         204 => 'No Content',
         400 => 'Bad Request',
         401 => 'Invalid Credentials',
+        403 => 'Forbidden',
         404 => 'Not Found',
         409 => 'Conflict',
         500 => 'Internal Server Error',
