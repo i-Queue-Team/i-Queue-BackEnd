@@ -23,20 +23,20 @@ use App\Http\Controllers\TestController;
 // --not disabled :O
 Route::middleware('auth:api')->group(function () {
     //All secure URL's
-    //Header Autorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
+    //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
     //Listado negocios "/id para un negocio en concreto"
     //http://localhost/i-Queue-BackEnd/public/api/comerce/list
-    Route::get('comerces/{id?}', [CommerceController::class, 'index']);
+    Route::get('commerces/{id?}', [CommerceController::class, 'index']);
     //Cola del negocio
     //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
-    Route::get('comerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
+    Route::get('commerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
 
     //http://localhost/i-Queue-BackEnd/public/api/comerce
-    Route::post('comerces', [CommerceController::class, 'store']);
+    Route::post('commerces', [CommerceController::class, 'store']);
 
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
-    Route::post('currentqueues', [CurrentQueueController::class, 'store']);
+    Route::post('current-queues', [CurrentQueueController::class, 'store']);
 
     //for testing purposes
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
@@ -61,6 +61,5 @@ Route::middleware('auth:api')->group(function () {
 //AUTH login/register
 Route::post("login", [UserController::class, 'login'])->name('login');
 Route::post("register", [UserController::class, 'register']);
-
 Route::apiResource("testing",TestController::class);
 
