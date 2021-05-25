@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Currentqueue;
+use App\Models\CurrentQueue;
 use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
-class CurrentqueueController extends Controller
+class CurrentQueueController extends Controller
 {
     // store queue
     public function store(Request $request)
@@ -26,7 +26,7 @@ class CurrentqueueController extends Controller
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
         }
         //queue instance
-        $queue = new Currentqueue();
+        $queue = new CurrentQueue();
         $queue->fixed_capacity = $request->fixed_capacity;
         $queue->average_time = $request->average_time;
         $queue->commerce_id = $request->commerce_id;

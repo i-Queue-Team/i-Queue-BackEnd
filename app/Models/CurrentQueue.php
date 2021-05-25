@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-class Currentqueue extends Model{
+class CurrentQueue extends Model{
 
     use HasFactory;
 
