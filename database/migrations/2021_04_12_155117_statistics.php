@@ -13,7 +13,7 @@ class Statistics extends Migration
      */
     public function up()
     {
-        Schema::create('Statistics', function (Blueprint $table) {
+        Schema::create('statistics', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('position');

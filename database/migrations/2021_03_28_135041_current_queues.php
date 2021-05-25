@@ -13,7 +13,7 @@ class Currentqueues extends Migration
      */
     public function up()
     {
-        Schema::create('currentqueues', function (Blueprint $table) {
+        Schema::create('current_queues', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fixed_capacity');
             $table->integer('current_capacity')->default('0');;
