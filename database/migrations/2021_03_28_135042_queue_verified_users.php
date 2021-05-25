@@ -39,6 +39,6 @@ class QueueVerifiedUsers extends Migration
      */
     public function down()
     {
-
+        Schema::dropIfExists('queue_verified_users');
     }
 }

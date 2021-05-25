@@ -34,6 +34,6 @@ class Currentqueues extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('current_queues');
     }
 }
