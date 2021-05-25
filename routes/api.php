@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CurrentqueueController;
-use App\Http\Controllers\Queue_verified_users_controller;
+use App\Http\Controllers\CurrentQueueController;
+use App\Http\Controllers\QueueVerifiedUsersController;
 use App\Http\Controllers\TestController;
 
 /*
@@ -36,23 +36,23 @@ Route::middleware('auth:api')->group(function () {
 
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
-    Route::post('currentqueues', [CurrentqueueController::class, 'store']);
+    Route::post('currentqueues', [CurrentQueueController::class, 'store']);
 
     //for testing purposes
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
-    Route::get('queue_verified_users', [Queue_verified_users_controller::class, 'index']);
+    Route::get('queue-verified-users', [QueueVerifiedUsersController::class, 'index']);
 
     //add user to queue
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
-    Route::post('queue_verified_users', [Queue_verified_users_controller::class, 'store']);
+    Route::post('queue-verified-users', [QueueVerifiedUsersController::class, 'store']);
 
     //delete user to queue
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
-    Route::delete('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'delete']);
+    Route::delete('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'delete']);
     //check if user can enter establishment (tablet)
-    Route::get('queue_verified_users_check/{id}', [Queue_verified_users_controller::class, 'entry_check']);
+    Route::get('queue-verified-users-check/{id}', [QueueVerifiedUsersController::class, 'entry_check']);
     //check unser info (phone)
-    Route::get('queue_verified_users/{id}', [Queue_verified_users_controller::class, 'info']);
+    Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
 
 
