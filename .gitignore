@@ -13,3 +13,9 @@ npm-debug.log
 yarn-error.log
 .vscode
 .gitconfig
+.idea/.gitignore
+.idea/i-Queue-BackEnd.iml
+.idea/modules.xml
+.idea/php.xml
+.idea/phpunit.xml
+.idea/vcs.xml
