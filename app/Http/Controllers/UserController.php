@@ -24,7 +24,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         $inputs = $request->all();
@@ -35,7 +35,7 @@ class UserController extends Controller
         if (!is_null($user)) {
             return IQResponse::response(Response::HTTP_OK,$user);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -51,13 +51,13 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         $user = User::where("email", $request->email)->first();
 
         if (is_null($user)) {
-            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -66,7 +66,7 @@ class UserController extends Controller
             $user->token = $token;
             return IQResponse::response(Response::HTTP_OK,$user);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_UNAUTHORIZED);
+            return IQResponse::emptyResponse(Response::HTTP_UNAUTHORIZED);
         }
     }
 }

@@ -23,7 +23,7 @@ class CurrentQueueController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
         //queue instance
         $queue = new CurrentQueue();
@@ -35,7 +35,7 @@ class CurrentQueueController extends Controller
         if (!is_null($queue)) {
             return IQResponse::response(Response::HTTP_CREATED,$queue);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

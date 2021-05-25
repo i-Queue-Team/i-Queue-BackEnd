@@ -31,7 +31,7 @@ class CommerceController extends Controller
         if ($commerce) {
             return response()->json(["status" => "Success", "commerce" => $commerce->Queue]);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -48,7 +48,7 @@ class CommerceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,validator()->errors());
         }
 
         $inputs = $request->all();
@@ -57,7 +57,7 @@ class CommerceController extends Controller
             return IQResponse::response(Response::HTTP_OK,$commerce);
         } else {
 
-            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

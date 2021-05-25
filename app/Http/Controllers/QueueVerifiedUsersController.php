@@ -25,7 +25,7 @@ class QueueVerifiedUsersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            IQResponse::errorResponse(Response::HTTP_BAD_REQUEST);
+            IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         //queue instance
@@ -44,7 +44,7 @@ class QueueVerifiedUsersController extends Controller
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED,$queueVerifiedUser);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     // store user in queue
@@ -62,7 +62,7 @@ class QueueVerifiedUsersController extends Controller
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $QueueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $QueueVerifiedUser->save();
-        return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
+        return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
     }
 
     public function index()
@@ -82,9 +82,9 @@ class QueueVerifiedUsersController extends Controller
             $user->delete();
         }
         if (!is_null($user)) {
-            return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
+            return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
@@ -101,13 +101,13 @@ class QueueVerifiedUsersController extends Controller
                 $user->delete();
                 return IQResponse::response(Response::HTTP_OK,$user);
             } else {
-                return IQResponse::errorResponse(Response::HTTP_CONFLICT);
+                return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
             }
         }
         if (!is_null($user)) {
-            return IQResponse::errorResponse(Response::HTTP_NO_CONTENT);
+            return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
      //function to get user info from queue
@@ -123,7 +123,7 @@ class QueueVerifiedUsersController extends Controller
         if (!is_null($user)) {
             return response()->json(["status" => "success", "message" => "User", "data" => $user]);
         } else {
-            return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
     //function to give the corresponding position to users depending on where they are in the queue
