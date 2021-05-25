@@ -63,7 +63,9 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user   = Auth::user();
             $token  = $user->createToken('token')->plainTextToken;
-            return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
+            $user->token = $token;
+            return IQResponse::response(Response::HTTP_OK,$user);
+            //return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
         } else {
             return IQResponse::errorResponse(Response::HTTP_UNAUTHORIZED);
         }
