@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-class Currentqueue extends Model
-{
+class Currentqueue extends Model{
+
     use HasFactory;
+
+    protected $table = 'current_queues';
     /*
     //HASHED ID !!!!!!!!!!!!!!! TODO
     //Hide predictable iD

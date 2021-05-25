@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
 
-class Commerce extends Model
-{
+class Commerce extends Model{
+
     use HasFactory;
+
+    protected $table = 'commerces';
 
     /*
 //HASHED ID !!!!!!!!!!!!!!! TODO
@@ -20,11 +22,11 @@ public function getIdAttribute($value)
     }
 
 */
-protected $fillable = [
-    'name',
-    'location',
+    protected $fillable = [
+        'name',
+        'location',
 
-];
+    ];
 
 
     public function Queue()
