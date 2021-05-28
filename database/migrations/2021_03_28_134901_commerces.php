@@ -16,8 +16,8 @@ class Commerces extends Migration
         Schema::create('commerces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('location');
-            $table->timestamps();
+            $table->double('latitude',9,7,false);
+            $table->double('longitude',10,7,false);
             //more to add in future
         });
     }
