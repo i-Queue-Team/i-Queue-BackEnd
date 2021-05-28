@@ -20,6 +20,7 @@ class Commerces extends Migration
             $table->double('longitude',10,7,false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedInteger('user_id');
+            $table->timestamps();
             //more to add in future
         });
     }
