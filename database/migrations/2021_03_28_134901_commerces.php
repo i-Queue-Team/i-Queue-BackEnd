@@ -18,6 +18,8 @@ class Commerces extends Migration
             $table->string('name');
             $table->double('latitude',9,7,false);
             $table->double('longitude',10,7,false);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->unsignedInteger('user_id');
             //more to add in future
         });
     }
