@@ -19,6 +19,7 @@ class CurrentqueuesTableSeeder extends Seeder
             'average_time' => '5',
             'password_verification' => '12345',
             'commerce_id' => '1',
+
         ]);
     }
 }

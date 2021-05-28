@@ -16,7 +16,9 @@ class CommerceTableSeeder extends Seeder
     {
         DB::table('commerces')->insert([
             'name' => 'Pizzeria Local',
-            'location' => '37.649034/-5.740634',
+            'latitude' => '37.649034',
+            'longitude' => '37.649034',
+            'user_id'=> '1'
 
         ]);
     }
