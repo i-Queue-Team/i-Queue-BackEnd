@@ -49,4 +49,13 @@ class CommerceController extends Controller
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function update(Commerce $commerce, Request $request){
+        //TODO IMPLEMENT
+        return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function destroy(Commerce $commerce){
+        //TODO IMPLEMENT
+        return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }
