@@ -11,6 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CurrentQueueController extends Controller
 {
+    public function index(){
+        return IQResponse::response(Response::HTTP_OK,CurrentQueue::all());
+    }
+    public function show($id){
+        $queue = CurrentQueue::find($id);
+        if ($queue) {
+            return IQResponse::response(Response::HTTP_OK,$queue);
+        } else {
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        }
+    }
     // store queue
     public function store(Request $request)
     {
