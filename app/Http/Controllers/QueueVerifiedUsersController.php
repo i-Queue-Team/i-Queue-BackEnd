@@ -70,7 +70,7 @@ class QueueVerifiedUsersController extends Controller
         // for testing
         return   QueueVerifiedUser::all()->where('queue_id', '=', 1);
     }
-    public function delete($user_id)
+    public function destroy($user_id)
     {
         //delete function
         $user = QueueVerifiedUser::where('user_id', $user_id)->first();
