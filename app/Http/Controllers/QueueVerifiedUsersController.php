@@ -118,10 +118,10 @@ class QueueVerifiedUsersController extends Controller
             $position = $user->position;
             $queue_id = $user->queue_id;
             // delete user from queue
-            return response()->json(["status" => "success", "message" => "User info", "data" => $user]);
+            return IQResponse::response(Response::HTTP_OK,$user);
         }
         if (!is_null($user)) {
-            return response()->json(["status" => "success", "message" => "User", "data" => $user]);
+            return IQResponse::response(Response::HTTP_OK,$user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
