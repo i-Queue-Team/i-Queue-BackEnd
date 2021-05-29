@@ -13,30 +13,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommerceController extends Controller
 {
-    function index($id = null)
+    function index()
     {
-        //// Recuperar el entero
-        //$decode = Hashids::decode($id);
-        //$id=$decode;
-        //return Commerce::all();
-        $commerce = Commerce::find($id);
-        if ($commerce)
-            $queue = $commerce->Queue;
-        return $id ? response()->json(["status" => "Success", "commerce" => $commerce]) : response()->json(["status" => "Success", "commerces" =>  Commerce::all()]);
+        return IQResponse::response(Response::HTTP_OK,Commerce::all());
     }
 
-    function CurrentQueue($id = null)
-    {
+    public function show($id){
         $commerce = Commerce::find($id);
         if ($commerce) {
-            return response()->json(["status" => "Success", "commerce" => $commerce->Queue]);
+            return IQResponse::response(Response::HTTP_OK,$commerce);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
-
-
-
 
     // store commerce
     public function store(Request $request)

@@ -24,15 +24,11 @@ use App\Http\Controllers\TestController;
 Route::middleware('auth:api')->group(function () {
     //All secure URL's
     //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
-    //Listado negocios "/id para un negocio en concreto"
-    //http://localhost/i-Queue-BackEnd/public/api/comerce/list
-    Route::get('commerces/{id?}', [CommerceController::class, 'index']);
-    //Cola del negocio
-    //http://localhost/i-Queue-BackEnd/public/api/comerce/queue
-    Route::get('commerce/queue/{id?}', [CommerceController::class, 'CurrentQueue']);
-
-    //http://localhost/i-Queue-BackEnd/public/api/comerce
-    Route::post('commerces', [CommerceController::class, 'store']);
+    Route::apiResource('commerces',CommerceController::class)->only([
+        'index', // Listado negocios
+        'show', // Mostrar un negocio en base al id
+        'store',//Guardar un negocio
+    ]);
 
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
