@@ -8,10 +8,10 @@ class IQResponse{
 
     public int $code;
     public string $message;
-    public mixed $data;
-    public mixed $errors;
+    public string $data;
+    public string $errors;
 
-    public function __construct(int $code = Response::HTTP_NOT_FOUND, mixed $data = null, mixed $errors = null){
+    public function __construct(int $code = Response::HTTP_NOT_FOUND, string $data = null, string $errors = null){
         $this->code = $code;
         $this->message = array_key_exists($code,IQResponse::$messageDescriptions) ? IQResponse::$messageDescriptions[$code] : "No Message";
         if (isset($data)){
@@ -56,7 +56,7 @@ class IQResponse{
     public static function errorResponse(int $code,$debugInfo = null){
         return response()->json(new IQResponse($code,null,$debugInfo),$code);
     }
-    public static function response(int $code, mixed $data = null){
+    public static function response(int $code, string $data = null){
         return response()->json(new IQResponse($code,$data),$code);
     }
 }
