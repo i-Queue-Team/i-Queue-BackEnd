@@ -31,7 +31,7 @@ public function getIdAttribute($value)
 
     public function queue()
     {
-        return $this->hasOne(QueueVerifiedUser::class,'commerce_id');
+        return $this->hasOne(CurrentQueue::class,'commerce_id');
     }
 
     public function admin(){
