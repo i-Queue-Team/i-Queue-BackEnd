@@ -47,4 +47,11 @@ class User extends Authenticatable
     //public function currentqueues(){
     //    return $this->hasMany('App\Models\Currentqueue');
     //}
+
+    public function commerce(){
+        return $this->hasOne(Commerce::class,'user_id');
+    }
+    public function queues(){
+        return $this->hasMany(QueueVerifiedUser::class,'user_id');
+    }
 }
