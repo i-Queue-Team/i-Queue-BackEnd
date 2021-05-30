@@ -9,9 +9,9 @@ class IQResponse{
     public int $code;
     public string $message;
     public object $data;
-    public string $errors;
+    public object $errors;
 
-    public function __construct(int $code = Response::HTTP_NOT_FOUND, object $data = null, string $errors = null){
+    public function __construct(int $code = Response::HTTP_NOT_FOUND, object $data = null, object $errors = null){
         $this->code = $code;
         $this->message = array_key_exists($code,IQResponse::$messageDescriptions) ? IQResponse::$messageDescriptions[$code] : "No Message";
         if (isset($data)){
