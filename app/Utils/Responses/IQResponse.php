@@ -53,11 +53,10 @@ class IQResponse{
     public static function emptyResponse($code){
         return response()->json(new IQResponse($code));
     }
-    public static function errorResponse(int $code,$debugInfo = null){
+    public static function errorResponse(int $code,object $debugInfo = null){
         return response()->json(new IQResponse($code,null,$debugInfo),$code);
     }
     public static function response(int $code,  $data = null){
-
         return response()->json(new IQResponse($code,$data),$code);
     }
 }
