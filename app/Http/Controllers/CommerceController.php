@@ -32,12 +32,13 @@ class CommerceController extends Controller
     {
         $validator  =   Validator::make($request->all(), [
             "name"  =>  "required|unique:commerces,name",
-            "location"  =>  "required",
+            "latitude"  =>  "required",
+            "longitude"  =>  "required",
 
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,validator()->errors());
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         $inputs = $request->all();
