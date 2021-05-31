@@ -30,7 +30,7 @@ class CurrentQueueController extends Controller
             "fixed_capacity"  =>  "required|integer",
             "average_time"  =>  "required|integer",
             //if exists and is valid
-            "commerce_id"=>"required|integer|exists:commerces,id|unique:currentqueues,commerce_id"
+            "commerce_id"=>"required|integer|exists:commerces,id|unique:current_queues,commerce_id"
         ]);
 
         if ($validator->fails()) {

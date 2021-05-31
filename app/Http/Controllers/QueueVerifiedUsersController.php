@@ -19,13 +19,13 @@ class QueueVerifiedUsersController extends Controller
     {
         //validate queue
         $validator  =   Validator::make($request->all(), [
-            "queue_id"  =>  "required|integer|exists:currentqueues,id",
-            "user_id"  =>  "required|integer|exists:users,id|unique:QueueVerifiedUsers,user_id",
-            "password_verification"  =>  "required|exists:currentqueues,password_verification",
+            "queue_id"  =>  "required|integer|exists:current_queues,id",
+            "user_id"  =>  "required|integer|exists:users,id|unique:queue_verified_users,user_id",
+            "password_verification"  =>  "required|exists:current_queues,password_verification",
         ]);
 
         if ($validator->fails()) {
-            IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         //queue instance
