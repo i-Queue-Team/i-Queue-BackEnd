@@ -40,8 +40,7 @@ class CurrentQueue extends Model{
 
 
     //commerce from queue
-    public function Commerce()
-    {
-        return $this->hasOne('App\Models\Commerce', 'id');
+    public function comerce(){
+        return $this->belongsTo(Commerce::class,'commerce_id','id');
     }
 }
