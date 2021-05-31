@@ -26,8 +26,7 @@ class UserController extends Controller
     }
 
     public function destroy(User $user){
-        if($this->checkUserId($user)){
-            $user = AuthTools::getAuthUser();
+        if(AuthTools::checkUserId($user)){
             $user->delete();
             return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
         }else{
@@ -41,7 +40,8 @@ class UserController extends Controller
         $validator  =   Validator::make($request->all(), [
             "name"  =>  "required",
             "email"  =>  "required|email|unique:users",
-            "password"  =>  "required"
+            "password"  =>  "required",
+            "role" => "in:USER,ADMIN",
         ]);
 
         if ($validator->fails()) {
@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $inputs = $request->all();
         $inputs["password"] = Hash::make($request->password);
-
+        $inputs["role"] = $request->role;
         $user   =   User::create($inputs);
 
         if (!is_null($user)) {
