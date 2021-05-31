@@ -25,7 +25,9 @@ public function getIdAttribute($value)
 */
     protected $fillable = [
         'name',
-        'location',
+        'latitude',
+        'longitude',
+        'user_id',
 
     ];
 

@@ -16,8 +16,8 @@ class Commerces extends Migration
         Schema::create('commerces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->double('latitude',9,7,false);
-            $table->double('longitude',10,7,false);
+            $table->double('latitude');
+            $table->double('longitude');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->unsignedInteger('user_id');
             $table->timestamps();
