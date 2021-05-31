@@ -24,7 +24,7 @@ class CommerceFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Pizzeria Local',
+            'name' => $this->faker->company,
             'latitude' => $this->faker->randomFloat(null,0,7),
             'longitude' => $this->faker->randomFloat(null,0,7),
             'user_id'=> User::factory()->admin()->create(),
