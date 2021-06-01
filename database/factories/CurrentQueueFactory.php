@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\CurrentQueue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +25,7 @@ class CurrentQueueFactory extends Factory
         return [
             'fixed_capacity' => $this->faker->numberBetween(10,50),
             'average_time' => $this->faker->numberBetween(5,10),
-            'password_verification' => '12345',
+            'password_verification' => Str::random(20),
             'commerce_id' => 'overriden',
         ];
     }
