@@ -15,4 +15,7 @@ class QueueVerifiedUser extends Model{
         'estimated_time'
 
     ];
+    public function queue(){
+        return $this->belongsTo(CurrentQueue::class,'queue_id','id');
+    }
 }
