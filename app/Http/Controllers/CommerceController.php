@@ -15,13 +15,16 @@ class CommerceController extends Controller
 {
     function index()
     {
+
+
         return IQResponse::response(Response::HTTP_OK,Commerce::all());
     }
 
     public function show($id){
         $commerce = Commerce::find($id);
+        $queue = $commerce->Queue;
         if ($commerce) {
-            return IQResponse::response(Response::HTTP_OK,$commerce);
+            return IQResponse::response(Response::HTTP_OK,$commerce,$queue);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
