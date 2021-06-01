@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $inputs = $request->all();
         $inputs["password"] = Hash::make($request->password);
-        $inputs["role"] = $request->role;
+        $inputs["role"] = $request->role ? $request->role : 'USER';
         $user   =   User::create($inputs);
 
         if (!is_null($user)) {
