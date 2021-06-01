@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Commerce;
+use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -14,12 +17,6 @@ class CommerceTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('commerces')->insert([
-            'name' => 'Pizzeria Local',
-            'latitude' => '37.649034',
-            'longitude' => '37.649034',
-            'user_id'=> '1'
-
-        ]);
+        Commerce::factory(5)->create();
     }
 }

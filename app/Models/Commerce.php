@@ -31,9 +31,12 @@ public function getIdAttribute($value)
 
     ];
 
-
-    public function Queue()
+    public function queue()
     {
-        return $this->belongsTo('App\Models\Currentqueue', 'id');
+        return $this->hasOne(CurrentQueue::class,'commerce_id');
+    }
+
+    public function admin(){
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }

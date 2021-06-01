@@ -7,17 +7,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Utils\Auth\AuthTools;
 use App\Utils\Responses\IQResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    private function checkUserId(User $user){
-        return Auth::id() == $user->id;
-    }
-
     public function show(User $user){
-        if($this->checkUserId($user)){
+        if(AuthTools::checkUserId($user)){
             return IQResponse::response(Response::HTTP_OK,User::find($user->id));
         }else{
             return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
@@ -29,8 +26,8 @@ class UserController extends Controller
     }
 
     public function destroy(User $user){
-        if($this->checkUserId($user)){
-            Auth::user()->delete();
+        if(AuthTools::checkUserId($user)){
+            $user->delete();
             return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
         }else{
             return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
@@ -43,7 +40,8 @@ class UserController extends Controller
         $validator  =   Validator::make($request->all(), [
             "name"  =>  "required",
             "email"  =>  "required|email|unique:users",
-            "password"  =>  "required"
+            "password"  =>  "required",
+            "role" => "in:USER,ADMIN",
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +50,7 @@ class UserController extends Controller
 
         $inputs = $request->all();
         $inputs["password"] = Hash::make($request->password);
-
+        $inputs["role"] = $request->role;
         $user   =   User::create($inputs);
 
         if (!is_null($user)) {

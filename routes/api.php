@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\CommerceQueueUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CurrentQueueController;
 use App\Http\Controllers\QueueVerifiedUsersController;
@@ -24,11 +25,7 @@ use App\Http\Controllers\TestController;
 Route::middleware('auth:api')->group(function () {
     //All secure URL's
     //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
-    Route::apiResource('commerces',CommerceController::class)->only([
-        'index', // Listado negocios
-        'show', // Mostrar un negocio en base al id
-        'store',//Guardar un negocio
-    ]);
+    Route::apiResource('commerces',CommerceController::class);
 
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
@@ -50,7 +47,6 @@ Route::middleware('auth:api')->group(function () {
     //check unser info (phone)
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
-
     Route::apiResource('users',UserController::class)->only(['show','destroy']);
 
 });
@@ -58,5 +54,5 @@ Route::middleware('auth:api')->group(function () {
 //AUTH login/register
 Route::post("login", [UserController::class, 'login'])->name('login');
 Route::post("register", [UserController::class, 'register']);
-Route::apiResource("testing",TestController::class);
+//Route::apiResource("testing",TestController::class);
 
