@@ -30,6 +30,7 @@ Route::middleware('auth:api')->group(function () {
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
     Route::post('current-queues', [CurrentQueueController::class, 'store']);
+    Route::get('current-queues', [CurrentQueueController::class, 'index']);
 
     //for testing purposes
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
