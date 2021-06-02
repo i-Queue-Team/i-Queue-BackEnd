@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commerce;
-use App\Models\Currentqueue;
+use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
 use App\Utils\Responses\IQResponse;
-use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,8 +37,6 @@ class CommerceController extends Controller
             "name"  =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
             "longitude"  =>  "required",
-            "user_id"  =>  "required",
-
         ]);
 
 
@@ -47,9 +45,17 @@ class CommerceController extends Controller
         }
 
         $inputs = $request->all();
+        $inputs['user_id'] = auth()->id();;
 
+        DB::beginTransaction();
         $commerce   =   Commerce::create($inputs);
-        if (!is_null($commerce)) {
+        $queue = new CurrentQueue([
+            'commerce_id' => $commerce,
+        ]);
+        $commerce->queue()->save($queue);
+        DB::commit();
+
+        if (!is_null($commerce)||!is_null($queue) ) {
             return IQResponse::response(Response::HTTP_OK,$commerce);
         } else {
 
