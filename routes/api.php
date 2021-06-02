@@ -1,12 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CommerceController;
-use App\Http\Controllers\CommerceQueueUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\CurrentQueueController;
 use App\Http\Controllers\QueueVerifiedUsersController;
-use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +48,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::apiResource('users',UserController::class)->only(['show','destroy']);
 
+    Route::post('queue-verified-users/queue-info',[QueueVerifiedUsersController::class,'queue_info']);
 });
 
 //AUTH login/register
