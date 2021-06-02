@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commerce;
 use App\Models\Statistic;
 use App\Models\Currentqueue;
 use Illuminate\Http\Request;
@@ -110,18 +109,6 @@ class QueueVerifiedUsersController extends Controller
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
-    }
-
-    public function queue_info(Request $request){
-        $validator = Validator::make($request->all(),[
-            'commerce_id' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
-        }
-        $commerce = Commerce::findOrFail($request->commerce_id);
-        $queue = $commerce->queue()->get()->first();
-        return IQResponse::response(Response::HTTP_OK,$queue);
     }
 }
 
