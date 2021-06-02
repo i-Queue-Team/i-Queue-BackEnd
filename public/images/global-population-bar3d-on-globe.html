@@ -1,0 +1,115 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=global-population-bar3d-on-globe&gl=1
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/echarts.min.js"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/dataTool.min.js"></script>
+
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+
+
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/map/js/world.js"></script>
+
+
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/bmap.min.js"></script>
+
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+var ROOT_PATH = 'https://echarts.apache.org/examples';
+var data = [
+            [
+                -83,
+                76.5,
+                1.1
+            ],
+            [
+                -83,
+                76.5,
+                1.1
+            ]
+        ];
+
+    data = data.filter(function (dataItem) {
+        return dataItem[2] > 0;
+    }).map(function (dataItem) {
+        return [dataItem[0], dataItem[1], Math.sqrt(dataItem[2])];
+    });
+
+    option = {
+        backgroundColor: '#000',
+        globe: {
+            baseTexture: ROOT_PATH + "/data-gl/asset/world.topo.bathy.200401.jpg",
+            heightTexture: ROOT_PATH + "/data-gl/asset/world.topo.bathy.200401.jpg",
+            shading: 'lambert',
+            environment: ROOT_PATH + '/data-gl/asset/starfield.jpg',
+            light: {
+                main: {
+                    intensity: 2
+                }
+            },
+            viewControl: {
+                autoRotate: false
+            }
+        },
+        visualMap: {
+            max: 40,
+            calculable: true,
+            realtime: false,
+            inRange: {
+                colorLightness: [0.2, 0.9]
+            },
+            textStyle: {
+                color: '#fff'
+            },
+            controller: {
+                inRange: {
+                    color: 'orange'
+                }
+            },
+            outOfRange: {
+                colorAlpha: 0
+            }
+        },
+        series: [{
+            type: 'bar3D',
+            coordinateSystem: 'globe',
+            data: data,
+            barSize: 0.6,
+            minHeight: 0.2,
+            silent: true,
+            itemStyle: {
+                color: 'orange'
+            }
+        }]
+    };
+
+    myChart.setOption(option);
+
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>

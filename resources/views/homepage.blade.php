@@ -86,6 +86,10 @@
                 <a href="{{ url('/registro') }}" class="waves-effect waves-light btn-large">Regístrate ya</a>
             </div>
         </div>
+        <div class="row">
+            <div id="main" style="width:100%; height:400px"></div>
+        </div>
+
         <!--registro button-->
     </main>
 
@@ -137,7 +141,13 @@
 <link rel="stylesheet" href="./css/materialize.css">
 
 <!-- Compiled and minified JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/bmap.min.js"></script>
 
 <!--inicializador de carusel-->
 <script>
@@ -145,6 +155,78 @@
         var elems = document.querySelectorAll('.slider');
         var instances = M.Slider.init(elems);
         interval: 1000;
+    });
+
+</script>
+<script>
+    $(document).ready(function() {
+        var ROOT_PATH = './images/';
+
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+
+
+        var data = [
+            [-3.63584,
+                38.0936,
+
+                200
+            ],
+            [
+                -83,
+                76.5,
+                200
+            ]
+        ];
+        data = data.filter(function(dataItem) {
+            return dataItem[2] > 0;
+        }).map(function(dataItem) {
+            return [dataItem[0], dataItem[1], Math.sqrt(dataItem[2])];
+        });
+
+        option = {
+            backgroundColor: '#fff',
+            globe: {
+                baseTexture: "./images/world.topo.bathy.200401.jpg",
+                heightTexture: "./images/world.topo.bathy.200401.jpg",
+                //environment: "./images/nebula.jpg",
+                shading: 'color',
+
+
+
+                light: {
+                    main: {
+                        intensity: 3,
+                        shadow: false
+                    }
+                },
+
+                viewControl: {
+                    autoRotate: false
+                }
+
+            },
+
+
+            series: [{
+                type: 'bar3D',
+                coordinateSystem: 'globe',
+                data: data,
+                barSize: 0.6,
+                minHeight: 0.2,
+                silent: true,
+                itemStyle: {
+                    color: 'green'
+                }
+            }]
+        };
+
+        myChart.setOption(option);
+
+
+        option && myChart.setOption(option);
     });
 
 </script>
