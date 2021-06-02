@@ -49,6 +49,7 @@
         <!--fin menu-->
         <h2 class="center-align"><b>Bienvenido a I-Queue</b></h2>
 
+
         <!--carusel-->
         <div class="slider">
             <ul class="slides">
@@ -57,7 +58,8 @@
                     <div class="caption center-align">
                         <h3>Monitoriza tu negocio</h3>
                         <h5>Gestiona la cadencia de clientes y el aforo.</h5>
-                        <img class="responsive-img" src="./images/web-analytics.png">
+                        <img class="responsive-img" src="./images/logo.png" alt="">
+
                     </div>
                 </li>
                 <li>
@@ -86,8 +88,10 @@
                 <a href="{{ url('/registro') }}" class="waves-effect waves-light btn-large">Regístrate ya</a>
             </div>
         </div>
-        <div class="row">
+        <div class="row center-align">
             <div id="main" style="width:100%; height:400px"></div>
+            <h5>I queue por el mundo!</h5>
+            <p>A muchos negocios al rededor el mundo les encanta Iqueue!</p>
         </div>
 
         <!--registro button-->
@@ -193,9 +197,6 @@
                 heightTexture: "./images/world.topo.bathy.200401.jpg",
                 //environment: "./images/nebula.jpg",
                 shading: 'color',
-
-
-
                 light: {
                     main: {
                         intensity: 3,
@@ -208,8 +209,6 @@
                 }
 
             },
-
-
             series: [{
                 type: 'bar3D',
                 coordinateSystem: 'globe',
