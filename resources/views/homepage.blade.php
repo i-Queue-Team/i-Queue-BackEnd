@@ -189,7 +189,7 @@
         option = {
             backgroundColor: '#fff',
             globe: {
-                baseTexture: "./images/world.topo.bathy.200401.jpg",
+                baseTexture: "./images/world.jpg",
                 heightTexture: "./images/world.topo.bathy.200401.jpg",
                 //environment: "./images/nebula.jpg",
                 shading: 'color',
