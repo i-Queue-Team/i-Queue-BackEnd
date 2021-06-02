@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class Currentqueues extends Migration
 {
@@ -18,7 +19,7 @@ class Currentqueues extends Migration
             $table->integer('fixed_capacity')->default(30);
             $table->integer('current_capacity')->default(0);;
             $table->integer('average_time')->default(0);
-            $table->string('password_verification');
+            $table->string('password_verification')->default(Str::random(20));
             $table->timestamps();
 
             //foreing key
