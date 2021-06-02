@@ -9,7 +9,7 @@ class AuthTools{
         return Auth::id() == $user->id;
     }
     public static function getAuthUser() : User{
-        return User::find(Auth::user());
+        return User::find(auth()->id());
     }
 }
 ?>
