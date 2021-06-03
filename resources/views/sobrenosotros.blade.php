@@ -24,6 +24,7 @@
     }
 
 </style>
+
 <body class="container">
     <!--menu-->
     <!--nav extendido-->
@@ -34,7 +35,6 @@
                 <li><a href="{{ url('/login') }}"><img src="./images/userlogin.png"
                             style=" padding: 5px 0px 5px 0px; margin-top: 10px;" alt=""></a></li>
             </ul>
-
             <a href="{{ url('/login') }}" data-target="mobile-demo" class="sidenav-trigger"
                 style=" margin: 10px 0px 0px 0px; padding-left: 10px; height: 20px;"><img src="./images/userlogin.png"
                     alt=""></a>
@@ -48,155 +48,82 @@
         </div>
     </nav>
     <!--fin menu-->
-
-    <div class="row">
-        <div class="heading-title text-center">
-            <h2 class="center-align"><b>Nuestro equipo</b></h2>
-        </div>
-        <!--Zamora-->
-        <div class="col s12 m6 l4">
-            <div class="team-member">
-                <div class="team-img">
-                    <img src="./images/ios.png" class="responsive-img" alt="team member"
-                        style="display:block;margin:auto;">
-                </div>
-                <div class="team-hover">
-                    <div class="desk">
-                        <div class="card-panel teal lighten-2" style="display:block;margin:auto; heigth:100%;">
-                            <img src='./images/zamora.PNG' class="responsive-img"
-                                style="border-radius:140px;border:4px solid #666;margin-top:60px" />
-                            <p>He desarrollado la aplicación móvil para terminales iOS.</p>
-
-                        </div>
-                    </div>
-                    <div class="s-link">
-                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                        <a href="#"><img src="./images/github.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-title">
-                <h5>Jose Ángel Zamora</h5>
-                <span>Desarrollador iOS</span>
-            </div>
-        </div>
-        <!--Zamora-->
-        <!--Pepelu-->
-        <div class="col s12 m6 l4 offset-l2">
-            <div class="team-member">
-                <div class="team-img">
-                    <img src="./images/android.png" class="responsive-img" alt="team member"
-                        style="display:block;margin:auto;">
-                </div>
-                <div class="team-hover">
-                    <div class="desk">
-                        <div class="card-panel teal lighten-2" style="display:block;margin:auto;">
-
-                            <div class="content">
-                                <img src='./images/pepelu.PNG' class="responsive-img"
-                                    style="border-radius:140px;border:4px solid #666;margin-top:60px" />
-                                <p>He desarrollado la aplicación para terminales Android.</p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="s-link">
-                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                        <a href="#"><img src="./images/github.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-title">
-                <h5>Jose Luis Berrio</h5>
-                <span>Desarrollador Android</span>
-            </div>
-        </div>
-        <br><br><br>
-        <!--Pepelu-->
-        <!--Felix-->
-        <div class="col s12 m6 l4">
-            <div class="team-member">
-                <div class="team-img">
-                    <img src="./images/backend.png" class="responsive-img" alt="team member">
-                </div>
-                <div class="team-hover">
-                    <div class="desk">
-                        <div class="card-panel teal lighten-2">
-                            <img src='./images/perfiltest2.png' class="responsive-img"
-                                style="border-radius:140px;border:4px solid #666;margin-top:70px" />
-                            <p>He desarrollado el backend utilizando el framework Laravel</p>
-                        </div>
-                    </div>
-                    <div class="s-link">
-                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                        <a href="#"><img src="./images/github.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-title">
-                <h5>Felix Corujo</h5>
-                <span>Desarrollador Backend</span>
-            </div>
-        </div>
-        <!--Felix-->
-        <div class="col s12 m6 l4">
-            <div class="team-member">
-                <div class="team-img">
-                    <img src="./images/front.png" class="responsive-img" alt="team member">
-                </div>
-                <div class="team-hover">
-                    <div class="desk">
-                        <div class="card-panel teal lighten-2">
-                            <img src='./images/dani.png' class="responsive-img"
-                                style="border-radius:140px;border:4px solid #666;margin-top:70px" />
-                            <p>He diseñado las interfaces desarrollado el frontend de la app </p>
-                        </div>
-                    </div>
-                    <div class="s-link">
-                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                        <a href="#"><img src="./images/github.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-title">
-                <h5>Dani Merino</h5>
-                <span>Desarrollador Frontend</span>
-            </div>
-        </div>
-        <div class="col s12 m6 l4">
-            <div class="team-member">
-                <div class="team-img">
-                    <img src="./images/backend.png" class="responsive-img" alt="team member">
-                </div>
-                <div class="team-hover">
-                    <div class="desk">
-                        <div class="card-panel teal lighten-2">
-                            <img src='./images/perfiltest2.png' class="responsive-img"
-                                style="border-radius:140px;border:4px solid #666;margin-top:70px" />
-                            <p>Vicente quotes .</p>
-                        </div>
-                    </div>
-                    <div class="s-link">
-                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                        <a href="#"><img src="./images/github.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="team-title">
-                <h5>Vicente Maroto</h5>
-                <span>Desarrollador Backend</span>
-            </div>
-        </div>
+    <!-- Our team Section -->
+    <section id="team" class="team content-section">
+        <div class="">
+            <div class="row text-center">
+                <div class="col s12">
+                    <h2>Nuestro equipo</h2>
+                    <h3 class="caption gray">Conoce a los desarrolladores!</h3>
+                </div><!-- /.col l12 -->
+                <div class="">
+                    <div class="row">
+                        <div class="col l4">
+                            <!-- dani-->
+                            <div class="team-member">
+                                <figure>
+                                    <img src="{{ asset('images/dani.PNG') }}" alt="" class="img-responsive circle"
+                                        style="max-height: 450px; max-width:550px">
+                                    <figcaption>
+                                        <p>He diseñado las interfaces desarrollado el frontend de la app </p>
+                                        <ul>
+                                            <li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                                <h4>Dani Merino</h4>
+                                <p>Desarrollador Frontend</p>
+                            </div><!-- /.team-member-->
+                        </div><!-- /.col l4 -->
+                        <!-- dani-->
+                        <div class="col l4">
+                            <div class="team-member">
+                                <figure>
+                                    <img src="{{ asset('images/pepelu.PNG') }}" alt="" class="img-responsive circle"
+                                        style="max-height: 450px; max-width:550px">
+                                    <figcaption>
+                                        <p>He desarrollado la aplicación para terminales Android.</p>
+                                        <ul>
+                                            <li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                                <h4>Jose Luis Berrio</h4>
+                                <p>Desarrollador Android</p>
+                            </div><!-- /.team-member-->
+                        </div><!-- /.col l4 -->
+                        <!-- dani-->
+                        <div class="col l4">
+                            <div class="team-member">
+                                <figure>
+                                    <img src="{{ asset('images/zamora.PNG') }}" alt="" class="img-responsive circle"
+                                        style="max-height: 450px; max-width:550px">
+                                    <figcaption>
+                                        <p>He desarrollado la aplicación móvil para terminales iOS.</p>
+                                        <ul>
+                                            <li><a href=""><i class="fa fa-facebook fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-twitter fa-2x"></i></a></li>
+                                            <li><a href=""><i class="fa fa-linkedin fa-2x"></i></a></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                                <h4>Jose Ángel Zamora</h4>
+                                <p>>Desarrollador iOS</p>
+                            </div><!-- /.team-member-->
+                        </div><!-- /.col l4 -->
 
 
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
 
-    </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.our-team -->
+
 
 
     <!-- Footer -->
