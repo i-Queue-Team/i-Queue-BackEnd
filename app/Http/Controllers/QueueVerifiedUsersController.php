@@ -66,9 +66,9 @@ class QueueVerifiedUsersController extends Controller
             $user->delete();
         }
         if (!is_null($user)) {
-            return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
+            return IQResponse::emptyResponse(Response::HTTP_OK,$user);
         } else {
-            return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
