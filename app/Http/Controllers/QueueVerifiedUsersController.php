@@ -11,6 +11,7 @@ use App\Utils\Queue\QueueTools;
 use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Commerce;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -26,13 +27,16 @@ class QueueVerifiedUsersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
 
         //queue instance
         $queueVerifiedUser = new QueueVerifiedUser();
         $queueVerifiedUser->queue_id = $request->queue_id;
         $queueVerifiedUser->user_id = $request->user_id;
+        //name
+        $commerce = Commerce::find($request->queue_id);
+        $queueVerifiedUser->name = $commerce->name;
         //posicion es igual a la funcion posicion
         $queueVerifiedUser->position = QueueTools::position($request->queue_id);
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
@@ -43,7 +47,7 @@ class QueueVerifiedUsersController extends Controller
         QueueTools::refresh_estimated_time($request->queue_id);
         QueueTools::store_statistic($request);
         if (!is_null($queueVerifiedUser)) {
-            return IQResponse::response(Response::HTTP_CREATED,$queueVerifiedUser);
+            return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -66,7 +70,7 @@ class QueueVerifiedUsersController extends Controller
             $user->delete();
         }
         if (!is_null($user)) {
-            return IQResponse::emptyResponse(Response::HTTP_OK,$user);
+            return IQResponse::emptyResponse(Response::HTTP_OK, $user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
@@ -83,7 +87,7 @@ class QueueVerifiedUsersController extends Controller
                 QueueTools::refresh_position($queue_id, $position);
                 QueueTools::refresh_estimated_time($queue_id);
                 $user->delete();
-                return IQResponse::response(Response::HTTP_OK,$user);
+                return IQResponse::response(Response::HTTP_OK, $user);
             } else {
                 return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
             }
@@ -94,18 +98,23 @@ class QueueVerifiedUsersController extends Controller
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
-     //function to get user info from queue
+    //function to get user info from queue
     public function info($user_id)
     {
         $user = QueueVerifiedUser::where('user_id', $user_id)->first();
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
+
+
+
+
+
             // delete user from queue
-            return IQResponse::response(Response::HTTP_OK,$user);
+            return IQResponse::response(Response::HTTP_OK, $user);
         }
         if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK,$user);
+            return IQResponse::response(Response::HTTP_OK, $user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }

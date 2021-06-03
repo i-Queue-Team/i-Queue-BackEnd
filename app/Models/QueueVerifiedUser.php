@@ -12,7 +12,8 @@ class QueueVerifiedUser extends Model{
     protected $table = 'queue_verified_users';
 
     protected $fillable = [
-        'estimated_time'
+        'estimated_time',
+        'name',
 
     ];
     public function queue(){
