@@ -8,6 +8,7 @@ use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Utils\Responses\IQResponse;
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ class CommerceController extends Controller
         $commerce->queue()->save($queue);
         $image = $request->file('image');
         $imageName = Str::random(20) . '.' . $image->extension();
-        Storage::put("./commerces/$imageName",$request);
+        Storage::disk('public')->put("./commerces/$imageName",file_get_contents($request->image));
         $commerce->image = $imageName;
         DB::commit();
         if (!is_null($commerce)||!is_null($queue) ) {
