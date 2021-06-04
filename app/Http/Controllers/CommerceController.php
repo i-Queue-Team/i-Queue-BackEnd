@@ -52,7 +52,7 @@ class CommerceController extends Controller
         ]);
         $commerce->queue()->save($queue);
         $image = $request->file('image');
-        $imageName = Str::random(20) . $image->extension();
+        $imageName = Str::random(20) . '.' . $image->extension();
         Storage::put("./commerces/$imageName",$request);
         DB::commit();
         if (!is_null($commerce)||!is_null($queue) ) {
