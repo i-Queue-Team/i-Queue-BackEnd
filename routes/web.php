@@ -52,10 +52,10 @@ Route::get('/login', function () {
 
 Route::post("login", [UserController::class, 'authenticateWeb']);
 
-Route::get('/user', function () {
-    return view('userView');
-});
+Route::group( ['middleware' => 'auth' ], function()
+{
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
 
-Route::get('/admin', function () {
-    return view('userAdminView');
 });

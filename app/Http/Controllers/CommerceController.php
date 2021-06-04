@@ -15,8 +15,6 @@ class CommerceController extends Controller
 {
     function index()
     {
-
-
         return IQResponse::response(Response::HTTP_OK,Commerce::all());
     }
 

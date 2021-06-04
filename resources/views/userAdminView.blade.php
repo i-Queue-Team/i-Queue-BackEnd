@@ -40,7 +40,7 @@
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/home') }}" class="brand-logo"><span class=".center-align">I-Queue</span></a>
+            <a href="{{ url('/home') }}" class="brand-logo"><span class=".center-align">I-Queue -ADMINPANEL</span></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{{ url('/login') }}"><img src="./images/userlogin.png"
                             style=" padding: 5px 0px 5px 0px; margin-top: 10px;" alt=""></a></li>
