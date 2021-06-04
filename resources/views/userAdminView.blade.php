@@ -31,7 +31,7 @@
 
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-    <title>User view 1</title>
+    <title>Iqueue-ADMIN-PANEL</title>
 </head>
 
 <body class="container">
@@ -40,51 +40,44 @@
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/home') }}" class="brand-logo"><span class=".center-align">I-Queue -ADMINPANEL</span></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{ url('/login') }}"><img src="./images/userlogin.png"
-                            style=" padding: 5px 0px 5px 0px; margin-top: 10px;" alt=""></a></li>
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">I-queue Admin-Panel</span></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="{{ url('/login') }}"><i class="material-icons left">account_circle</i>Login</a></li>
             </ul>
-            <a href="{{ url('/login') }}" data-target="mobile-demo" class="sidenav-trigger"
-                style=" margin: 10px 0px 0px 0px; padding-left: 10px; height: 20px;"><img src="./images/userlogin.png"
-                    alt=""></a>
         </div>
-        <!--fin nav extendido-->
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li><a href="#negocioDatos">Datos</a></li>
-                <li><a href="#cola">Cola</a></li>
-                <li><a href="#promo">Promociones</a></li>
+                <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
+                <li class="tab col s3"><a href="#test2">Tu Cola</a></li>
+                <li class="tab col s3 "><a href="#test3">Configuracion</a></li>
+
             </ul>
         </div>
     </nav>
-    <main>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+    </ul>
+    <main class="center-align">
         <!--fin menu-->
-        <h2 class="center-align">Mapa I-Queue</h2>
-
-        <p>Click the button to create a P element with some text, and append it to DIV.</p>
-
-        <div id="myDIV">
-            A DIV element
+        <div id="test1" class="col s12">
+            <!--tab datos-->
+            <h2>Datos</h2>
+            <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
+        <div id="test2" class="col s12">
+            <!--tab datos-->
+            <h2>Nombre Cola</h2>
+        </div>
+        <div id="test3" class="col s12">
+            <!--tab datos-->
+            <h2>Configuracion</h2>
         </div>
 
-        <button onclick="myFunction()">Añadir</button>
-        <button onclick="myFunction2()">Borrar</button>
 
-        <p><strong>Example explained:</strong><br>First create a P node,<br> then create a Text node,<br> then append
-            the Text node to the P node.<br>Finally, get the DIV element with id="myDIV", and append the P node to DIV.
-        </p>
-
-
-        <section class="container">
-
-            <div id='mydiv'>TEXTO QUE VA A CAMBIAR</div>
-            <br />
-            <input type='button' onclick='change()' value='cambiar valor'>
-            <div id="map">
-
-            </div>
-        </section>
         <!--fin login-->
         <br>
     </main>
@@ -129,15 +122,6 @@
             </div>
         </div>
     </footer>
-
-
-
-
-
-
-
-
-
 </body>
 
 
@@ -145,43 +129,90 @@
 <link rel="stylesheet" href="./css/materialize.css">
 
 <!-- Compiled and minified JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-    var map = L.map('map').
-    setView([41.66, -4.72],
-        15);
-
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-
-        maxZoom: 18
-    }).addTo(map);
-
-    L.control.scale().addTo(map);
-    L.marker([41.66, -4.71], {
-        draggable: true
-    }).addTo(map);
-    L.marker([41.70, -4.71], {
-        draggable: true
-    }).addTo(map);
-
-</script>
-<script>
-    function myFunction() {
-        var div = document.createElement("DIV");
-        var para = document.createElement("P");
-        var t = document.createTextNode("This is a paragraph.");
-        para.appendChild(t);
-        div.appendChild(para);
-        document.getElementById("myDIV").appendChild(div);
-    }
-
-    function myFunction2() {
-
-        var myobj = document.getElementById("myDIV").t;
-        myobj.replaceChild(sp1, sp2);
-    }
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"
+    integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.tabs').tabs();
+    });
+
+
+    const image = new Image();
+    image.src = './images/logo.svg';
+    const plugin = {
+        id: 'custom_canvas_background_image',
+        beforeDraw: (chart) => {
+            if (image.complete) {
+                const ctx = chart.ctx;
+                const {
+                    top,
+                    left,
+                    width,
+                    height
+                } = chart.chartArea;
+                const x = left + width / 2 - image.width / 2;
+                const y = top + height / 2 - image.height / 2;
+                ctx.drawImage(image, x, y);
+            } else {
+                image.onload = () => chart.draw();
+            }
+        }
+    };
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+
+        plugins: [plugin],
+        data: {
+            labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+            datasets: [{
+                label: 'Personas en el local',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132,  0.5)',
+                    'rgba(54, 162, 235,  0.5)',
+                    'rgba(255, 206, 86,  0.5)',
+                    'rgba(75, 192, 192,  0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64,  0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            aspectRatio: 2,
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                }
+            },
+            responsive: true,
+            cutoutPercentage: 90,
+            legend: {
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+        }
+
+    });
+
+</script>
 
 </html>
