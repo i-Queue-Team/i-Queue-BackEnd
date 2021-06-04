@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\CommerceController;
+use App\Http\Controllers\CommerceQueueUserController;
+
+use App\Http\Controllers\CurrentQueueController;
+use App\Http\Controllers\QueueVerifiedUsersController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +48,9 @@ Route::get('/registro', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+
+Route::post("login", [UserController::class, 'authenticateWeb']);
 
 Route::get('/user', function () {
     return view('userView');

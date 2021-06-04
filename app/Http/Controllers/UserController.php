@@ -13,23 +13,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function show(User $user){
-        if(AuthTools::checkUserId($user)){
-            return IQResponse::response(Response::HTTP_OK,User::find($user->id));
-        }else{
+    public function show(User $user)
+    {
+        if (AuthTools::checkUserId($user)) {
+            return IQResponse::response(Response::HTTP_OK, User::find($user->id));
+        } else {
             return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
         }
     }
 
-    public function update(Request $request, $id){
-
+    public function update(Request $request, $id)
+    {
     }
 
-    public function destroy(User $user){
-        if(AuthTools::checkUserId($user)){
+    public function destroy(User $user)
+    {
+        if (AuthTools::checkUserId($user)) {
             $user->delete();
             return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
-        }else{
+        } else {
             return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
         }
     }
@@ -45,7 +47,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
 
         $inputs = $request->all();
@@ -54,7 +56,7 @@ class UserController extends Controller
         $user   =   User::create($inputs);
 
         if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK,$user);
+            return IQResponse::response(Response::HTTP_OK, $user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -72,7 +74,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
 
         $user = User::where("email", $request->email)->first();
@@ -85,9 +87,33 @@ class UserController extends Controller
             $user   = Auth::user();
             $token  = $user->createToken('token')->plainTextToken;
             $user->token = $token;
-            return IQResponse::response(Response::HTTP_OK,$user);
+            return IQResponse::response(Response::HTTP_OK, $user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_UNAUTHORIZED);
+        }
+    }
+
+    public function authenticateWeb(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            "email" =>  "required|email|exists:users",
+            "password" =>  "required",
+        ]);
+        if ($validator->fails()) {
+            return view('login')->with('errors', $validator->errors());
+        }
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = User::where("email", $request->email)->first();
+            if($user->role=="USER"){
+                return redirect()->intended('user');
+            }else{
+                return redirect()->intended('admin');
+            }
+
+        } else {
+            $validator->getMessageBag()->add('email', 'credenciales erroneas');
+            return view('login')->with('errors', $validator->errors());
         }
     }
 }

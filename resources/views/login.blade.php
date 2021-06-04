@@ -56,17 +56,24 @@
         <section class="container">
             <div style="border-radius: 1rem; background-color: antiquewhite; padding: 10px; ">
                 <article class="col s6 offset-s3">
-                    <form method="GET" action="{{ url('/user') }}">
+                    <form method="POST" action="{{ url('/login') }}">
+                        {{ csrf_field() }}
                         <div class="input-field">
                             <i class="material-icons prefix">person_pin</i>
-                            <label for="usuario">Usuario</label>
-                            <input type="text" name="usuario" required>
-                        </div>
+                            <label for="email">Email</label>
+                            <input type="text" name="email" required>
 
+
+                            @if ($errors)
+                                <span class="error">
+                                    <span class="helper-text" data-error="wrong" data-success="right">{{ $errors->first('email') }}</span>
+                                </span>
+                            @endif
+                        </div>
                         <div class="input-field">
                             <i class="material-icons prefix">password</i>
                             <label for="password">Contraseña</label>
-                            <input type="password" name="password" required minlength="8">
+                            <input type="password" name="password" required>
                         </div>
                         <p class="center-align">
                             <button class="waves-effect waves-light btn" type="submit"><i
