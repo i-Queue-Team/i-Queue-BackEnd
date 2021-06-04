@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--CHARTS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>I-Queue empresas</title>
 </head>
 <style>
@@ -28,26 +29,7 @@
 
     <!--menu-->
 
-    <nav class="nav-extended">
-        <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/home') }}" class="brand-logo"><span class=".center-align">I-Queue</span></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{ url('/login') }}"><img src="./images/userlogin.png"
-                            style=" padding: 5px 0px 5px 0px; margin-top: 10px;" alt=""></a></li>
-            </ul>
-
-            <a href="{{ url('/login') }}" data-target="mobile-demo" class="sidenav-trigger"
-                style=" margin: 10px 0px 0px 0px; padding-left: 10px; height: 20px;"><img src="./images/userlogin.png"
-                    alt=""></a>
-        </div>
-        <div class="nav-content">
-            <ul class="tabs tabs-transparent">
-                <li><a href="{{ url('/contactoempresas') }}">Empresas</a></li>
-                <li><a href="{{ url('/sobrenosotros') }}">Sobre nosotros</a></li>
-            </ul>
-        </div>
-        <!--fin menu-->
-    </nav>
+    @include('navLayout')
     <main>
         <h2 class="center-align"><b>I-Queue Empresas</b></h2>
 
@@ -239,7 +221,7 @@
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+<script type="text/javascript" src="{{ asset('js/app.js')}}"></script>
 
 </body>
 

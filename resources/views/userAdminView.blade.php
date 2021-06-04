@@ -7,7 +7,7 @@
 
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         #map {
             width: 100%;
@@ -165,22 +165,23 @@
     }).addTo(map);
 
 </script>
-    <script>
-        function myFunction() {
-            var div = document.createElement("DIV");
-            var para = document.createElement("P");
-            var t = document.createTextNode("This is a paragraph.");
-            para.appendChild(t);
-            div.appendChild(para);
-            document.getElementById("myDIV").appendChild(div);
-        }
+<script>
+    function myFunction() {
+        var div = document.createElement("DIV");
+        var para = document.createElement("P");
+        var t = document.createTextNode("This is a paragraph.");
+        para.appendChild(t);
+        div.appendChild(para);
+        document.getElementById("myDIV").appendChild(div);
+    }
 
-        function myFunction2() {
+    function myFunction2() {
 
-            var myobj = document.getElementById("myDIV").t;
-            myobj.replaceChild(sp1, sp2);
-        }
+        var myobj = document.getElementById("myDIV").t;
+        myobj.replaceChild(sp1, sp2);
+    }
 
-    </script>
+</script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 </html>

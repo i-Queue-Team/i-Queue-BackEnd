@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Home I-Queue</title>
 </head>
 
@@ -25,26 +25,9 @@
     </style>
     <!--contenedor-->
 
-    <!--menu-->
-    <nav class="nav-extended">
-        <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/home') }}" class="brand-logo"><span class=".center-align">I-Queue</span></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{{ url('/login') }}"><img src="./images/userlogin.png"
-                            style=" padding: 5px 0px 5px 0px; margin-top: 10px;" alt=""></a></li>
-            </ul>
+    <!--nav-->
+    @include('navLayout')
 
-            <a href="{{ url('/login') }}" data-target="mobile-demo" class="sidenav-trigger"
-                style=" margin: 10px 0px 0px 0px; padding-left: 10px; height: 20px;"><img src="./images/userlogin.png"
-                    alt=""></a>
-        </div>
-        <div class="nav-content">
-            <ul class="tabs tabs-transparent">
-                <li><a href="{{ url('/contactoempresas') }}">Empresas</a></li>
-                <li><a href="{{ url('/sobrenosotros') }}">Sobre nosotros</a></li>
-            </ul>
-        </div>
-    </nav>
     <main>
         <!--fin menu-->
         <h2 class="center-align"><b>Bienvenido a I-Queue</b></h2>
@@ -147,12 +130,15 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/echarts.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/dataTool.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/bmap.min.js"></script>
 
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/echarts.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js')}}"></script>
 <!--inicializador de carusel-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -160,7 +146,6 @@
         var instances = M.Slider.init(elems);
         interval: 1000;
     });
-
 </script>
 <script>
     $(document).ready(function() {
