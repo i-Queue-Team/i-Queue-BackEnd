@@ -32,9 +32,10 @@ class CommerceController extends Controller
     public function store(Request $request)
     {
         $validator  =   Validator::make($request->all(), [
-            "name"  =>  "required|unique:commerces,name",
+            "name"      =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
-            "longitude"  =>  "required",
+            "longitude" =>  "required",
+            "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
 
 
