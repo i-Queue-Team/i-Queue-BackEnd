@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commerce;
+use Illuminate\Support\Str;
 use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
-use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\DB;
+use App\Utils\Responses\IQResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,23 +39,22 @@ class CommerceController extends Controller
             "longitude" =>  "required",
             "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
-
-
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
 
         $inputs = $request->all();
-        $inputs['user_id'] = auth()->id();;
-
+        $inputs['user_id'] = auth()->id();
         DB::beginTransaction();
         $commerce   =   Commerce::create($inputs);
         $queue = new CurrentQueue([
             'commerce_id' => $commerce,
         ]);
         $commerce->queue()->save($queue);
+        $image = $request->file('image');
+        $imageName = Str::random(20) . $image->extension();
+        Storage::put("./commerces/$imageName",$request);
         DB::commit();
-
         if (!is_null($commerce)||!is_null($queue) ) {
             return IQResponse::response(Response::HTTP_OK,$commerce);
         } else {
