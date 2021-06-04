@@ -9,8 +9,10 @@
     <div class="nav-content">
         <ul class="tabs tabs-transparent">
             <li class="tab {{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}">Inicio</a></li>
-            <li class="tab {{ Request::is('contactoempresas') ? 'active' : '' }}"><a href="{{ url('/contactoempresas') }}">Empresas</a></li>
-            <li class="tab {{ Request::is('sobrenosotros') ? 'active' : '' }}"><a href="{{ url('/sobrenosotros') }}">Sobre nosotros</a></li>
+            <li class="tab {{ Request::is('contactoempresas') ? 'active' : '' }}"><a
+                    href="{{ url('/contactoempresas') }}">Empresas</a></li>
+            <li class="tab {{ Request::is('sobrenosotros') ? 'active' : '' }}"><a
+                    href="{{ url('/sobrenosotros') }}">Sobre nosotros</a></li>
         </ul>
     </div>
 </nav>

@@ -150,59 +150,11 @@
                     </li>
                 </ul>
             </div>
-
             <br>
-
-
-
-
     </main>
-
-
-
-
-    <!-- Footer -->
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Info</h5>
-                    <p class="grey-text text-lighten-4"> I-Queue es la aplicación multiplataforma desarrollada
-                        por el equipo de la promoción 2020-2021 de Escuela Estech del Grado Superior en
-                        Desarrollo de Aplicaciones multiplataforma. La idea está basada en la digitalización,
-                        monitorización y adaptación de la misma para una gran cantidad de modelos de negocio de
-                        cara a la mejora e implementación de sus servicios de cara al público.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Descárgate la app</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!"><img src="./images/appstore.PNG" alt=""></a>
-                        </li>
-                        <br>
-                        <li><a class="grey-text text-lighten-3" href="#!"><img src="./images/androidstore.PNG"
-                                    alt=""></a></li>
-                        <li>
-                            <h5>Redes sociales</h5>
-                            <a class="grey-text text-lighten-3" href="#!"><img src="./images/facebook.png" alt=""></a>
-                            <a class="grey-text text-lighten-3" href="#!"><img src="./images/correoelectronico.png"
-                                    alt=""></a>
-                            <a class="grey-text text-lighten-3" href="#!"><img src="./images/gorjeo.png" alt=""></a>
-                            <a class="grey-text text-lighten-3" href="#!"><img src="./images/instagram.png" alt=""></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright">
-            <div class="container">
-                <p class="center-align">© 2021 Copyright I-Queue team</p>
-            </div>
-        </div>
-    </footer>
     <!--fin footer-->
+    @include('footerlayout')
 
-
-    </div>
     <!--fin contenedor-->
 </body>
 
@@ -222,7 +174,7 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/app.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 </body>
 
