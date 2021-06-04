@@ -54,6 +54,7 @@ class CommerceController extends Controller
         $image = $request->file('image');
         $imageName = Str::random(20) . '.' . $image->extension();
         Storage::put("./commerces/$imageName",$request);
+        $commerce->image = $imageName;
         DB::commit();
         if (!is_null($commerce)||!is_null($queue) ) {
             return IQResponse::response(Response::HTTP_OK,$commerce);
