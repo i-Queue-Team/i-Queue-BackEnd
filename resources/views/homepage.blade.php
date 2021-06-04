@@ -155,8 +155,6 @@
         var myChart = echarts.init(chartDom);
         var option;
 
-
-
         var data = [
             [-3.63584,
                 38.0936,

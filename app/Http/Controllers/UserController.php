@@ -112,4 +112,10 @@ class UserController extends Controller
             return view('login')->with('errors', $validator->errors());
         }
     }
+    public function logout () {
+        //logout user
+        Auth::logout();
+        // redirect to homepage
+        return redirect('/');
+    }
 }

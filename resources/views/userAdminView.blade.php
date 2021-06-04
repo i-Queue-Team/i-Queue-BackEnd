@@ -14,7 +14,6 @@
             height: 400px;
             box-shadow: 5px 5px 5px #888;
         }
-
     </style>
     <style>
         body {
@@ -22,11 +21,9 @@
             min-height: 100vh;
             flex-direction: column;
         }
-
         main {
             flex: 1 0 auto;
         }
-
     </style>
 
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
@@ -40,9 +37,10 @@
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">I-queue Admin-Panel</span></a>
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">I-queue
+                    Admin-Panel</span></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="{{ url('/login') }}"><i class="material-icons left">account_circle</i>Login</a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{Auth::user()->name}}<i class="material-icons right">account_box</i></a></li>
             </ul>
         </div>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -51,15 +49,19 @@
                 <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
                 <li class="tab col s3"><a href="#test2">Tu Cola</a></li>
                 <li class="tab col s3 "><a href="#test3">Configuracion</a></li>
-
             </ul>
         </div>
     </nav>
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+
+        <li><a href="#!">Configuracion</a></li>
+        <li class="divider"></li>
+        <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
+    </ul>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
+        <li><a href="#!">Configuracion</a></li>
+        <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
     </ul>
     <main class="center-align">
         <!--fin menu-->
@@ -138,6 +140,7 @@
 <script>
     $(document).ready(function() {
         $('.tabs').tabs();
+        $(".dropdown-trigger").dropdown();
     });
 
 
