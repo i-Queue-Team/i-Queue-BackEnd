@@ -20,14 +20,15 @@ class CommerceController extends Controller
 
     function index()
     {
-        return IQResponse::response(Response::HTTP_OK,Commerce::all());
+        $commerce = Commerce::all();
+        return IQResponse::response(Response::HTTP_OK,CommerceResource::collection($commerce));
     }
 
     public function show($id){
         $commerce = Commerce::find($id);
         $queue = $commerce->Queue;
         if ($commerce) {
-            return IQResponse::response(Response::HTTP_OK,$commerce,$queue);
+            return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
