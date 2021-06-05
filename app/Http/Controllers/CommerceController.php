@@ -9,7 +9,6 @@ use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Utils\Responses\IQResponse;
-use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +23,8 @@ class CommerceController extends Controller
         return IQResponse::response(Response::HTTP_OK,CommerceResource::collection($commerce));
     }
 
-    public function show($id){
-        $commerce = Commerce::find($id);
-        $queue = $commerce->Queue;
-        if ($commerce) {
+    public function show(Commerce $commerce){
+        if (!is_null($commerce)) {
             return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
@@ -74,7 +71,9 @@ class CommerceController extends Controller
     }
 
     public function destroy(Commerce $commerce){
+        Storage::disk('public')->delete('commerces/' . $commerce->image);
+        $commerce->delete();
         //TODO IMPLEMENT
-        return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+        return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
     }
 }
