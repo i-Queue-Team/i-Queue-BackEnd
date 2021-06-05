@@ -27,7 +27,6 @@ class QueueVerifiedUsersController extends Controller
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
-            "user_id"  =>  "required|integer|exists:users,id",
             "password_verification"  =>  "required|exists:current_queues,password_verification",
             "being_null_in_queue"  =>  "required",
         ]);
