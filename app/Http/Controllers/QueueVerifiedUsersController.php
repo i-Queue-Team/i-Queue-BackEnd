@@ -58,7 +58,8 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        return   QueueVerifiedUser::all()->where('queue_id', '=', 1);
+        return IQResponse::response(Response::HTTP_OK,QueueVerifiedUser::all()->where('user_id', '=', auth()->id()));
+
     }
     public function destroy($queue_id)
     {
