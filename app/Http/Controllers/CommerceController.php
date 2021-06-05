@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommerceResource;
 use App\Models\Commerce;
 use Illuminate\Support\Str;
 use App\Models\CurrentQueue;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommerceController extends Controller
 {
+
     function index()
     {
         return IQResponse::response(Response::HTTP_OK,Commerce::all());
@@ -54,12 +56,12 @@ class CommerceController extends Controller
         $commerce->queue()->save($queue);
         $image = $request->file('image');
         $imageName = Str::random(20) . '.' . $image->extension();
-        Storage::disk('public')->put("./commerces/$imageName",file_get_contents($request->image));
+        Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
         $commerce->image = $imageName;
         $commerce->save();
         DB::commit();
         if (!is_null($commerce)||!is_null($queue) ) {
-            return IQResponse::response(Response::HTTP_OK,$commerce);
+            return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
         } else {
 
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
