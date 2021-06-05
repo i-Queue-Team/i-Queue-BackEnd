@@ -21,7 +21,7 @@ class QueueVerifiedUsersController extends Controller
     public function store(Request $request)
     {
 
-        if (QueueTools::already_in_queue($request->user_id,$request->queue_id))  {
+        if (QueueTools::already_in_queue($request->user_id,  auth()->id())) {
             $request->request->add(['being_null_in_queue' => 'value']);
         }
         //validate queue
@@ -37,7 +37,7 @@ class QueueVerifiedUsersController extends Controller
         //queue instance
         $queueVerifiedUser = new QueueVerifiedUser();
         $queueVerifiedUser->queue_id = $request->queue_id;
-        $queueVerifiedUser->user_id = $request->user_id;
+        $queueVerifiedUser->user_id =  auth()->id();
         //name
         $commerce = Commerce::find($request->queue_id);
         $queueVerifiedUser->name = $commerce->name;
@@ -60,10 +60,12 @@ class QueueVerifiedUsersController extends Controller
         // for testing
         return   QueueVerifiedUser::all()->where('queue_id', '=', 1);
     }
-    public function destroy($user_id)
+    public function destroy($queue_id)
     {
         //delete function
-        $user = QueueVerifiedUser::where('user_id', $user_id)->first();
+        $inputs['user_id'] = auth()->id();
+        $user = QueueVerifiedUser::all()->where('queue_id','=',$queue_id)->where('user_id', '=', auth()->id())->first();
+
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
@@ -105,12 +107,6 @@ class QueueVerifiedUsersController extends Controller
     {
         $user = QueueVerifiedUser::where('user_id', $user_id)->first();
         if ($user) {
-            $position = $user->position;
-            $queue_id = $user->queue_id;
-
-
-
-
 
             // delete user from queue
             return IQResponse::response(Response::HTTP_OK, $user);
