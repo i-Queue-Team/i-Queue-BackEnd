@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Commerce;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommerceResource extends JsonResource
 {
@@ -20,7 +21,8 @@ class CommerceResource extends JsonResource
             'name' => $this->name,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'image' => url('/') . Storage::url('') . 'commerces/' . $this->image
+            'image' => url('/') . Storage::url('') . 'commerces/' . $this->image,
+            'queue' => $this->queue,
         ];
     }
 }
