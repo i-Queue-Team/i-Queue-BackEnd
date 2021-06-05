@@ -21,7 +21,7 @@ class CommerceResource extends JsonResource
             'name' => $this->name,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'image' => url('/') . Storage::url('') . 'commerces/' . $this->image,
+            'image' => $this->image ? url('/') . Storage::url('') . 'commerces/' . $this->image : null,
             'queue' => $this->queue,
         ];
     }
