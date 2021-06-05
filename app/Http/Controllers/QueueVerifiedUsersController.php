@@ -80,9 +80,10 @@ class QueueVerifiedUsersController extends Controller
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
-    public function entry_check($user_id)
+    public function entry_check($user_id,$queue_id)
     {
-        $user = QueueVerifiedUser::where('user_id', $user_id)->first();
+
+        $user = QueueVerifiedUser::all()->where('queue_id','=',$queue_id)->where('user_id', '=', $user_id)->first();
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
