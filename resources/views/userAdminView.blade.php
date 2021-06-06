@@ -146,12 +146,12 @@ $token = Session::get('variableName');
                             </div>
                             <div class="row">
                                 <div class="row">
-                                    <div class="input-field col s6" id="latitude_err">
+                                    <div class="input-field col s6" id="average_time_err">
                                         <i class="material-icons prefix">mode_edit</i>
-                                        <input id="time" class="timepicker" type="text">
-                                        <label for="time">¿Cuanto tarda un cliente de media?</label>
+                                        <input id="average_time" name="average_time" class="timepicker" type="text" value="{{$queue->average_time}}">
+                                        <label for="average_time">¿Cuanto tarda un cliente de media?</label>
                                     </div>
-                                    <div class="input-field col s6" id="longitude_err">
+                                    <div class="input-field col s6" >
                                         <button type="submit" class="waves-effect waves-light btn-large">
                                             <i class="material-icons right">update</i>Actualizar
                                         </button>
