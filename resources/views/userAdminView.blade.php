@@ -35,11 +35,16 @@
 </head>
 @php
 use App\Models\Commerce;
+use App\Models\CurrentQueue;
 use Illuminate\Support\Facades\Storage;
+//flag
 $empty_checker = false;
+//commerce object
 $commerce = Commerce::where('user_id', Auth::user()->id)->first();
 if (empty($commerce)) {
     $empty_checker = true;
+} else {
+    $queue = CurrentQueue::where('commerce_id', $commerce->id)->first();
 }
 $token = Session::get('variableName');
 @endphp
@@ -92,7 +97,71 @@ $token = Session::get('variableName');
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab Cola-->
-            <h2>Nombre Cola</h2>
+            <h2>Parametros de la Cola</h2>
+            <img src="images/yuna.jpg" alt="" class="circle responsive-img">
+            <div class="row">
+                <div class="col s12 m6 l6">
+                    <h3>{{ $commerce->name }}</h3>
+                    <hr>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aforo</th>
+                                <th>Personas en la tienda</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>20</td>
+                                <td>15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+
+                <div class="col s12 m6 l6">
+                    <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
+                    <hr>
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input-field col s6" id="fixed_capacity_err">
+                                        <i class="material-icons prefix">nature_people</i>
+                                        <input id="fixed_capacity" name="fixed_capacity" type="number" min="1" step="1"
+                                            value="{{ $queue->fixed_capacity }}" class="validate">
+                                        <label for="fixed_capacity">Aforo</label>
+                                    </div>
+                                    <div class="input-field col s6" id="password_verification_err">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="password_verification" name="password_verification" type="text"
+                                            value="{{ $queue->password_verification }}" class="validate">
+                                        <label for="password_verification">Token</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="input-field col s6" id="latitude_err">
+                                        <i class="material-icons prefix">mode_edit</i>
+                                        <input id="time" class="timepicker" type="text">
+                                        <label for="time">¿Cuanto tarda un cliente de media?</label>
+                                    </div>
+                                    <div class="input-field col s6" id="longitude_err">
+                                        <button type="submit" class="waves-effect waves-light btn-large">
+                                            <i class="material-icons right">update</i>Actualizar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab negocio-->
@@ -177,7 +246,7 @@ $token = Session::get('variableName');
                                 <p>{{ $commerce->name }}</p>
                             </div>
                             <div class="card-reveal">
-                                <span class="card-title grey-text text-darken-4">Card Title<i
+                                <span class="card-title grey-text text-darken-4">Actualizar "{{ $commerce->name }}"<i
                                         class="material-icons right">close</i></span>
                                 <div class="row">
                                     <form class="col s12">
@@ -229,7 +298,6 @@ $token = Session::get('variableName');
                                                 </div>
                                             </div>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -354,6 +422,19 @@ $token = Session::get('variableName');
 
 </script>
 <script>
+    jQuery(document).ready(function() {
+        jQuery('.timepicker').timepicker({
+            twelveHour: false,
+            format: "ii"
+        });
+    });
+    $('.timepicker').on('change', function() {
+        let receivedVal = $(this).val();
+        var timeParts = $(this).val().split(":");
+
+        $(this).val(Number(timeParts[0]) * 60 + Number(timeParts[1]));
+    });
+
     $(document).ready(function() {
         $("form").submit(function(event) {
             var formData = new FormData(this);
