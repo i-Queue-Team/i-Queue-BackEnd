@@ -97,71 +97,78 @@ $token = Session::get('variableName');
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab Cola-->
-            <h2>Parametros de la Cola</h2>
-            <img src="images/yuna.jpg" alt="" class="circle responsive-img">
-            <div class="row">
-                <div class="col s12 m6 l6">
-                    <h3>{{ $commerce->name }}</h3>
-                    <hr>
+            @if ($empty_checker)
+                <h2>Antes debes configurar tu negocio!</h2>
+            @else
+                <h2>Parametros de la Cola</h2>
+                <img src="images/yuna.jpg" alt="" class="circle responsive-img">
+                <div class="row">
+                    <div class="col s12 m6 l6">
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Aforo</th>
-                                <th>Personas en la tienda</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>20</td>
-                                <td>15</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="progress">
-                        <div class="indeterminate"></div>
+                        <h3>{{ $commerce->name }}</h3>
+                        <hr>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aforo</th>
+                                    <th>Personas en la tienda</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>20</td>
+                                    <td>15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="progress">
+                            <div class="indeterminate"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col s12 m6 l6">
-                    <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
-                    <hr>
-                    <div class="row">
-                        <form class="col s12">
-                            <div class="row">
+                    <div class="col s12 m6 l6">
+                        <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
+                        <hr>
+                        <div class="row">
+                            <form class="col s12">
                                 <div class="row">
-                                    <div class="input-field col s6" id="fixed_capacity_err">
-                                        <i class="material-icons prefix">nature_people</i>
-                                        <input id="fixed_capacity" name="fixed_capacity" type="number" min="1" step="1"
-                                            value="{{ $queue->fixed_capacity }}" class="validate">
-                                        <label for="fixed_capacity">Aforo</label>
-                                    </div>
-                                    <div class="input-field col s6" id="password_verification_err">
-                                        <i class="material-icons prefix">lock</i>
-                                        <input id="password_verification" name="password_verification" type="text"
-                                            value="{{ $queue->password_verification }}" class="validate">
-                                        <label for="password_verification">Token</label>
+                                    <div class="row">
+                                        <div class="input-field col s6" id="fixed_capacity_err">
+                                            <i class="material-icons prefix">nature_people</i>
+                                            <input id="fixed_capacity" name="fixed_capacity" type="number" min="1"
+                                                step="1" value="{{ $queue->fixed_capacity }}" class="validate">
+                                            <label for="fixed_capacity">Aforo</label>
+                                        </div>
+                                        <div class="input-field col s6" id="password_verification_err">
+                                            <i class="material-icons prefix">lock</i>
+                                            <input id="password_verification" name="password_verification" type="text"
+                                                value="{{ $queue->password_verification }}" class="validate">
+                                            <label for="password_verification">Token</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="row">
-                                    <div class="input-field col s6" id="average_time_err">
-                                        <i class="material-icons prefix">mode_edit</i>
-                                        <input id="average_time" name="average_time" class="timepicker" type="text" value="{{$queue->average_time}}">
-                                        <label for="average_time">¿Cuanto tarda un cliente de media?</label>
-                                    </div>
-                                    <div class="input-field col s6" >
-                                        <button type="submit" class="waves-effect waves-light btn-large">
-                                            <i class="material-icons right">update</i>Actualizar
-                                        </button>
+                                    <div class="row">
+                                        <div class="input-field col s6" id="average_time_err">
+                                            <i class="material-icons prefix">access_time</i>
+                                            <input id="average_time" name="average_time" class="timepicker" type="text"
+                                                value="{{ $queue->average_time }}">
+                                            <label for="average_time">¿Cuanto tarda un cliente (minutos)?</label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <button type="submit" class="waves-effect waves-light btn-large">
+                                                <i class="material-icons right">update</i>Actualizar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
         </div>
         <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab negocio-->
