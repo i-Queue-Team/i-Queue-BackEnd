@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Utils\Auth\AuthTools;
 use App\Utils\Responses\IQResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+use Session;
 class UserController extends Controller
 {
     public function show(User $user)
@@ -104,7 +104,9 @@ class UserController extends Controller
             return view('login')->with('errors', $validator->errors());
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-
+            $user   = Auth::user();
+            $token  = $user->createToken('token')->plainTextToken;
+            Session::put('variableName', $token);
             return redirect()->intended('dashboard');
         } else {
             $validator->getMessageBag()->add('email', 'credenciales erroneas');
@@ -113,7 +115,6 @@ class UserController extends Controller
     }
     public function registerWeb(Request $request)
     {
-
         $validator  =   Validator::make($request->all(), [
             "name"  =>  "required",
             "email"  =>  "required|email|unique:users",
@@ -123,19 +124,17 @@ class UserController extends Controller
         if ($validator->fails()) {
             return view('registro')->with('errors', $validator->errors());
         }
-
         $inputs = $request->all();
         $inputs["password"] = Hash::make($request->password);
         $inputs["role"] = $request->role ? $request->role : 'USER';
         $user   =   User::create($inputs);
-
-
         if (!is_null($user)) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                return redirect()->intended('dashboard');
+                return redirect()->intended('login');
+
             }else {
                 $validator->getMessageBag()->add('email', 'credenciales erroneas');
-                return view('login')->with('errors', $validator->errors());
+                return view('registro')->with('errors', $validator->errors());
             }
         }
     }

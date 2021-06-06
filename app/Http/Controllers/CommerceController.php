@@ -61,7 +61,6 @@ class CommerceController extends Controller
         if (!is_null($commerce)||!is_null($queue) ) {
             return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
         } else {
-
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

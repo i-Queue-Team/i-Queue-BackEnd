@@ -33,6 +33,16 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <title>Iqueue-ADMIN-PANEL</title>
 </head>
+@php
+use App\Models\Commerce;
+use Illuminate\Support\Facades\Storage;
+$empty_checker = false;
+$commerce = Commerce::where('user_id', Auth::user()->id)->first();
+if (empty($commerce)) {
+    $empty_checker = true;
+}
+$token = Session::get('variableName');
+@endphp
 
 <body class="container">
 
@@ -52,36 +62,197 @@
             <ul class="tabs tabs-transparent">
                 <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
                 <li class="tab col s3"><a href="#test2">Tu Cola</a></li>
-                <li class="tab col s3 "><a href="#test3">Configuracion</a></li>
+                <li class="tab col s3 "><a href="#test3">
+                        @if ($empty_checker)
+                            Configura tu negocio
+                        @else
+                            Configuración
+                        @endif
+                    </a></li>
             </ul>
         </div>
     </nav>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
 
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="#!">Configuración</a></li>
         <li class="divider"></li>
         <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
     </ul>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="#!">Configuración</a></li>
         <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
     </ul>
     <main class="center-align">
         <!--fin menu-->
-        <div id="test1" class="col s12">
+        <div id="test1" class="col s12 queue-animate-bottom">
             <!--tab datos-->
             <h2>Datos</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
         </div>
-        <div id="test2" class="col s12">
-            <!--tab datos-->
+        <div id="test2" class="col s12 queue-animate-bottom">
+            <!--tab Cola-->
             <h2>Nombre Cola</h2>
         </div>
-        <div id="test3" class="col s12">
-            <!--tab datos-->
-            <h2>Configuracion</h2>
+        <div id="test3" class="col s12 queue-animate-bottom">
+            <!--tab negocio-->
+            <h2>Configuración</h2>
+            <!--Si no tiene negocio-->
+            @if ($empty_checker)
+                <h5>No tienes negocio configurado! :(</h5>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6" id="name_err">
+                                <input id="name" name="name" type="text" class="validate">
+                                <label for="name">Nombre del negocio</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <div class="file-field input-field" id="image_err">
+                                    <div class="btn">
+                                        <span>Foto</span>
+                                        <input name="image" type="file">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="image" class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-field col s6" id="latitude_err">
+                                    <i class="material-icons prefix">map</i>
+                                    <input id="latitude" name="latitude" type="number" min="0" step="0.1"
+                                        class="validate">
+                                    <label for="latitud">Latitud</label>
+                                </div>
+                                <div class="input-field col s6" id="longitude_err">
+                                    <i class="material-icons prefix">map</i>
+                                    <input id="longitude" name="longitude" type="number" min="0" step="0.1"
+                                        class="validate">
+                                    <label for="longitud">Longitud</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">mode_edit</i>
+
+                                    <textarea id="info" class="materialize-textarea"></textarea>
+                                    <label for="info">Informacion del local</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <button type="submit" class="waves-effect waves-light btn-large">
+                                    <i class="material-icons right">add_circle</i>Crear Negocio
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            @else
+                <!--si tiene negocio-->
+                <div class="row">
+                    <!-- Pullup Card -->
+                    <div class="col s12 m7">
+                        <h3 class="header">Tu negocio</h3>
+                        <div class="card large">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img class="activator " style="width: 100%;
+                                height: 100%;
+                                object-fit:cover;"
+                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : null }}">
+                            </div>
+                            <div class="card-content">
+                                <span class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
+                                        class="material-icons right">edit</i></span>
+
+                                <p>{{ $commerce->name }}</p>
+                            </div>
+                            <div class="card-reveal">
+                                <span class="card-title grey-text text-darken-4">Card Title<i
+                                        class="material-icons right">close</i></span>
+                                <div class="row">
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s6" id="name_err">
+                                                <input id="name" name="name" type="text" class="validate">
+                                                <label for="name">Nombre del negocio</label>
+                                            </div>
+
+                                            <div class="input-field col s6">
+                                                <div class="file-field input-field" id="image_err">
+                                                    <div class="btn">
+                                                        <span>Foto</span>
+                                                        <input name="image" type="file">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input id="image" class="file-path validate" type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="input-field col s6" id="latitude_err">
+                                                    <i class="material-icons prefix">map</i>
+                                                    <input id="latitude" name="latitude" type="number" min="0"
+                                                        step="0.1" class="validate">
+                                                    <label for="latitud">Latitud</label>
+                                                </div>
+                                                <div class="input-field col s6" id="longitude_err">
+                                                    <i class="material-icons prefix">map</i>
+                                                    <input id="longitude" name="longitude" type="number" min="0"
+                                                        step="0.1" class="validate">
+                                                    <label for="longitud">Longitud</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="row">
+                                                <div class="input-field col s6" id="latitude_err">
+                                                    <i class="material-icons prefix">mode_edit</i>
+                                                    <textarea id="info" class="materialize-textarea"></textarea>
+                                                    <label for="info">Informacion del local</label>
+                                                </div>
+                                                <div class="input-field col s6" id="longitude_err">
+                                                    <button type="submit" class="waves-effect waves-light btn-large">
+                                                        <i class="material-icons right">update</i>Actualizar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m5">
+                        <br><br><br><br>
+                        <p class="caption">
+                            Aqui puedes retocar y realizar cambios oportunos a tu negocio!
+
+                            <img src="./images/edit_icon.png" style=" width: 50%;">
+                        </p>
+                    </div>
+                    <div class="col s12">
+                        <br>
+
+                    </div>
+                </div>
+
+
+            @endif
         </div>
+
 
 
         <!--fin login-->
@@ -105,10 +276,10 @@
 <script>
     $(document).ready(function() {
         $('.tabs').tabs();
-        $(".dropdown-trigger").dropdown({  constrainWidth: false });;
+        $(".dropdown-trigger").dropdown({
+            constrainWidth: false
+        });;
     });
-
-
     const image = new Image();
     image.src = './images/logo.svg';
     const plugin = {
@@ -179,6 +350,53 @@
             },
         }
 
+    });
+
+</script>
+<script>
+    $(document).ready(function() {
+        $("form").submit(function(event) {
+            var formData = new FormData(this);
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('/') }}/api/commerces",
+                headers: {
+                    'Authorization': 'Bearer {{ $token }}'
+                },
+                data: formData,
+                encode: true,
+                processData: false, // tell jQuery not to process the data
+                contentType: false,
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    var response = jQuery.parseJSON(xhr.responseText);
+                    console.log(response.errors);
+                    if (response.errors) {
+                        $.each(response.errors, function(index, value) {
+                            console.log(index + ": " + value);
+                            if (response.errors) {
+                                if (!$("#" + index).hasClass("invalid")) {
+                                    $("#" + index).addClass("invalid");
+                                    $("#" + index + "_err").append(
+                                        '<span class="helper-text" data-error="' +
+                                        value +
+                                        '" data-success="Pinta Bien!">' +
+                                        value + "</span>"
+                                    );
+                                }
+                            } else {
+                                $("#" + index).addClass("success");
+                            }
+                        });
+                    }
+                }
+            }).done(function(data) {
+                location.reload();
+                //console.log(data);
+            });
+            event.preventDefault();
+        });
     });
 
 </script>
