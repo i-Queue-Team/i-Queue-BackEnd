@@ -232,7 +232,7 @@ $token = Session::get('variableName');
                         <div class="row">
 
                             <div class="row">
-                                <div class="input-field col s12">
+                                <div class="input-field col s12"  id="info_err">
                                     <i class="material-icons prefix">mode_edit</i>
 
                                     <textarea id="info" name="info" class="materialize-textarea"></textarea>
