@@ -14,16 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
 use Illuminate\Validation\ValidationException;
 
+use function PHPUnit\Framework\isNull;
+
 class QueueVerifiedUsersController extends Controller
 {
 
     // store user in queue
     public function store(Request $request)
     {
-
-        if (QueueTools::already_in_queue($request->user_id,  auth()->id())) {
-            $request->request->add(['being_null_in_queue' => 'value']);
+        if( !is_null($request->queue_id) ){
+            if (QueueTools::already_in_queue( auth()->id(), $request->queue_id)) {
+                $request->request->add(['being_null_in_queue' => 'value']);
+            }
         }
+
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
