@@ -112,7 +112,7 @@ $token = Session::get('variableName');
                 <h2>Antes debes configurar tu negocio!</h2>
             @else
                 <h2>Parametros de la Cola</h2>
-                <img src="images/yuna.jpg" alt="" class="circle responsive-img">
+                <img src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}" alt="" class="circle " height="140px" width="140px" style="object-fit: cover;">
                 <div class="row">
                     <div class="col s12 m6 l6">
 
@@ -261,7 +261,7 @@ $token = Session::get('variableName');
                                 <img class="activator " style="width: 100%;
                                 height: 100%;
                                 object-fit:cover;"
-                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : null }}">
+                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}">
                             </div>
                             <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
