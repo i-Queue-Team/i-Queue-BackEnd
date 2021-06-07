@@ -59,13 +59,13 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        $user = QueueVerifiedUser::where('user_id',auth()->id())->get();
-        if ($user) {
+        $users = QueueVerifiedUser::where('user_id',auth()->id())->get();
+        if ($users) {
             // delete user from queue
-            return IQResponse::response(Response::HTTP_OK,new QueueVerifiedUsersResource($user));
+            return IQResponse::response(Response::HTTP_OK,QueueVerifiedUsersResource::collection($users));
         }
-        if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
+        if (!is_null($users)) {
+            return IQResponse::response(Response::HTTP_OK, QueueVerifiedUsersResource::collection($users));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
