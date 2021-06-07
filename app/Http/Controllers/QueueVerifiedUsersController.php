@@ -61,7 +61,7 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        $user = QueueVerifiedUser::where('user_id',auth()->id())->first();
+        $user = QueueVerifiedUser::where('user_id',auth()->id());
         if ($user) {
 
             // delete user from queue
