@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Commerce;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
