@@ -61,7 +61,18 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        return IQResponse::response(Response::HTTP_OK,QueueVerifiedUser::all()->where('user_id', '=', auth()->id()));
+        $user = QueueVerifiedUser::where('user_id',auth()->id())->first();
+        if ($user) {
+
+            // delete user from queue
+            return IQResponse::response(Response::HTTP_OK, $user);
+        }
+        if (!is_null($user)) {
+            return IQResponse::response(Response::HTTP_OK, $user);
+        } else {
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        }
+
 
     }
     public function destroy($queue_id)
