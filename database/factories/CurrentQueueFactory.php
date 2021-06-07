@@ -25,7 +25,7 @@ class CurrentQueueFactory extends Factory
         return [
             'fixed_capacity' => $this->faker->numberBetween(10,50),
             'average_time' => $this->faker->numberBetween(5,10),
-            'password_verification' => Str::random(20),
+            'password_verification' => "12345",
             'commerce_id' => 'overriden',
         ];
     }
