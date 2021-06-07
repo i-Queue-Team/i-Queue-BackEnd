@@ -47,7 +47,7 @@ $commerce = Commerce::where('user_id', Auth::user()->id)->first();
 if (empty($commerce)) {
     $empty_checker = true;
 } else {
-    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
+    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) AND`queue_id`='.$commerce->id.' GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
 
     foreach ($stats as $key => $result) {
         $week_data[$result->weekday] = $result->total;
