@@ -235,7 +235,7 @@ $token = Session::get('variableName');
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">mode_edit</i>
 
-                                    <textarea id="info" class="materialize-textarea"></textarea>
+                                    <textarea id="info" name="info" class="materialize-textarea"></textarea>
                                     <label for="info">Informacion del local</label>
                                 </div>
                             </div>
@@ -267,7 +267,7 @@ $token = Session::get('variableName');
                                 <span class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
                                         class="material-icons right">edit</i></span>
 
-                                <p>{{ $commerce->name }}</p>
+                                <p>{{ $commerce->info }}</p>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">Actualizar "{{ $commerce->name }}"<i

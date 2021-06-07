@@ -22,7 +22,7 @@ class Commerces extends Migration
             $table->unsignedInteger('user_id');
             $table->timestamps();
             $table->string('image',200)->nullable();
-            $table->text('info');
+            $table->text('info')->nullable();
             //more to add in future
         });
     }
