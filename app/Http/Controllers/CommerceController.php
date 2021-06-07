@@ -95,11 +95,13 @@ class CommerceController extends Controller
         //TODO IMPLEMENT
         return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
     }
-}
-
-
-/*
-        "image"     =>  "image|mimes:jpeg,png,jpg|max:2048"
+    public function update_image(Request $request,Commerce $commerce){
+        $validator  =   Validator::make($request->all(), [
+            "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
+        ]);
+        if ($validator->fails()) {
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+        }
 
         $image = $request->file('image');
         $removedImage = $commerce->image;
@@ -111,4 +113,11 @@ class CommerceController extends Controller
         if ($commerce->image != $removedImage){
             Storage::disk('public')->delete('commerces/' . $removedImage);
         }
+    }
+}
+
+
+
+/*
+
  */

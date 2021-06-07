@@ -25,7 +25,9 @@ use App\Http\Controllers\TestController;
 Route::middleware('auth:api')->group(function () {
     //All secure URL's
     //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
+    Route::post('commerces/{commerce}/image',[CommerceController::class,'update_image']);
     Route::apiResource('commerces',CommerceController::class);
+
 
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
