@@ -334,7 +334,7 @@ $token = Session::get('variableName');
         <br>
     </main>
 
-    @include('footerlayout')
+    @include('footerLayout')
 </body>
 
 

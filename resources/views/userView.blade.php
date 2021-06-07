@@ -90,7 +90,7 @@
 
     <!--fin menu-->
 
-    @include('footerlayout')
+    @include('footerLayout')
 
 
 

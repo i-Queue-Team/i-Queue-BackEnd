@@ -82,7 +82,7 @@
 
 
     <!-- Footer -->
-    @include('footerlayout')
+    @include('footerLayout')
     <!--fin footer-->
 
     <!--fin contenedor-->
