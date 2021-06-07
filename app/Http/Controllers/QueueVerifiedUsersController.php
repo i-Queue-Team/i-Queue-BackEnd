@@ -49,7 +49,7 @@ class QueueVerifiedUsersController extends Controller
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $queueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $queueVerifiedUser->save();
-        QueueTools::refresh_estimated_time($request->queue_id);
+        QueueTools::refresh_estimated_time(auth()->id());
         QueueTools::store_statistic($request);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);

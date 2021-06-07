@@ -36,16 +36,25 @@
 @php
 use App\Models\Commerce;
 use App\Models\CurrentQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
 //flag
 $empty_checker = false;
 //commerce object
+$week_data = [0, 0, 0, 0, 0, 0, 0, 0];
 $commerce = Commerce::where('user_id', Auth::user()->id)->first();
 if (empty($commerce)) {
     $empty_checker = true;
 } else {
+    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
+
+    foreach ($stats as $key => $result) {
+        $week_data[$result->weekday] = $result->total;
+    }
     $queue = CurrentQueue::where('commerce_id', $commerce->id)->first();
 }
+$week_data_array = json_encode($week_data);
 $token = Session::get('variableName');
 @endphp
 
@@ -94,6 +103,8 @@ $token = Session::get('variableName');
             <!--tab datos-->
             <h2>Datos</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
+            <br>
+            <a class="waves-effect waves-light btn-large" onClick="window.location.reload();"><i class="material-icons right">update</i>actualizar</a>
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab Cola-->
@@ -388,17 +399,18 @@ $token = Session::get('variableName');
 
         plugins: [plugin],
         data: {
-            labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+            labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
             datasets: [{
                 label: 'Personas en el local',
-                data: [12, 19, 3, 5, 2, 3],
+                data: {{ $week_data_array }},
                 backgroundColor: [
                     'rgba(255, 99, 132,  0.5)',
                     'rgba(54, 162, 235,  0.5)',
                     'rgba(255, 206, 86,  0.5)',
                     'rgba(75, 192, 192,  0.5)',
                     'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64,  0.5)'
+                    'rgba(255, 159, 64,  0.5)',
+                    'rgba(255, 500, 64,  0.5)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
