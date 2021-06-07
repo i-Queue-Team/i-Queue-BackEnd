@@ -106,22 +106,28 @@ $token = Session::get('variableName');
                     <div class="col s12 m6 l6">
 
                         <h3>{{ $commerce->name }}</h3>
-                        <hr>
 
-                        <table>
+
+                        <table class="centered">
                             <thead>
                                 <tr>
                                     <th>Aforo</th>
                                     <th>Personas en la tienda</th>
+                                    <th>Personas en la cola</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>20</td>
                                     <td>15</td>
+                                    <td>0</td>
                                 </tr>
                             </tbody>
                         </table>
+                        <br>
+                        <br>
+                        <br>
+
                         <div class="progress">
                             <div class="indeterminate"></div>
                         </div>
@@ -129,7 +135,7 @@ $token = Session::get('variableName');
 
                     <div class="col s12 m6 l6">
                         <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
-                        <hr>
+
                         <div class="row">
                             <form class="col s12">
                                 <div class="row">

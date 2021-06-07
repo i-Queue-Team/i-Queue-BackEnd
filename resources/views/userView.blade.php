@@ -87,14 +87,9 @@
         </div>
     </main>
 
-
     <!--fin menu-->
 
     @include('footerLayout')
-
-
-
-
 
 </body>
 
