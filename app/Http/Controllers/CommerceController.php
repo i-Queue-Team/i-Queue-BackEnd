@@ -66,8 +66,38 @@ class CommerceController extends Controller
         }
     }
     public function update(Commerce $commerce, Request $request){
-        //TODO IMPLEMENT
-        return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
+        $validator  =   Validator::make($request->all(), [
+            "name"      =>  "required|unique:commerces,name",
+            "latitude"  =>  "",
+            "longitude" =>  "",
+            "image"     =>  "image|mimes:jpeg,png,jpg|max:2048",
+        ]);
+        if ($validator->fails()) {
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+        }
+        DB::beginTransaction();
+        if(!is_null($request->name)){
+            $commerce->name = $request->name;
+        }
+        if(!is_null($request->latitude)){
+            $commerce->latitude = $request->latitude;
+        }
+        if(!is_null($request->longitude)){
+            $commerce->longitude = $request->longitude;
+        }
+        $image = $request->file('image');
+        $removedImage = $commerce->image;
+        $imageName = Str::random(20) . '.' . $image->extension();
+        if(!is_null($image)){
+            $commerce->image = $imageName;
+            Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
+        }
+        $commerce->save();
+        DB::commit();
+        if ($commerce->image != $removedImage){
+            Storage::disk('public')->delete('commerces/' . $removedImage);
+        }
+        return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
     }
 
     public function destroy(Commerce $commerce){
