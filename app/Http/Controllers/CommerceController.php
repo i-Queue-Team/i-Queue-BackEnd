@@ -38,6 +38,7 @@ class CommerceController extends Controller
             "name"      =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
             "longitude" =>  "required",
+            "info" =>  "required",
             "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
         if ($validator->fails()) {
