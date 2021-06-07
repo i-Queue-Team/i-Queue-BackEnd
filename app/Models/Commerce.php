@@ -32,6 +32,10 @@ public function getIdAttribute($value)
 
     ];
 
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
     public function queue()
     {
         return $this->hasOne(CurrentQueue::class,'commerce_id');
