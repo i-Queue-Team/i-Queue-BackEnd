@@ -15,10 +15,11 @@ class QueueVerifiedUsersResource extends JsonResource
      */
     public function toArray($request)
     {
+        //return parent::toArray($this);
         //$resource = $this->resource;
         //$commerce = $resource->queue;
         //$resource = new CommerceResource($commerce);
-        $commerce = new CommerceResource($this->queue->commerce);
+        //$commerce = new CommerceResource($this->queue->commerce);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -28,7 +29,7 @@ class QueueVerifiedUsersResource extends JsonResource
             'updated_at' => $this->updated_at,
             'queue_id' => $this->queue_id,
             'user_id' => $this->user_id,
-            'image' => $commerce->resource->image,
+            //'image' => $commerce->resource->image,
         ];
     }
 }
