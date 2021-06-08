@@ -87,7 +87,7 @@ class CommerceController extends Controller
         }
         $image = $request->file('image');
         $removedImage = $commerce->image;
-        if($request->has('image')&& !empty($request->file('image'))){
+        if($request->has('image')){
             $imageName = Str::random(20) . '.' . $image->extension();
             $commerce->image = $imageName;
             Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
@@ -106,25 +106,6 @@ class CommerceController extends Controller
         $commerce->delete();
         //TODO IMPLEMENT
         return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
-    }
-    public function update_image(Request $request,Commerce $commerce){
-        $validator  =   Validator::make($request->all(), [
-            "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
-        ]);
-        if ($validator->fails()) {
-            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
-        }
-
-        $image = $request->file('image');
-        $removedImage = $commerce->image;
-        if($request->has('image')){
-            $imageName = Str::random(20) . '.' . $image->extension();
-            $commerce->image = $imageName;
-            Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
-        }
-        if ($commerce->image != $removedImage){
-            Storage::disk('public')->delete('commerces/' . $removedImage);
-        }
     }
 }
 
