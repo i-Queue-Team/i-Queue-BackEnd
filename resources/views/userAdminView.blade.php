@@ -43,11 +43,13 @@ use Illuminate\Support\Facades\Storage;
 $empty_checker = false;
 //commerce object
 $week_data = [0, 0, 0, 0, 0, 0, 0, 0];
+$commerce_id = 0;
 $commerce = Commerce::where('user_id', Auth::user()->id)->first();
 if (empty($commerce)) {
     $empty_checker = true;
 } else {
-    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) AND`queue_id`='.$commerce->id.' GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
+    $commerce_id = $commerce->id;
+    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) AND`queue_id`=' . $commerce->id . ' GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
 
     foreach ($stats as $key => $result) {
         $week_data[$result->weekday] = $result->total;
@@ -75,8 +77,8 @@ $token = Session::get('variableName');
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
-                <li class="tab col s3"><a href="#test2">Tu Cola</a></li>
-                <li class="tab col s3 "><a href="#test3">
+                <li class="tab col s3"><a href="#TuCola">Tu Cola</a></li>
+                <li class="tab col s3 "><a href="#configuracion">
                         @if ($empty_checker)
                             Configura tu negocio
                         @else
@@ -104,15 +106,17 @@ $token = Session::get('variableName');
             <h2>Datos</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
             <br>
-            <a class="waves-effect waves-light btn-large" onClick="window.location.reload();"><i class="material-icons right">update</i>actualizar</a>
+            <a class="waves-effect waves-light btn-large" onClick="window.location.reload();"><i
+                    class="material-icons right">update</i>actualizar</a>
         </div>
-        <div id="test2" class="col s12 queue-animate-bottom">
+        <div id="TuCola" class="col s12 queue-animate-bottom">
             <!--tab Cola-->
             @if ($empty_checker)
                 <h2>Antes debes configurar tu negocio!</h2>
             @else
                 <h2>Parametros de la Cola</h2>
-                <img src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}" alt="" class="circle " height="140px" width="140px" style="object-fit: cover;">
+                <img src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : 'https://i.imgur.com/n6bF2Vx.jpeg' }}"
+                    alt="" class="circle " height="140px" width="140px" style="object-fit: cover;">
                 <div class="row">
                     <div class="col s12 m6 l6">
 
@@ -187,14 +191,14 @@ $token = Session::get('variableName');
             @endif
 
         </div>
-        <div id="test3" class="col s12 queue-animate-bottom">
+        <div id="configuracion" class="col s12 queue-animate-bottom">
             <!--tab negocio-->
             <h2>Configuración</h2>
             <!--Si no tiene negocio-->
             @if ($empty_checker)
                 <h5>No tienes negocio configurado! :(</h5>
                 <div class="row">
-                    <form class="col s12">
+                    <form class="col s12" id="commerce_create">
                         <div class="row">
                             <div class="input-field col s6" id="name_err">
                                 <input id="name" name="name" type="text" class="validate">
@@ -232,7 +236,7 @@ $token = Session::get('variableName');
                         <div class="row">
 
                             <div class="row">
-                                <div class="input-field col s12"  id="info_err">
+                                <div class="input-field col s12" id="info_err">
                                     <i class="material-icons prefix">mode_edit</i>
 
                                     <textarea id="info" name="info" class="materialize-textarea"></textarea>
@@ -261,7 +265,7 @@ $token = Session::get('variableName');
                                 <img class="activator " style="width: 100%;
                                 height: 100%;
                                 object-fit:cover;"
-                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}">
+                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : 'https://i.imgur.com/n6bF2Vx.jpeg' }}">
                             </div>
                             <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
@@ -273,10 +277,11 @@ $token = Session::get('variableName');
                                 <span class="card-title grey-text text-darken-4">Actualizar "{{ $commerce->name }}"<i
                                         class="material-icons right">close</i></span>
                                 <div class="row">
-                                    <form class="col s12" id="#commerce_update">
+                                    <form class="col s12" id="commerce_update">
                                         <div class="row">
                                             <div class="input-field col s6" id="name_err">
                                                 <input id="name" name="name" type="text" class="validate">
+                                                <input name="_method" type="hidden" value="PUT">
                                                 <label for="name">Nombre del negocio</label>
                                             </div>
 
@@ -319,6 +324,7 @@ $token = Session::get('variableName');
                                                     <button type="submit" class="waves-effect waves-light btn-large">
                                                         <i class="material-icons right">update</i>Actualizar
                                                     </button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -461,8 +467,9 @@ $token = Session::get('variableName');
     });
 
     $(document).ready(function() {
-        $("form").submit(function(event) {
+        $("#commerce_create").submit(function(event) {
             var formData = new FormData(this);
+
             console.log(formData);
             $.ajax({
                 type: "POST",
@@ -505,10 +512,11 @@ $token = Session::get('variableName');
         });
         $("#commerce_update").submit(function(event) {
             var formData = new FormData(this);
+            formData.append('_method', 'PUT');
             console.log(formData);
             $.ajax({
                 type: "POST",
-                url: "{{ URL::to('/') }}/api/commerces",
+                url: "{{ URL::to('/') }}/api/commerces/{{ $commerce_id }}",
                 headers: {
                     'Authorization': 'Bearer {{ $token }}'
                 },
@@ -540,12 +548,25 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
+
+                var url = window.location;
+                var urlString= encodeURIComponent(url);
+                console.log(urlString);
+                if(urlString.includes("configuracion")){
+                    document.location = url;
+
+                }else{
+                    document.location = url+"#configuracion";
+                }
                 location.reload();
+
+
                 //console.log(data);
             });
             event.preventDefault();
         });
     });
+
 
 </script>
 

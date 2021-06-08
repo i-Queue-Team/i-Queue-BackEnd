@@ -76,18 +76,18 @@ class CommerceController extends Controller
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
         }
         DB::beginTransaction();
-        if($request->has('name')){
+        if($request->has('name')&& !empty($request->input('name'))){
             $commerce->name = $request->input('name');
         }
-        if($request->has('latitude')){
+        if($request->has('latitude')&& !empty($request->input('latitude'))){
             $commerce->latitude = $request->input('latitude');
         }
-        if($request->has('longitude')){
+        if($request->has('longitude')&& !empty($request->input('longitude'))){
             $commerce->longitude = $request->input('longitude');
         }
         $image = $request->file('image');
         $removedImage = $commerce->image;
-        if($request->has('image')){
+        if($request->has('image')&& !empty($request->file('image'))){
             $imageName = Str::random(20) . '.' . $image->extension();
             $commerce->image = $imageName;
             Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
