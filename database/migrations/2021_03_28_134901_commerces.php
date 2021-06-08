@@ -19,7 +19,7 @@ class Commerces extends Migration
             $table->double('latitude');
             $table->double('longitude');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->unique();
             $table->timestamps();
             $table->string('image',200)->nullable();
             $table->text('info')->nullable();

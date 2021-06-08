@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QueueVerifiedUsersResource;
 use App\Models\Statistic;
 use App\Models\Currentqueue;
 use Illuminate\Http\Request;
@@ -12,9 +13,6 @@ use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
-use Illuminate\Validation\ValidationException;
-
-use function PHPUnit\Framework\isNull;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -61,14 +59,13 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        $user = QueueVerifiedUser::where('user_id',auth()->id())->get();
-        if ($user) {
-
+        $users = QueueVerifiedUser::where('user_id',auth()->id())->get();
+        if ($users) {
             // delete user from queue
-            return IQResponse::response(Response::HTTP_OK, $user);
+            return IQResponse::response(Response::HTTP_OK,QueueVerifiedUsersResource::collection($users));
         }
-        if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK, $user);
+        if (!is_null($users)) {
+            return IQResponse::response(Response::HTTP_OK, QueueVerifiedUsersResource::collection($users));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
@@ -89,7 +86,7 @@ class QueueVerifiedUsersController extends Controller
             $user->delete();
         }
         if (!is_null($user)) {
-            return IQResponse::emptyResponse(Response::HTTP_OK, $user);
+            return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
@@ -107,7 +104,7 @@ class QueueVerifiedUsersController extends Controller
                 QueueTools::refresh_position($queue_id, $position);
                 QueueTools::refresh_estimated_time($queue_id);
                 $user->delete();
-                return IQResponse::response(Response::HTTP_OK, $user);
+                return IQResponse::response(Response::HTTP_OK,new QueueVerifiedUsersResource($user));
             } else {
                 return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
             }
@@ -125,10 +122,10 @@ class QueueVerifiedUsersController extends Controller
         if ($user) {
 
             // delete user from queue
-            return IQResponse::response(Response::HTTP_OK, $user);
+            return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
         }
         if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK, $user);
+            return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
