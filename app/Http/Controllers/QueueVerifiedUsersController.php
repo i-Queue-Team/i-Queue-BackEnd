@@ -48,6 +48,7 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $queueVerifiedUser->save();
         QueueTools::refresh_estimated_time($request->queue_id);
+        QueueTools::add_user_to_queue($request->queue_id);
         $request->request->add(['user_id' => auth()->id()]);
 
         QueueTools::store_statistic($request);

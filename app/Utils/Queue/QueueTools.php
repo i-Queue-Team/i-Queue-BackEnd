@@ -36,6 +36,22 @@ class QueueTools
                 ['position' => DB::raw('position-1')],
             );
     }
+    //function to add user to capacity
+    public static function add_user_to_queue(int $queue_id)
+    {
+        CurrentQueue::where('id', $queue_id)
+            ->update(
+                ['current_capacity' => DB::raw('current_capacity+1')],
+            );
+    }
+    //function to remove user to queue
+    public static function remove_user_to_queue(int $queue_id)
+    {
+        CurrentQueue::where('id', $queue_id)
+            ->update(
+                ['current_capacity' => DB::raw('current_capacity-1')],
+            );
+    }
     //function to give the corresponding position to users depending on where they are in the queue
     public static function refresh_estimated_time(int $queue_id)
     {
@@ -55,9 +71,9 @@ class QueueTools
     {
         return QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->count() + 1;
     }
-    public static function already_in_queue($user_id,$queue_id){
-        $isInQueue = DB::select( DB::raw("select * from queue_verified_users where user_id = $user_id and queue_id = $queue_id"));
+    public static function already_in_queue($user_id, $queue_id)
+    {
+        $isInQueue = DB::select(DB::raw("select * from queue_verified_users where user_id = $user_id and queue_id = $queue_id"));
         return empty($isInQueue);
-
     }
 }
