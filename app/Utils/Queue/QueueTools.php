@@ -40,7 +40,6 @@ class QueueTools
     public static function refresh_estimated_time(int $queue_id)
     {
         $queue = CurrentQueue::find($queue_id);
-        return $queue;
         $average_time = $queue->average_time;
         $users = QueueVerifiedUser::all()->where('queue_id', $queue_id);
         foreach ($users as $user) {
