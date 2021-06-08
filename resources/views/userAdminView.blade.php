@@ -66,8 +66,7 @@ $token = Session::get('variableName');
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">I-queue
-                    Admin-Panel</span></a>
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">AdminPanel</span></a>
             <ul class="right hide-on-med-and-down">
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
                             class="material-icons right">account_box</i></a></li>
@@ -133,9 +132,9 @@ $token = Session::get('variableName');
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>20</td>
-                                    <td>15</td>
-                                    <td>0</td>
+                                    <td><span id="fixed_capacity"></span></td>
+                                    <td><span id="current_capacity"></span></td>
+                                    <td><span id="current_queue"></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -189,8 +188,8 @@ $token = Session::get('variableName');
                     </div>
                 </div>
             @endif
-
         </div>
+
         <div id="configuracion" class="col s12 queue-animate-bottom">
             <!--tab negocio-->
             <h2>Configuración</h2>
@@ -570,19 +569,41 @@ $token = Session::get('variableName');
             event.preventDefault();
         });
 
+
+        getQueueData();
+        var intervalId = window.setInterval(function() {
+            getQueueData();
+        }, 5000);
+
+    });
+
+    function getQueueData() {
         $.ajax({
             url: "{{ URL::to('/') }}/api/current-queues/{{ $commerce_id }}",
             headers: {
-                    'Authorization': 'Bearer {{ $token }}'
-                },
-            success: function(respuesta) {
-                console.log(respuesta);
+                'Authorization': 'Bearer {{ $token }}'
+            },
+            success: function(data) {
+                console.log(data);
+
+                $('#fixed_capacity').html(data.data.fixed_capacity);
+                $('#current_capacity').html(data.data.current_capacity);
+                $('#current_queue').html(getCurrentQueueValue(data.data.fixed_capacity,data.data.current_capacity));
+                M.toast({html: 'Datos actualizados!'})
             },
             error: function() {
-                console.log("No se ha podido obtener la información");
+                console.log("error");
             }
         });
-    });
+    }
+
+    function getCurrentQueueValue(fixed_capacity,current_capacity){
+        if(current_capacity<fixed_capacity){
+            return 0;
+        }else{
+            return current_capacity -fixed_capacity;
+        }
+    }
 
 </script>
 
