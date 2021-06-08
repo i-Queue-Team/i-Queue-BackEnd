@@ -20,6 +20,10 @@ class QueueVerifiedUser extends Model{
         return $this->belongsTo(CurrentQueue::class,'queue_id','id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
     protected $casts = [
         'queue_id' => 'int',
     ];

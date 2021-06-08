@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Vinkla\Hashids\Facades\Hashids;
 
 class CurrentQueue extends Model{
 
@@ -39,8 +38,11 @@ class CurrentQueue extends Model{
 
 
 
+    public function verifiedUsers(){
+        return $this->hasMany(QueueVerifiedUser::class,'queue_id');
+    }
     //commerce from queue
-    public function comerce(){
-        return $this->belongsTo(Commerce::class,'commerce_id','id');
+    public function commerce(){
+        return $this->belongsTo(Commerce::class,'commerce_id');
     }
 }
