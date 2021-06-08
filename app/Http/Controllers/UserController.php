@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommerceResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -144,5 +145,19 @@ class UserController extends Controller
         Auth::logout();
         // redirect to homepage
         return redirect('/');
+    }
+    public function commerce(){
+        $user = AuthTools::getAuthUser();
+        if ($user->role != "ADMIN"){
+            return IQResponse::response(Response::HTTP_NOT_FOUND);
+        }else{
+            $commerce = $user->commerce;
+            //Is admin user
+            if($commerce){
+                return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
+            }else{
+                return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+            }
+        }
     }
 }
