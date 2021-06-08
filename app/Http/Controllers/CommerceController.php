@@ -87,7 +87,7 @@ class CommerceController extends Controller
         }
         $image = $request->file('image');
         $removedImage = $commerce->image;
-        if($request->has('image')){
+        if($request->has('image')&& !empty($request->file('image'))){
             $imageName = Str::random(20) . '.' . $image->extension();
             $commerce->image = $imageName;
             Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
