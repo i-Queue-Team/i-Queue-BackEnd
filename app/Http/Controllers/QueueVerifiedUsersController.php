@@ -48,6 +48,8 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $queueVerifiedUser->save();
         QueueTools::refresh_estimated_time(auth()->id());
+        $request->request->add(['user_id' => auth()->id()]);
+
         QueueTools::store_statistic($request);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);

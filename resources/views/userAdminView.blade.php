@@ -280,7 +280,7 @@ $token = Session::get('variableName');
                                     <form class="col s12" id="commerce_update">
                                         <div class="row">
                                             <div class="input-field col s6" id="name_err">
-                                                <input id="name" name="name" type="text" class="validate" >
+                                                <input id="name" name="name" type="text" class="validate">
                                                 <input name="_method" type="hidden" value="PUT">
                                                 <label for="name">Nombre del negocio</label>
                                             </div>
@@ -289,10 +289,11 @@ $token = Session::get('variableName');
                                                 <div class="file-field input-field" id="image_err">
                                                     <div class="btn">
                                                         <span>Foto</span>
-                                                        <input name="image" type="file" >
+                                                        <input name="image" type="file">
                                                     </div>
                                                     <div class="file-path-wrapper">
-                                                        <input id="image" class="file-path validate" type="text" value="{{ $commerce->image }}">
+                                                        <input id="image" class="file-path validate" type="text"
+                                                            value="{{ $commerce->image }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,13 +303,15 @@ $token = Session::get('variableName');
                                                 <div class="input-field col s6" id="latitude_err">
                                                     <i class="material-icons prefix">map</i>
                                                     <input id="latitude" name="latitude" type="number" min="0"
-                                                        step="0.1" class="validate" value="{{ $commerce->latitude }}">
+                                                        step="0.1" class="validate"
+                                                        value="{{ $commerce->latitude }}">
                                                     <label for="latitud">Latitud</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
                                                     <i class="material-icons prefix">map</i>
                                                     <input id="longitude" name="longitude" type="number" min="0"
-                                                        step="0.1" class="validate" value="{{ $commerce->longitude }}">
+                                                        step="0.1" class="validate"
+                                                        value="{{ $commerce->longitude }}">
                                                     <label for="longitud">Longitud</label>
                                                 </div>
                                             </div>
@@ -317,7 +320,8 @@ $token = Session::get('variableName');
                                             <div class="row">
                                                 <div class="input-field col s6" id="latitude_err">
                                                     <i class="material-icons prefix">mode_edit</i>
-                                                    <textarea id="info" name="info"  class="materialize-textarea">{{ $commerce->info }}</textarea>
+                                                    <textarea id="info" name="info"
+                                                        class="materialize-textarea">{{ $commerce->info }}</textarea>
                                                     <label for="info">Informacion del local</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
@@ -550,13 +554,13 @@ $token = Session::get('variableName');
             }).done(function(data) {
 
                 var url = window.location;
-                var urlString= encodeURIComponent(url);
+                var urlString = encodeURIComponent(url);
                 console.log(urlString);
-                if(urlString.includes("configuracion")){
+                if (urlString.includes("configuracion")) {
                     document.location = url;
 
-                }else{
-                    document.location = url+"#configuracion";
+                } else {
+                    document.location = url + "#configuracion";
                 }
                 location.reload();
 
@@ -565,8 +569,20 @@ $token = Session::get('variableName');
             });
             event.preventDefault();
         });
-    });
 
+        $.ajax({
+            url: "{{ URL::to('/') }}/api/current-queues/{{ $commerce_id }}",
+            headers: {
+                    'Authorization': 'Bearer {{ $token }}'
+                },
+            success: function(respuesta) {
+                console.log(respuesta);
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+        });
+    });
 
 </script>
 
