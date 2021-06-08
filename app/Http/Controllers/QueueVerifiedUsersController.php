@@ -14,16 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
 use Illuminate\Validation\ValidationException;
 
+use function PHPUnit\Framework\isNull;
+
 class QueueVerifiedUsersController extends Controller
 {
 
     // store user in queue
     public function store(Request $request)
     {
-
-        if (QueueTools::already_in_queue($request->user_id,  auth()->id())) {
-            $request->request->add(['being_null_in_queue' => 'value']);
+        if( !is_null($request->queue_id) ){
+            if (QueueTools::already_in_queue( auth()->id(), $request->queue_id)) {
+                $request->request->add(['being_null_in_queue' => 'value']);
+            }
         }
+
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
@@ -45,7 +49,7 @@ class QueueVerifiedUsersController extends Controller
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $queueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $queueVerifiedUser->save();
-        QueueTools::refresh_estimated_time($request->queue_id);
+        QueueTools::refresh_estimated_time(auth()->id());
         QueueTools::store_statistic($request);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
@@ -57,7 +61,18 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        return IQResponse::response(Response::HTTP_OK,QueueVerifiedUser::all()->where('user_id', '=', auth()->id()));
+        $user = QueueVerifiedUser::where('user_id',auth()->id())->get();
+        if ($user) {
+
+            // delete user from queue
+            return IQResponse::response(Response::HTTP_OK, $user);
+        }
+        if (!is_null($user)) {
+            return IQResponse::response(Response::HTTP_OK, $user);
+        } else {
+            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        }
+
 
     }
     public function destroy($queue_id)

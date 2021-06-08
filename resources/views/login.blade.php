@@ -100,7 +100,7 @@
     </main>
     <!--fin login-->
     <br>
-    @include('footerlayout')
+    @include('footerLayout')
 
 </body>
 

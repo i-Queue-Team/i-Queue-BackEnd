@@ -36,16 +36,25 @@
 @php
 use App\Models\Commerce;
 use App\Models\CurrentQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
 //flag
 $empty_checker = false;
 //commerce object
+$week_data = [0, 0, 0, 0, 0, 0, 0, 0];
 $commerce = Commerce::where('user_id', Auth::user()->id)->first();
 if (empty($commerce)) {
     $empty_checker = true;
 } else {
+    $stats = DB::select(DB::raw('SELECT count(*) as total,WEEKDAY(`created_at`) as weekday FROM statistics WHERE (YEAR(`created_at`) = YEAR(NOW())) AND`queue_id`='.$commerce->id.' GROUP BY WEEKDAY(`created_at`) ORDER BY WEEKDAY(`created_at`)'));
+
+    foreach ($stats as $key => $result) {
+        $week_data[$result->weekday] = $result->total;
+    }
     $queue = CurrentQueue::where('commerce_id', $commerce->id)->first();
 }
+$week_data_array = json_encode($week_data);
 $token = Session::get('variableName');
 @endphp
 
@@ -94,6 +103,8 @@ $token = Session::get('variableName');
             <!--tab datos-->
             <h2>Datos</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
+            <br>
+            <a class="waves-effect waves-light btn-large" onClick="window.location.reload();"><i class="material-icons right">update</i>actualizar</a>
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab Cola-->
@@ -101,27 +112,33 @@ $token = Session::get('variableName');
                 <h2>Antes debes configurar tu negocio!</h2>
             @else
                 <h2>Parametros de la Cola</h2>
-                <img src="images/yuna.jpg" alt="" class="circle responsive-img">
+                <img src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}" alt="" class="circle " height="140px" width="140px" style="object-fit: cover;">
                 <div class="row">
                     <div class="col s12 m6 l6">
 
                         <h3>{{ $commerce->name }}</h3>
-                        <hr>
 
-                        <table>
+
+                        <table class="centered">
                             <thead>
                                 <tr>
                                     <th>Aforo</th>
                                     <th>Personas en la tienda</th>
+                                    <th>Personas en la cola</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>20</td>
                                     <td>15</td>
+                                    <td>0</td>
                                 </tr>
                             </tbody>
                         </table>
+                        <br>
+                        <br>
+                        <br>
+
                         <div class="progress">
                             <div class="indeterminate"></div>
                         </div>
@@ -129,7 +146,7 @@ $token = Session::get('variableName');
 
                     <div class="col s12 m6 l6">
                         <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
-                        <hr>
+
                         <div class="row">
                             <form class="col s12">
                                 <div class="row">
@@ -215,10 +232,10 @@ $token = Session::get('variableName');
                         <div class="row">
 
                             <div class="row">
-                                <div class="input-field col s12">
+                                <div class="input-field col s12"  id="info_err">
                                     <i class="material-icons prefix">mode_edit</i>
 
-                                    <textarea id="info" class="materialize-textarea"></textarea>
+                                    <textarea id="info" name="info" class="materialize-textarea"></textarea>
                                     <label for="info">Informacion del local</label>
                                 </div>
                             </div>
@@ -244,13 +261,13 @@ $token = Session::get('variableName');
                                 <img class="activator " style="width: 100%;
                                 height: 100%;
                                 object-fit:cover;"
-                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : null }}">
+                                    src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : "https://i.imgur.com/n6bF2Vx.jpeg" }}">
                             </div>
                             <div class="card-content">
                                 <span class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
                                         class="material-icons right">edit</i></span>
 
-                                <p>{{ $commerce->name }}</p>
+                                <p>{{ $commerce->info }}</p>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">Actualizar "{{ $commerce->name }}"<i
@@ -334,7 +351,7 @@ $token = Session::get('variableName');
         <br>
     </main>
 
-    @include('footerlayout')
+    @include('footerLayout')
 </body>
 
 
@@ -382,17 +399,18 @@ $token = Session::get('variableName');
 
         plugins: [plugin],
         data: {
-            labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+            labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
             datasets: [{
                 label: 'Personas en el local',
-                data: [12, 19, 3, 5, 2, 3],
+                data: {{ $week_data_array }},
                 backgroundColor: [
                     'rgba(255, 99, 132,  0.5)',
                     'rgba(54, 162, 235,  0.5)',
                     'rgba(255, 206, 86,  0.5)',
                     'rgba(75, 192, 192,  0.5)',
                     'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64,  0.5)'
+                    'rgba(255, 159, 64,  0.5)',
+                    'rgba(255, 500, 64,  0.5)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',

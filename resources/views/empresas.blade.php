@@ -153,7 +153,7 @@
             <br>
     </main>
     <!--fin footer-->
-    @include('footerlayout')
+    @include('footerLayout')
 
     <!--fin contenedor-->
 </body>

@@ -18,7 +18,7 @@ class Currentqueues extends Migration
             $table->increments('id');
             $table->integer('fixed_capacity')->default(30);
             $table->integer('current_capacity')->default(0);;
-            $table->integer('average_time')->default(0);
+            $table->integer('average_time')->default(5);
             $table->string('password_verification')->default(Str::random(20));
             $table->timestamps();
 

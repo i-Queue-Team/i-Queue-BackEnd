@@ -38,6 +38,7 @@ class CommerceController extends Controller
             "name"      =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
             "longitude" =>  "required",
+            "info" =>  "required",
             "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
         if ($validator->fails()) {
@@ -69,6 +70,7 @@ class CommerceController extends Controller
             "name"      =>  "unique:commerces,name",
             "latitude"  =>  "",
             "longitude" =>  "",
+            "image"     =>  "image|mimes:jpeg,png,jpg|max:2048",
         ]);
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
@@ -82,6 +84,16 @@ class CommerceController extends Controller
         }
         if($request->has('longitude')){
             $commerce->longitude = $request->input('longitude');
+        }
+        $image = $request->file('image');
+        $removedImage = $commerce->image;
+        if($request->has('image')){
+            $imageName = Str::random(20) . '.' . $image->extension();
+            $commerce->image = $imageName;
+            Storage::disk('public')->put('commerces/' . $imageName,file_get_contents($request->image));
+        }
+        if ($commerce->image != $removedImage){
+            Storage::disk('public')->delete('commerces/' . $removedImage);
         }
 
         $commerce->save();
@@ -117,7 +129,8 @@ class CommerceController extends Controller
 }
 
 
-
 /*
+
+
 
  */
