@@ -273,7 +273,7 @@ $token = Session::get('variableName');
                                 <span class="card-title grey-text text-darken-4">Actualizar "{{ $commerce->name }}"<i
                                         class="material-icons right">close</i></span>
                                 <div class="row">
-                                    <form class="col s12">
+                                    <form class="col s12" id="#commerce_update">
                                         <div class="row">
                                             <div class="input-field col s6" id="name_err">
                                                 <input id="name" name="name" type="text" class="validate">
@@ -462,6 +462,48 @@ $token = Session::get('variableName');
 
     $(document).ready(function() {
         $("form").submit(function(event) {
+            var formData = new FormData(this);
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('/') }}/api/commerces",
+                headers: {
+                    'Authorization': 'Bearer {{ $token }}'
+                },
+                data: formData,
+                encode: true,
+                processData: false, // tell jQuery not to process the data
+                contentType: false,
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    var response = jQuery.parseJSON(xhr.responseText);
+                    console.log(response.errors);
+                    if (response.errors) {
+                        $.each(response.errors, function(index, value) {
+                            console.log(index + ": " + value);
+                            if (response.errors) {
+                                if (!$("#" + index).hasClass("invalid")) {
+                                    $("#" + index).addClass("invalid");
+                                    $("#" + index + "_err").append(
+                                        '<span class="helper-text" data-error="' +
+                                        value +
+                                        '" data-success="Pinta Bien!">' +
+                                        value + "</span>"
+                                    );
+                                }
+                            } else {
+                                $("#" + index).addClass("success");
+                            }
+                        });
+                    }
+                }
+            }).done(function(data) {
+                location.reload();
+                //console.log(data);
+            });
+            event.preventDefault();
+        });
+        $("#commerce_update").submit(function(event) {
             var formData = new FormData(this);
             console.log(formData);
             $.ajax({
