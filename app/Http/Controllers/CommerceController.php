@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CommerceResource;
 use App\Models\Commerce;
 use Illuminate\Support\Str;
 use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
+use App\Utils\Auth\AuthTools;
 use Illuminate\Support\Facades\DB;
 use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\CommerceResource;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,6 +35,13 @@ class CommerceController extends Controller
     // store commerce
     public function store(Request $request)
     {
+        $user = AuthTools::getAuthUser();
+        if(
+            $user->role != "ADMIN" ||
+            !is_null($user->commerce)
+        ){
+            return IQResponse::emptyResponse(Response::HTTP_FORBIDDEN);
+        }
         $validator  =   Validator::make($request->all(), [
             "name"      =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
