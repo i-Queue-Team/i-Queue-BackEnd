@@ -85,6 +85,7 @@ class QueueVerifiedUsersController extends Controller
                     $queue->delete();
                     QueueTools::refresh_position($queue_id, $queue->position);
                     QueueTools::refresh_estimated_time($queue_id);
+                    QueueTools::remove_user_to_queue($queue_id);
                     return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($queue));
                 }
             }
