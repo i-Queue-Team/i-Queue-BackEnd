@@ -35,13 +35,6 @@ class CommerceController extends Controller
     // store commerce
     public function store(Request $request)
     {
-        $user = AuthTools::getAuthUser();
-        if(
-            $user->role != "ADMIN" ||
-            !is_null($user->commerce)
-        ){
-            return IQResponse::emptyResponse(Response::HTTP_FORBIDDEN);
-        }
         $validator  =   Validator::make($request->all(), [
             "name"      =>  "required|unique:commerces,name",
             "latitude"  =>  "required",
@@ -51,6 +44,14 @@ class CommerceController extends Controller
         ]);
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+        }
+
+        $user = AuthTools::getAuthUser();
+        if($user->role != "ADMIN"){
+            return IQResponse::emptyResponse(Response::HTTP_FORBIDDEN);
+        }
+        if ($user->commerce){
+            return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
 
         $inputs = $request->all();
