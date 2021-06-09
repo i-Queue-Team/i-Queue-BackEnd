@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\CommerceController;
 use App\Http\Controllers\CommerceQueueUserController;
 
@@ -53,7 +53,7 @@ Route::get('/login', function () {
 Route::get("logout", [UserController::class, 'logout']);
 Route::post("register", [UserController::class, 'registerWeb']);
 Route::post("login", [UserController::class, 'authenticateWeb']);
-
+Route::get('forgot-password/{id?}', [ForgotPasswordController::class, 'forgotPassword']);
 Route::group( ['middleware' => 'auth' ], function()
 {
     Route::get('/dashboard', function () {

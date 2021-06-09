@@ -152,6 +152,7 @@ $token = Session::get('variableName');
 
                         <div class="row">
                             <form class="col s12">
+                                @csrf
                                 <div class="row">
                                     <div class="row">
                                         <div class="input-field col s6" id="fixed_capacity_err">

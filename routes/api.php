@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CurrentQueueController;
 use App\Http\Controllers\QueueVerifiedUsersController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +58,8 @@ Route::middleware('auth:api')->group(function () {
 //AUTH login/register
 Route::post("login", [UserController::class, 'login'])->name('login');
 Route::post("register", [UserController::class, 'register']);
+
+Route::post('forgot-password', [ForgotPasswordController::class, 'generatePetition']);
+Route::post('forgot-password-change-password', [ForgotPasswordController::class, 'changePassword']);
 //Route::apiResource("testing",TestController::class);
 
