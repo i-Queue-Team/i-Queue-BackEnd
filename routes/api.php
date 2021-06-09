@@ -27,8 +27,6 @@ Route::middleware('auth:api')->group(function () {
     //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
     Route::post('commerces/{commerce}/image',[CommerceController::class,'update_image']);
     Route::apiResource('commerces',CommerceController::class);
-
-
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
 
@@ -53,7 +51,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
     Route::apiResource('users',UserController::class)->only(['show','destroy']);
-
+    Route::get('users/{id}/commerce',[UserController::class,'commerce']);
 });
 
 //AUTH login/register
