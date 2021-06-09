@@ -125,10 +125,7 @@ class QueueVerifiedUsersController extends Controller
 
             // delete user from queue
             return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
-        }
-        if (!is_null($user)) {
-            return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
-        } else {
+        }else{
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
