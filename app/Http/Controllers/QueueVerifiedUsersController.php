@@ -20,8 +20,8 @@ class QueueVerifiedUsersController extends Controller
     // store user in queue
     public function store(Request $request)
     {
-        if( !is_null($request->queue_id) ){
-            if (QueueTools::already_in_queue( auth()->id(), $request->queue_id)) {
+        if (!is_null($request->queue_id)) {
+            if (QueueTools::already_in_queue(auth()->id(), $request->queue_id)) {
                 $request->request->add(['being_null_in_queue' => 'value']);
             }
         }
@@ -62,24 +62,22 @@ class QueueVerifiedUsersController extends Controller
     public function index()
     {
         // for testing
-        $users = QueueVerifiedUser::where('user_id',auth()->id())->get();
+        $users = QueueVerifiedUser::where('user_id', auth()->id())->get();
         if ($users) {
             // delete user from queue
-            return IQResponse::response(Response::HTTP_OK,QueueVerifiedUsersResource::collection($users));
+            return IQResponse::response(Response::HTTP_OK, QueueVerifiedUsersResource::collection($users));
         }
         if (!is_null($users)) {
             return IQResponse::response(Response::HTTP_OK, QueueVerifiedUsersResource::collection($users));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
-
-
     }
     public function destroy($queue_id)
     {
         //delete function
         $inputs['user_id'] = auth()->id();
-        $user = QueueVerifiedUser::all()->where('queue_id','=',$queue_id)->where('user_id', '=', auth()->id())->first();
+        $user = QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->where('user_id', '=', auth()->id())->first();
 
         if ($user) {
             $position = $user->position;
@@ -87,6 +85,7 @@ class QueueVerifiedUsersController extends Controller
             QueueTools::refresh_position($queue_id, $position);
             QueueTools::refresh_estimated_time($queue_id);
             $user->delete();
+            QueueTools::remove_user_to_queue($queue_id);
         }
         if (!is_null($user)) {
             return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
@@ -95,10 +94,10 @@ class QueueVerifiedUsersController extends Controller
         }
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
-    public function entry_check($user_id,$queue_id)
+    public function entry_check($user_id, $queue_id)
     {
 
-        $user = QueueVerifiedUser::all()->where('queue_id','=',$queue_id)->where('user_id', '=', $user_id)->first();
+        $user = QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->where('user_id', '=', $user_id)->first();
         if ($user) {
             $position = $user->position;
             $queue_id = $user->queue_id;
@@ -107,7 +106,8 @@ class QueueVerifiedUsersController extends Controller
                 QueueTools::refresh_position($queue_id, $position);
                 QueueTools::refresh_estimated_time($queue_id);
                 $user->delete();
-                return IQResponse::response(Response::HTTP_OK,new QueueVerifiedUsersResource($user));
+                QueueTools::remove_user_to_queue($queue_id);
+                return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
             } else {
                 return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
             }
