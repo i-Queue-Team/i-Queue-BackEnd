@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommerceResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Utils\Auth\AuthTools;
