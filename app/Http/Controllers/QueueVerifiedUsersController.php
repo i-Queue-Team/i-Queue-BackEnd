@@ -72,15 +72,15 @@ class QueueVerifiedUsersController extends Controller
     public function destroy($queue_id)
     {
         //delete function
-        $queues = AuthTools::getAuthUser()->queues;
-        if($queues){
-            foreach($queues as $queue){
-                if($queue->id = $queue_id){
-                    $queue->delete();
-                    QueueTools::refresh_position($queue_id, $queue->position);
+        $queueUsers = AuthTools::getAuthUser()->queues;
+        if($queueUsers){
+            foreach($queueUsers as $queueUser){
+                if($queueUser->id = $queue_id){
+                    $queueUser->delete();
+                    QueueTools::refresh_position($queue_id, $queueUser->position);
                     QueueTools::refresh_estimated_time($queue_id);
                     QueueTools::remove_user_to_queue($queue_id);
-                    return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($queue));
+                    return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($queueUser));
                 }
             }
         }
