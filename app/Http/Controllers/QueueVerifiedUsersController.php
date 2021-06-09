@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\QueueVerifiedUsersResource;
 use App\Models\Statistic;
-use App\Models\Currentqueue;
+use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\QueueVerifiedUser;
@@ -77,7 +77,6 @@ class QueueVerifiedUsersController extends Controller
     public function destroy($queue_id)
     {
         //delete function
-        $inputs['user_id'] = auth()->id();
         $queues = AuthTools::getAuthUser()->queues;
         if($queues){
             foreach($queues as $queue){
@@ -93,28 +92,30 @@ class QueueVerifiedUsersController extends Controller
         return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
-    public function entry_check($user_id, $queue_id)
+    public function entryCheck($user_id, $queue_id)
     {
-        $user = QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->where('user_id', '=', $user_id)->first();
-        if ($user) {
-            $position = $user->position;
-            $queue_id = $user->queue_id;
-            if ($position == 1) {
-                // delete user from queue
-                QueueTools::refresh_position($queue_id, $position);
-                QueueTools::refresh_estimated_time($queue_id);
-                $user->delete();
-                QueueTools::remove_user_to_queue($queue_id);
-                return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
-            } else {
-                return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
+        //Find queue by id
+        $queue = CurrentQueue::find($queue_id);
+        //Return if no queue found
+        if(!$queue) return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        // User-registered queues
+        $queueUsers = AuthTools::getAuthUser()->queues;
+        if ($queueUsers){
+            foreach($queueUsers as $queueUser){
+                if($queueUser->queue_id == $queue_id){
+                    //We found user registered in the queue
+                    if($queueUser->position == 1){
+                        $queueUser->delete();
+                        QueueTools::refresh_position($queue_id, 1);
+                        QueueTools::refresh_estimated_time($queue_id);
+                        QueueTools::remove_user_to_queue($queue_id);
+                        return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
+                    }
+                }
             }
-        }
-        if (!is_null($user)) {
-            return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
-        } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
+        return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
     }
     //function to get user info from queue
     public function info($user_id)
