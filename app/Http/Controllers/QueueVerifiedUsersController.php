@@ -29,7 +29,7 @@ class QueueVerifiedUsersController extends Controller
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
-        if (!$queueUsers->count() > 0) {
+        if ($queueUsers->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
         //queue instance
