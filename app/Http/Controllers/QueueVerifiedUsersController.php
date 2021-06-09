@@ -13,6 +13,7 @@ use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
+use App\Utils\Auth\AuthTools;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -77,26 +78,22 @@ class QueueVerifiedUsersController extends Controller
     {
         //delete function
         $inputs['user_id'] = auth()->id();
-        $user = QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->where('user_id', '=', auth()->id())->first();
-
-        if ($user) {
-            $position = $user->position;
-            $queue_id = $user->queue_id;
-            QueueTools::refresh_position($queue_id, $position);
-            QueueTools::refresh_estimated_time($queue_id);
-            $user->delete();
-            QueueTools::remove_user_to_queue($queue_id);
+        $queues = AuthTools::getAuthUser()->queues;
+        if($queues){
+            foreach($queues as $queue){
+                if($queue->id = $queue_id){
+                    $queue->delete();
+                    QueueTools::refresh_position($queue_id, $queue->position);
+                    QueueTools::refresh_estimated_time($queue_id);
+                    return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($queue));
+                }
+            }
         }
-        if (!is_null($user)) {
-            return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
-        } else {
-            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
-        }
+        return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
     public function entry_check($user_id, $queue_id)
     {
-
         $user = QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->where('user_id', '=', $user_id)->first();
         if ($user) {
             $position = $user->position;
