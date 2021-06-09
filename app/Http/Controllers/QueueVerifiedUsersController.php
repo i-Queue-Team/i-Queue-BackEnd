@@ -35,7 +35,7 @@ class QueueVerifiedUsersController extends Controller
         //queue instance
         $queueVerifiedUser = new QueueVerifiedUser();
         $queueVerifiedUser->queue_id = $request->queue_id;
-        $queueVerifiedUser->user_id =  auth()->id();
+        $queueVerifiedUser->user_id = $user->id;
         //name
         $commerce = Commerce::find($request->queue_id);
         //posicion es igual a la funcion posicion
@@ -45,8 +45,7 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser->save();
         QueueTools::refresh_estimated_time($request->queue_id);
         QueueTools::add_user_to_queue($request->queue_id);
-        $request->request->add(['user_id' => auth()->id()]);
-        QueueTools::store_statistic($request);
+        QueueTools::storeStatistic($request,$user);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
         } else {

@@ -2,6 +2,7 @@
 
 namespace App\Utils\Queue;
 
+use App\Models\User;
 use App\Models\Statistic;
 use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
@@ -13,13 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 class QueueTools
 {
     // store user in queue
-    public static function store_statistic(Request $request)
+    public static function storeStatistic(Request $request,User $user)
     {
         //validate queue
         //queue instance
         $QueueVerifiedUser = new Statistic();
         $QueueVerifiedUser->queue_id = $request->queue_id;
-        $QueueVerifiedUser->user_id = $request->user_id;
+        $QueueVerifiedUser->user_id = $request->$user->id;
         //posicion es igual a la funcion posicion
         $QueueVerifiedUser->position = self::position($request->queue_id);
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
