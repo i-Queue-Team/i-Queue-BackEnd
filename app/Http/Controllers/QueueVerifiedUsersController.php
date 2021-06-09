@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\QueueVerifiedUsersResource;
-use App\Models\Statistic;
 use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\QueueVerifiedUser;
 use App\Utils\Queue\QueueTools;
 use App\Utils\Responses\IQResponse;
@@ -21,20 +19,18 @@ class QueueVerifiedUsersController extends Controller
     // store user in queue
     public function store(Request $request)
     {
-        if (!is_null($request->queue_id)) {
-            if (QueueTools::already_in_queue(auth()->id(), $request->queue_id)) {
-                $request->request->add(['being_null_in_queue' => 'value']);
-            }
-        }
-
+        $user = AuthTools::getAuthUser();
+        $queueUsers = $user->queues->where('user_id','=',$user);
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
             "password_verification"  =>  "required|exists:current_queues,password_verification",
-            "being_null_in_queue"  =>  "required",
         ]);
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
+        }
+        if (!$queueUsers->count() > 0) {
+            return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
         //queue instance
         $queueVerifiedUser = new QueueVerifiedUser();
@@ -42,7 +38,6 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser->user_id =  auth()->id();
         //name
         $commerce = Commerce::find($request->queue_id);
-        $queueVerifiedUser->name = $commerce->name;
         //posicion es igual a la funcion posicion
         $queueVerifiedUser->position = QueueTools::position($request->queue_id);
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
@@ -51,7 +46,6 @@ class QueueVerifiedUsersController extends Controller
         QueueTools::refresh_estimated_time($request->queue_id);
         QueueTools::add_user_to_queue($request->queue_id);
         $request->request->add(['user_id' => auth()->id()]);
-
         QueueTools::store_statistic($request);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
