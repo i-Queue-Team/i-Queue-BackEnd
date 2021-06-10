@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\QueueVerifiedUser;
 use Carbon\Carbon;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -27,11 +28,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-           $schedule->call(function () {
-               //delete those who has been 1 minute without entering
+        $schedule->call(function () {
+            //delete those who has been 1 minute without entering
             $delete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->delete();
-           })->everyMinute();
-
+            //send notifications using this query
+            //$test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinute(4))->get();
+        })->everyMinute();
     }
 
     /**
@@ -41,7 +43,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

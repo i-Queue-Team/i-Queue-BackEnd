@@ -120,7 +120,7 @@ class QueueVerifiedUsersController extends Controller
     }
 
 
-    public function test(){
+    public function test_schedules(){
         //SELECT * FROM `queue_verified_users` WHERE estimated_time < now()
         //delete the ones appearing with this one
         $test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->subMinutes(1))->delete();
