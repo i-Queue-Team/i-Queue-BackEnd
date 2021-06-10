@@ -117,6 +117,16 @@ class QueueVerifiedUsersController extends Controller
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
+<<<<<<< Updated upstream
+=======
+
+
+    public function test(){
+        //SELECT * FROM `queue_verified_users` WHERE estimated_time < now()
+        $test= QueueVerifiedUser::where('estimated_time', '<', 'NOW())')->get();
+        return $test;
+    }
+>>>>>>> Stashed changes
 }
 
 
