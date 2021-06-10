@@ -15,7 +15,6 @@ class QueueVerifiedUsers extends Migration
     {
         Schema::create('queue_verified_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default("empty");
             $table->integer('position');
             // date where user is estimated to enter bussisenes
             $table->dateTime('estimated_time');
