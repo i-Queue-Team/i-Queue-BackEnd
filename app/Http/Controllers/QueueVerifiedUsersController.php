@@ -122,7 +122,10 @@ class QueueVerifiedUsersController extends Controller
 
     public function test(){
         //SELECT * FROM `queue_verified_users` WHERE estimated_time < now()
-        $test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinutes(-5))->get();
+        //delete the ones appearing with this one
+        $test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->subMinutes(1))->delete();
+        //send notifications to these ones
+        //$test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinute(4))->get();
         return $test;
     }
 }

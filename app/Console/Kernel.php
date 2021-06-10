@@ -4,7 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\Models\QueueVerifiedUser;
+use Carbon\Carbon;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -26,9 +27,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-           //$schedule->call(function () {
-           //    DB::table('recent_users')->delete();
-           //})->everyMinute();
+           $schedule->call(function () {
+               //delete those who has been 1 minute without entering
+            $delete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->delete();
+           })->everyMinute();
 
     }
 
