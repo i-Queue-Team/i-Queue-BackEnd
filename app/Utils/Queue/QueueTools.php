@@ -20,7 +20,7 @@ class QueueTools
         //queue instance
         $QueueVerifiedUser = new Statistic();
         $QueueVerifiedUser->queue_id = $request->queue_id;
-        $QueueVerifiedUser->user_id = $request->$user->id;
+        $QueueVerifiedUser->user_id = $user->id;
         //posicion es igual a la funcion posicion
         $QueueVerifiedUser->position = self::position($request->queue_id);
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado

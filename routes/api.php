@@ -63,3 +63,4 @@ Route::post('forgot-password', [ForgotPasswordController::class, 'generatePetiti
 Route::post('forgot-password-change-password', [ForgotPasswordController::class, 'changePassword']);
 //Route::apiResource("testing",TestController::class);
 
+Route::get("test", [QueueVerifiedUsersController::class, 'test']);
