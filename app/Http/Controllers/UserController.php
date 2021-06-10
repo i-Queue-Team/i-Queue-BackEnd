@@ -75,11 +75,13 @@ class UserController extends Controller
             "password" =>  "required",
         ]);
 
+
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
 
         $user = User::where("email", $request->email)->first();
+        $user_update=$user;
 
         if (is_null($user)) {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
@@ -89,6 +91,9 @@ class UserController extends Controller
             $user   = AuthTools::getAuthUser();
             $token  = $user->createToken('token')->plainTextToken;
             $user->token = $token;
+
+            $user_update->remember_token=$request->remember_token;
+            $user_update->save();
             return IQResponse::response(Response::HTTP_OK, $user);
         } else {
             return IQResponse::emptyResponse(Response::HTTP_UNAUTHORIZED);
