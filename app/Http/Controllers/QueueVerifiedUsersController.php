@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
 use App\Utils\Auth\AuthTools;
+use Illuminate\Support\Facades\Auth;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -20,7 +21,6 @@ class QueueVerifiedUsersController extends Controller
     public function store(Request $request)
     {
         $user = AuthTools::getAuthUser();
-        $queueUsers = $user->queues->where('user_id','=',$user);
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
@@ -29,7 +29,9 @@ class QueueVerifiedUsersController extends Controller
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
-        if ($queueUsers->count() >= 0) {
+        $queueUsers_check_inQueue = QueueVerifiedUser::where('user_id','=',$user->id)->where('queue_id','=',$request->queue_id)->get();
+        //return $queueUsers_check_inQueue;
+        if ($queueUsers_check_inQueue->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
         //queue instance
