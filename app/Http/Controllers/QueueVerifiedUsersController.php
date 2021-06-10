@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Commerce;
 use App\Utils\Auth\AuthTools;
+use Carbon\Carbon;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -117,16 +118,13 @@ class QueueVerifiedUsersController extends Controller
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
-<<<<<<< Updated upstream
-=======
 
 
     public function test(){
         //SELECT * FROM `queue_verified_users` WHERE estimated_time < now()
-        $test= QueueVerifiedUser::where('estimated_time', '<', 'NOW())')->get();
+        $test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinutes(-5))->get();
         return $test;
     }
->>>>>>> Stashed changes
 }
 
 
