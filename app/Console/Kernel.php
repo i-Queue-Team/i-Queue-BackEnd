@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\QueueVerifiedUser;
 use Carbon\Carbon;
+use App\Utils\Queue\QueueTools;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,11 +27,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+
 
         $schedule->call(function () {
             //delete those who has been 1 minute without entering
-            $delete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->delete();
+            $queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
+            foreach ($queueVerifiedUsersToDelete as $queueVerifiedUser) {
+                $queueVerifiedUser->delete();
+                QueueTools::refresh_position($queueVerifiedUser->queue->id, $queueVerifiedUser->position);
+                QueueTools::refresh_estimated_time($queueVerifiedUser->queue->id);
+            }
+
             //send notifications using this query
             //$test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinute(4))->get();
         })->everyMinute();

@@ -21,7 +21,7 @@ class QueueVerifiedUsersController extends Controller
     public function store(Request $request)
     {
         $user = AuthTools::getAuthUser();
-        $queueUsers = $user->queues->where('user_id','=',$user);
+        $queueUsers = $user->queues->where('user_id', '=', $user);
         //validate queue
         $validator  =   Validator::make($request->all(), [
             "queue_id"  =>  "required|integer|exists:current_queues,id",
@@ -46,7 +46,7 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser->save();
         QueueTools::refresh_estimated_time($request->queue_id);
         QueueTools::add_user_to_queue($request->queue_id);
-        QueueTools::storeStatistic($request,$user);
+        QueueTools::storeStatistic($request, $user);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
         } else {
@@ -67,9 +67,9 @@ class QueueVerifiedUsersController extends Controller
     {
         //delete function
         $queueUsers = AuthTools::getAuthUser()->queues;
-        if($queueUsers){
-            foreach($queueUsers as $queueUser){
-                if($queueUser->id = $queue_id){
+        if ($queueUsers) {
+            foreach ($queueUsers as $queueUser) {
+                if ($queueUser->id = $queue_id) {
                     $queueUser->delete();
                     QueueTools::refresh_position($queue_id, $queueUser->position);
                     QueueTools::refresh_estimated_time($queue_id);
@@ -86,14 +86,14 @@ class QueueVerifiedUsersController extends Controller
         //Find queue by id
         $queue = CurrentQueue::find($queue_id);
         //Return if no queue found
-        if(!$queue) return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        if (!$queue) return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         // User-registered queues
         $queueUsers = AuthTools::getAuthUser()->queues;
-        if ($queueUsers){
-            foreach($queueUsers as $queueUser){
-                if($queueUser->queue_id == $queue_id){
+        if ($queueUsers) {
+            foreach ($queueUsers as $queueUser) {
+                if ($queueUser->queue_id == $queue_id) {
                     //We found user registered in the queue
-                    if($queueUser->position == 1){
+                    if ($queueUser->position == 1) {
                         $queueUser->delete();
                         QueueTools::refresh_position($queue_id, 1);
                         QueueTools::refresh_estimated_time($queue_id);
@@ -114,19 +114,32 @@ class QueueVerifiedUsersController extends Controller
 
             // delete user from queue
             return IQResponse::response(Response::HTTP_OK, new QueueVerifiedUsersResource($user));
-        }else{
+        } else {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
         }
     }
 
 
-    public function test_schedules(){
-        //SELECT * FROM `queue_verified_users` WHERE estimated_time < now()
+    public function test_schedules()
+    {
+
         //delete the ones appearing with this one
-        $test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->subMinutes(1))->delete();
+        $queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
+
+        //$queueVerifiedUsersToDelete = QueueVerifiedUser::All();
+        //return $queueVerifiedUsersToDelete;
+        foreach ($queueVerifiedUsersToDelete as $queueVerifiedUser) {
+            $queueVerifiedUser->delete();
+            QueueTools::refresh_position($queueVerifiedUser->queue->id, $queueVerifiedUser->position);
+            QueueTools::refresh_estimated_time($queueVerifiedUser->queue->id);
+        }
+
+
+
+
         //send notifications to these ones
         //$test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinute(4))->get();
-        return $test;
+        return $queueVerifiedUsersToDelete;
     }
 }
 
