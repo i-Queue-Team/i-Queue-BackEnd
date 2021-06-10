@@ -29,9 +29,10 @@ class QueueVerifiedUsersController extends Controller
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
-        $queueUsers_check_inQueue = QueueVerifiedUser::where('user_id','=',$user->id)->where('queue_id','=',$request->queue_id)->get();
+        $queueUsers = $user->queues->where('queue_id','=',$request->queue_id);
+        //$queueUsers_check_inQueue = QueueVerifiedUser::where('user_id','=',$user->id)->where('queue_id','=',$request->queue_id)->get();
         //return $queueUsers_check_inQueue;
-        if ($queueUsers_check_inQueue->count() > 0) {
+        if ($queueUsers->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
         //queue instance
