@@ -92,7 +92,7 @@ class UserController extends Controller
             $token  = $user->createToken('token')->plainTextToken;
             $user->token = $token;
 
-            $user_update->remember_token=$request->remember_token;
+            $user_update->remember_token_firebase=$request->remember_token_firebase;
             $user_update->save();
             return IQResponse::response(Response::HTTP_OK, $user);
         } else {
