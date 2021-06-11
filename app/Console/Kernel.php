@@ -2,17 +2,18 @@
 
 namespace App\Console;
 
+use App\Http\Resources\CommerceResource;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\QueueVerifiedUser;
 use App\Utils\Queue\QueueTools;
 use Carbon\Carbon;
 use Kreait\Firebase\Factory;
-use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\RawMessageFromArray;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CurrentQueue;
 use App\Models\Commerce;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -34,103 +35,97 @@ class Kernel extends ConsoleKernel
     {
 
 
-        $schedule->call(function () {
-            //delete those who has been 1 minute without entering
-                    //delete the ones appearing with this one
-        $queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
+        $schedule->call(
+            function () {
+                //delete those who has been 1 minute without entering
+                //delete the ones appearing with this one
+                $queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
 
-        //$queueVerifiedUsersToDelete = QueueVerifiedUser::All();
-        //return $queueVerifiedUsersToDelete;
-        foreach ($queueVerifiedUsersToDelete as $queueVerifiedUser) {
-            $queueVerifiedUser->delete();
-            QueueTools::refresh_position($queueVerifiedUser->queue->id, $queueVerifiedUser->position);
-            QueueTools::refresh_estimated_time($queueVerifiedUser->queue->id);
-        }
-        //instanciar la libreria de firebase
-        $factory = (new Factory)->withServiceAccount(__DIR__ . '/firebase_credentials.json');
-        $messaging = $factory->createMessaging();
-        //iterar por los comercios
-        $commerces = Commerce::all();
-        foreach ($commerces as $commerce) {
-            $commerceName = $commerce->name;
-            $commerceImage = url('/') . Storage::url('') . 'commerces/' . $commerce->image;
-            //recoger los datos de las colas en las cuales sus usuarios verificados quedan menos de 5 minutos para que sea su turno
-            $QueueVerifiedUsersToSendNotif = CurrentQueue::find($commerce->id)->verifiedUsers->where('estimated_time', '<', Carbon::now()->addMinute(4));
-            //si esta vacio no hacer nada
-            if (!is_null($QueueVerifiedUsersToSendNotif)) {
-                $users = $QueueVerifiedUsersToSendNotif->pluck('user');
-                foreach ($users as $user) {
-                    $userFirebaseToken = $user->remember_token_firebase;
-                    $userName = $user->name;
-                    $userEstimated_time = QueueVerifiedUser::where('user_id', '=', $user->id)->where('queue_id', '=', $commerce->id)->first()->estimated_time;
-                    $userRemainingMinutes =  ltrim(gmdate('i', Carbon::parse($userEstimated_time)->diffInSeconds(Carbon::now())), 0);
-                    //si el usuario tiene token entonces enviar notificacion
-                    if (!is_null($userFirebaseToken)) {
-                        $deviceToken = [$userFirebaseToken];
-                        $message = new RawMessageFromArray([
-                            'notification' => [
-                                // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
-                                'title' => "¡Hey, $userName! ",
-                                'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerceName!",
-                                'image' => "$commerceImage",
-                            ],
-                            'data' => [
-                                'key_1' => 'Value 1',
-                                'key_2' => 'Value 2',
-                            ],
-                            'android' => [
-                                // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
-                                'ttl' => '3600s',
-                                'priority' => 'high',
+                //$queueVerifiedUsersToDelete = QueueVerifiedUser::All();
+                //return $queueVerifiedUsersToDelete;
+                foreach ($queueVerifiedUsersToDelete as $queueVerifiedUser) {
+                    $queueVerifiedUser->delete();
+                    QueueTools::refresh_position($queueVerifiedUser->queue->id, $queueVerifiedUser->position);
+                    QueueTools::refresh_estimated_time($queueVerifiedUser->queue->id);
+                }
+                //instanciar la libreria de firebase
+                $factory = (new Factory)->withServiceAccount(__DIR__ . '/firebase_credentials.json');
+                $messaging = $factory->createMessaging();
+                //iterar por los comercios
+                foreach (Commerce::all() as $commerce) {
+                    $commerceResource = new CommerceResource($commerce);
+                    //recoger los datos de las colas en las cuales sus usuarios verificados quedan menos de 5 minutos para que sea su turno
+                    $QueueVerifiedUsersToSendNotif = $commerce->queue->verifiedUsers->where('estimated_time', '<', Carbon::now()->addMinute(4))->pluck('user')->toArray();
+                    foreach ($QueueVerifiedUsersToSendNotif as $user) {
+                        $userFirebaseToken = $user->remember_token_firebase;
+                        $userEstimated_time = $user->queues->where('queue_id', '=', $commerce->queue->id)->first()->estimated_time;
+                        $userRemainingMinutes =  ltrim(gmdate('i', Carbon::parse($userEstimated_time)->diffInSeconds(Carbon::now())), 0);
+                        //si el usuario tiene token entonces enviar notificacion
+                        if (!is_null($userFirebaseToken)) {
+                            $message = new RawMessageFromArray([
                                 'notification' => [
-                                    'title' => "¡Hey, $userName! ",
-                                    'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerceName!",
-                                    'icon' => 'stock_ticker_update',
-                                    'color' => '#008080',
-                                    'tag' => "$commerceName",
+                                    // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#notification
+                                    'title' => "¡Hey, $user->name! ",
+                                    'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerce->name!",
+                                    'image' => "$commerceResource->image",
                                 ],
-                            ],
-                            'apns' => [
-                                // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig
-                                'headers' => [
-                                    'apns-priority' => '10',
+                                'data' => [
+                                    'key_1' => 'Value 1',
+                                    'key_2' => 'Value 2',
                                 ],
-                                'payload' => [
-                                    'aps' => [
-                                        'alert' => [
-                                            'title' => "¡Hey, $userName! ",
-                                            'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerceName!",
-                                        ],
-                                        'badge' => 1,
+                                'android' => [
+                                    // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidconfig
+                                    'ttl' => '3600s',
+                                    'priority' => 'high',
+                                    'notification' => [
+                                        'title' => "¡Hey, $user->name! ",
+                                        'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerce->name!",
+                                        'icon' => 'stock_ticker_update',
+                                        'color' => '#008080',
+                                        'tag' => $commerce->name,
                                     ],
                                 ],
-                            ],
-                            'webpush' => [
-                                // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
-                                'headers' => [
-                                    'Urgency' => 'normal',
+                                'apns' => [
+                                    // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#apnsconfig
+                                    'headers' => [
+                                        'apns-priority' => '10',
+                                    ],
+                                    'payload' => [
+                                        'aps' => [
+                                            'alert' => [
+                                                'title' => "¡Hey, $user->name! ",
+                                                'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerce->name!",
+                                            ],
+                                            'badge' => 1,
+                                        ],
+                                    ],
                                 ],
-                                'notification' => [
-                                    'title' => "¡Hey, $userName! ",
-                                    'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerceName!",
-                                    'icon' => 'https://my-server/icon.png',
+                                'webpush' => [
+                                    // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#webpushconfig
+                                    'headers' => [
+                                        'Urgency' => 'normal',
+                                    ],
+                                    'notification' => [
+                                        'title' => "¡Hey, $user->name! ",
+                                        'body' => "¡Te quedan $userRemainingMinutes minutos para entrar en $commerce->name!",
+                                        'icon' => $commerceResource->image
+                                    ],
                                 ],
-                            ],
-                            'fcm_options' => [
-                                // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#fcmoptions
-                                'analytics_label' => 'some-analytics-label'
-                            ]
-                        ]);
-                        $messaging->sendMulticast($message, $deviceToken);
+                                'fcm_options' => [
+                                    // https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#fcmoptions
+                                    'analytics_label' => 'some-analytics-label'
+                                ]
+                            ]);
+                            $messaging->sendMulticast($message, [$userFirebaseToken]);
+                        }
                     }
                 }
             }
-        }
 
 
             //send notifications using this query
             //$test= QueueVerifiedUser::where('estimated_time', '<', Carbon::now()->addMinute(4))->get();
-        })->everyMinute();
+        )->everyMinute();
     }
 
     /**
