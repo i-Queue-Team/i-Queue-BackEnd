@@ -24,7 +24,7 @@ class CommerceResource extends JsonResource
             'longitude' => $this->longitude,
             'info' => $this->info,
             'image' => $image,
-            'queue' => $this->queue,
+            'queueInfo' => $this->queue,
         ];
     }
 }
