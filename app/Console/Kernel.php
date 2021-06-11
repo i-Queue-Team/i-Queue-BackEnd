@@ -56,7 +56,8 @@ class Kernel extends ConsoleKernel
                     $commerceResource = new CommerceResource($commerce);
                     //recoger los datos de las colas en las cuales sus usuarios verificados quedan menos de 5 minutos para que sea su turno
                     $QueueVerifiedUsersToSendNotif = $commerce->queue->verifiedUsers->where('estimated_time', '<', Carbon::now()->addMinute(4))->pluck('user')->toArray();
-                    foreach ($QueueVerifiedUsersToSendNotif as $user) {
+                    foreach ($QueueVerifiedUsersToSendNotif as $queueUser) {
+                        $user = $queueUser->user;
                         $userFirebaseToken = $user->remember_token_firebase;
                         $userEstimated_time = $user->queues->where('queue_id', '=', $commerce->queue->id)->first()->estimated_time;
                         $userRemainingMinutes =  ltrim(gmdate('i', Carbon::parse($userEstimated_time)->diffInSeconds(Carbon::now())), 0);
