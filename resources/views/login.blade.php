@@ -36,14 +36,14 @@
 
 
         <section class="container">
-            <div style="border-radius: 1rem; background-color: antiquewhite; padding: 10px; ">
+            <div >
                 <article class="col s6 offset-s3">
-                    <form method="POST" action="{{ url('/login') }}">
+                    <form  method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
                         <div class="input-field">
                             <i class="material-icons prefix">person_pin</i>
+                            <input type="text" id="email" name="email" required>
                             <label for="email">Email</label>
-                            <input type="text" name="email" required>
                             @if ($errors)
                                 <span class="error">
                                     <span class="helper-text" data-error="wrong"
@@ -51,10 +51,12 @@
                                 </span>
                             @endif
                         </div>
+
                         <div class="input-field">
                             <i class="material-icons prefix">password</i>
-                            <label for="password">Contraseña</label>
-                            <input type="password" name="password" required>
+
+                            <input id="password" type="password" name="password" required>
+                            <label  for="password">Contraseña</label>
                         </div>
                         <p class="center-align">
                             <button class="waves-effect waves-light btn" type="submit"><i
