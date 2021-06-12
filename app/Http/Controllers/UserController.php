@@ -105,19 +105,23 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             "email" =>  "required|email|exists:users",
-            "password" =>  "required",
+            'password'=>'required'
         ]);
+
         if ($validator->fails()) {
-            return view('login')->with('errors', $validator->errors());
+            //return $validator->errors();
+
+            return view('login')->with('errors', $validator->errors())->with('inputs', $request->all());
+
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user   = Auth::user();
             $token  = $user->createToken('token')->plainTextToken;
             Session::put('variableName', $token);
             return redirect()->intended('dashboard');
-        } else {
+        }else{
             $validator->getMessageBag()->add('email', 'credenciales erroneas');
-            return view('login')->with('errors', $validator->errors());
+            return view('login')->with('errors', $validator->errors())->with('inputs', $request->all());
         }
     }
     public function registerWeb(Request $request)
@@ -138,7 +142,6 @@ class UserController extends Controller
         if (!is_null($user)) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return redirect()->intended('login');
-
             }else {
                 $validator->getMessageBag()->add('email', 'credenciales erroneas');
                 return view('registro')->with('errors', $validator->errors());

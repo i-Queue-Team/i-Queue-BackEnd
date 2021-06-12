@@ -42,21 +42,20 @@
                         {{ csrf_field() }}
                         <div class="input-field">
                             <i class="material-icons prefix">person_pin</i>
-                            <input type="text" id="email" name="email" required>
+                            <input type="text" id="email" name="email" required value='@isset($inputs) {{ $inputs['email'] }}@endisset'>
                             <label for="email">Email</label>
                             @if ($errors)
-                                <span class="error">
-                                    <span class="helper-text" data-error="wrong"
-                                        data-success="right">{{ $errors->first('email') }}</span>
-                                </span>
+                                <span class="helper-text red-text" data-error="wrong" data-success="right">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
 
                         <div class="input-field">
                             <i class="material-icons prefix">password</i>
-
                             <input id="password" type="password" name="password" required>
                             <label  for="password">Contraseña</label>
+                            @if ($errors)
+                                <span class="helper-text red-text" data-error="wrong" data-success="right">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
                         <p class="center-align">
                             <button class="waves-effect waves-light btn" type="submit"><i
