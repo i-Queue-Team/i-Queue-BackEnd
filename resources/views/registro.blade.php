@@ -39,25 +39,34 @@
                         <div class="input-field">
                             <i class="material-icons prefix">person_pin</i>
                             <label for="usuario">Usuario</label>
-                            <input id="usuario" type="text" name="name" value="{{old('name')}}" required>
+                            <input id="usuario" type="text" name="name" value='@isset($inputs) {{ $inputs['name'] }}@endisset' required>
+                            @if ($errors)
+                            <span class="helper-text red-text" data-error="wrong" data-success="right">{{ $errors->first('name') }}</span>
+                            @endif
                         </div>
 
                         <div class="input-field">
                             <i class="material-icons prefix">email</i>
                             <label for="email">email</label>
-                            <input id="email" type="email" name="email" value="{{old('email')}}" required class="validate">
+                            <input id="email" type="text" name="email" value='@isset($inputs) {{ $inputs['email'] }}@endisset' required class="validate">
+                            @if ($errors)
+                            <span class="helper-text red-text" data-error="wrong" data-success="right">{{ $errors->first('email') }}</span>
+                            @endif
                         </div>
 
                         <div class="input-field">
                             <i class="material-icons prefix">password</i>
                             <label for="password">Contraseña</label>
-                            <input id="password" type="password" name="password" required minlength="4">
+                            <input id="password" type="password" name="password" required >
+                            @if ($errors)
+                            <span class="helper-text red-text" data-error="wrong" data-success="right">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
 
                         <div class="input-field">
                             <i class="material-icons prefix">password</i>
                             <label for="password2" style="font-size: 0.8em;">Repetir contraseña</label>
-                            <input id="password2" type="password" name="password2" required minlength="4">
+                            <input id="password2" type="password" name="password2" required >
                         </div>
 
                         <div class="center-align">

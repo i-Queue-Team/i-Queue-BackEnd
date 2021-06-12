@@ -110,9 +110,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             //return $validator->errors();
-
             return view('login')->with('errors', $validator->errors())->with('inputs', $request->all());
-
         }
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user   = Auth::user();
@@ -127,13 +125,13 @@ class UserController extends Controller
     public function registerWeb(Request $request)
     {
         $validator  =   Validator::make($request->all(), [
-            "name"  =>  "required",
+            "name"  =>  "required|alpha",
             "email"  =>  "required|email|unique:users",
             "password"  =>  "required",
             "role" => "in:USER,ADMIN",
         ]);
         if ($validator->fails()) {
-            return view('registro')->with('errors', $validator->errors());
+            return view('registro')->with('errors', $validator->errors())->with('inputs', $request->all());
         }
         $inputs = $request->all();
         $inputs["password"] = Hash::make($request->password);
