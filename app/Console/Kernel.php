@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
             function () {
                 //delete those who has been 1 minute without entering
                 //delete the ones appearing with this one
-                $queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
+                //$queueVerifiedUsersToDelete = QueueVerifiedUser::where('estimated_time', '<', Carbon::now())->get();
 
                 //$queueVerifiedUsersToDelete = QueueVerifiedUser::All();
                 //return $queueVerifiedUsersToDelete;
