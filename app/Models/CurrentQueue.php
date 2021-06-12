@@ -45,4 +45,8 @@ class CurrentQueue extends Model{
     public function commerce(){
         return $this->belongsTo(Commerce::class,'commerce_id');
     }
+
+    public function positions(){
+        return $this->verifiedUsers->count() + 1;
+    }
 }

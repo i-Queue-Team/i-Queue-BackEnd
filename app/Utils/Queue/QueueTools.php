@@ -2,6 +2,7 @@
 
 namespace App\Utils\Queue;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Statistic;
 use App\Models\CurrentQueue;
@@ -14,67 +15,55 @@ use Symfony\Component\HttpFoundation\Response;
 class QueueTools
 {
     // store user in queue
-    public static function storeStatistic(Request $request,User $user)
+    public static function storeStatistic(CurrentQueue $queue,QueueVerifiedUser $queueUser)
     {
+        $transaction = function (CurrentQueue $queue, QueueVerifiedUser $queueUser){
+            $statistic = new Statistic();
+            $statistic->queue_id = $queue->id;
+            $statistic->user_id = $queueUser->user_id;
+            //posicion es igual a la funcion posicion
+            $statistic->position = $queue->positions();
+            //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
+            $statistic->estimated_time = self::estimatedTime($queueUser,$queue);
+        };
         //validate queue
         //queue instance
-        $QueueVerifiedUser = new Statistic();
-        $QueueVerifiedUser->queue_id = $request->queue_id;
-        $QueueVerifiedUser->user_id = $user->id;
-        //posicion es igual a la funcion posicion
-        $QueueVerifiedUser->position = self::position($request->queue_id);
-        //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
-        $QueueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
-        $QueueVerifiedUser->save();
-        //return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
+        DB::transaction($transaction($queue,$queueUser));
     }
-    //function to give the corresponding position to users depending on where they are in the queue
-    public static function refresh_position(int $queue_id, int $user_position)
-    {
-        QueueVerifiedUser::where('queue_id', $queue_id)
-            ->where('position', '>', $user_position)
-            ->update(
-                ['position' => DB::raw('position-1')],
-            );
+
+    public static function removeUserFromQueue(CurrentQueue $queue, QueueVerifiedUser $queueUser){
+        $transaction = function (CurrentQueue $queue, QueueVerifiedUser $queueUser) {
+            $queue->verifiedUsers->where('position'. '>', $queueUser->position)->update([
+                'position' => DB::raw('position-1'),
+            ]);
+            $queue->current_capacity = $queue->current_capacity-1;
+        };
+        DB::transaction($transaction($queue,$queueUser));
     }
-    //function to add user to capacity
-    public static function add_user_to_queue(int $queue_id)
-    {
-        CurrentQueue::where('id', $queue_id)
-            ->update(
-                ['current_capacity' => DB::raw('current_capacity+1')],
-            );
+
+    public static function addOneToQueueCapacity(CurrentQueue $queue){
+        $queue->current_capacity = $queue->current_capacity+1;
+        $queue->save();
     }
-    //function to remove user to queue
-    public static function remove_user_to_queue(int $queue_id)
-    {
-        CurrentQueue::where('id', $queue_id)
-            ->update(
-                ['current_capacity' => DB::raw('current_capacity-1')],
-            );
+    public static function refreshEstimatedTimes(CurrentQueue $queue){
+        $refresh = function (CurrentQueue $queue){
+            foreach($queue->verifiedUsers as $queueUser){
+                $queueUser->estimated_time = self::estimatedTime($queueUser,$queue);
+            }
+        };
+        date_default_timezone_set('Europe/Madrid');
+        DB::transaction($refresh($queue));
     }
-    //function to give the corresponding position to users depending on where they are in the queue
-    public static function refresh_estimated_time(int $queue_id)
-    {
-        $queue = CurrentQueue::find($queue_id);
-        $average_time = $queue->average_time;
-        $users = QueueVerifiedUser::all()->where('queue_id', $queue_id);
-        foreach ($users as $user) {
-            date_default_timezone_set('Europe/Madrid');
-            $position = $user->position;
-            $currentDate =  date('Y-m-d H:i:s');
-            $newDate = date("Y-m-d H:i:s", strtotime($currentDate . " +" . $average_time * $position . " minutes"));
-            $user->update(['estimated_time' => $newDate]);
+
+    public static function estimatedTime(QueueVerifiedUser $queueUser, CurrentQueue $queue) : string{
+        return Carbon::now()->addMinute($queue->average_time * $queueUser->position)->format('Y-m-d H:i:s');
+    }
+    public static function alreadyInQueue(User $user, CurrentQueue $queue){
+        foreach ($queue->verifiedUsers as $queueUser){
+            if($queueUser->user_id = $user->id){
+                return true;
+            }
         }
-    }
-    // retrieve position
-    public static function position($queue_id)
-    {
-        return QueueVerifiedUser::all()->where('queue_id', '=', $queue_id)->count() + 1;
-    }
-    public static function already_in_queue($user_id, $queue_id)
-    {
-        $isInQueue = DB::select(DB::raw("select * from queue_verified_users where user_id = $user_id and queue_id = $queue_id"));
-        return empty($isInQueue);
+        return false;
     }
 }
