@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
                 $minutes = 5;
                 foreach(QueueVerifiedUser::all() as $queueUser){
                     $minutesEstimated = Carbon::parse($queueUser->estimated_time)->diffInSeconds(Carbon::now(),false)/-60;
-                    if ($minutesEstimated < 0){
+                    if ($minutesEstimated <= 0){
                         $queueUser->delete();
                         QueueTools::refresh_position($queueUser->queue->id, $queueUser->position);
                         QueueTools::refresh_estimated_time($queueUser->queue->id);
