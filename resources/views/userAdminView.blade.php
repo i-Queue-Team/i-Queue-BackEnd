@@ -607,5 +607,5 @@ $token = Session::get('variableName');
     }
 
 </script>
-
+@include('CookieLayout')
 </html>

@@ -177,5 +177,5 @@
     });
 
 </script>
-
+@include('CookieLayout')
 </html>

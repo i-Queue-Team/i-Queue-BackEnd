@@ -147,4 +147,7 @@
   });</script>
 </body>
 
+@include('CookieLayout')
+
+
 </html>

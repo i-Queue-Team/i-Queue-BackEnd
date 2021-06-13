@@ -302,5 +302,5 @@
     });
 
 </script>
-
+@include('CookieLayout')
 </html>
