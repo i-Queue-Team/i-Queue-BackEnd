@@ -71,16 +71,16 @@
                             <div class="modal-content">
                                 <h4>Recordar contraseña</h4>
                                 <p>Introduce tu dirección de correo electronico</p>
-                                <form action="#ContraseñaRecordada">
+                                <form id="rememberPass">
                                     <div class="input-field">
                                         <i class="material-icons prefix">contact_mail</i>
-                                        <label for="email">email</label>
-                                        <input type="email" name="email" required class="validate">
+                                        <label for="inputmail">email</label>
+                                        <input id="inputmail" type="email" name="email" required class="validate">
                                     </div>
                                     <div class="input-field">
                                         <i class="material-icons prefix">contact_mail</i>
-                                        <label for="email2">repetir email</label>
-                                        <input type="email" name="email2" required class="validate">
+                                        <label for="confirm_inputmail">repetir email</label>
+                                        <input id="confirm_inputmail" type="email" name="email2" required class="validate">
                                     </div>
                             </div>
                             <div class="modal-footer">
@@ -123,5 +123,77 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+<script>
+    var password = document.getElementById("inputmail"),
+    confirm_password = document.getElementById("confirm_inputmail");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Los emails no coinciden :(");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    $(document).ready(function() {
+
+        $("#rememberPass").submit(function(event) {
+            var formData = new FormData(this);
+            formData.append('_method', 'POST');
+            console.log(formData);
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('/') }}/api/forgot-password",
+                data: formData,
+                encode: true,
+                processData: false, // tell jQuery not to process the data
+                contentType: false,
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    var response = jQuery.parseJSON(xhr.responseText);
+                    console.log(response.errors);
+                    if (response.errors) {
+                        $.each(response.errors, function(index, value) {
+                            console.log(index + ": " + value);
+                            if (response.errors) {
+                                if (!$("#" + index).hasClass("invalid")) {
+                                    $("#" + index).addClass("invalid");
+                                    $("#" + index + "_err").append(
+                                        '<span class="helper-text" data-error="' +
+                                        value +
+                                        '" data-success="Pinta Bien!">' +
+                                        value + "</span>"
+                                    );
+                                }
+                            } else {
+                                $("#" + index).addClass("success");
+                            }
+                        });
+                    }
+                }
+            }).done(function(data) {
+
+                var url = window.location;
+                var urlString = encodeURIComponent(url);
+                console.log(urlString);
+                if (urlString.includes("configuracion")) {
+                    document.location = url;
+
+                } else {
+                    document.location = url + "#configuracion";
+                }
+                location.reload();
+
+
+                //console.log(data);
+            });
+            event.preventDefault();
+        });
+    });
+
+
+</script>
 @include('CookieLayout')
 </html>

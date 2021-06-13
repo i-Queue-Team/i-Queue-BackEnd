@@ -69,6 +69,16 @@
                             <input id="password2" type="password" name="password2" required >
                         </div>
 
+  <div class="input-field col s12">
+    <select name="role">
+      <option value="" disabled selected>Seleciona tu usuario</option>
+      <option value="USER">Soy Un usuario</option>
+      <option value="ADMIN">Soy Un negocio</option>
+
+    </select>
+    <label></label>
+  </div>
+
                         <div class="center-align">
                             <label>
                                 <input type="checkbox" id="terminos" onclick="sendBtn()" />
@@ -144,7 +154,10 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <script>    $(document).ready(function(){
     $('.modal').modal();
+  });  $(document).ready(function(){
+    $('select').formSelect();
   });</script>
+
 </body>
 
 @include('CookieLayout')

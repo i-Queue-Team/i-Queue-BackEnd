@@ -34,7 +34,7 @@
     <!--nav extendido-->
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo center">I-queue</a>
+            <a href="{{ url('/') }}" class="brand-logo center">I-queue</a>
             <ul id="nav-mobile" class="left ">
                 <li><a href="{{ url('/') }}"> <i class="material-icons">chevron_left</i></a></li>
 
@@ -56,7 +56,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="confirm_password" type="password" class="validate">
-                        <label for="email">Confirmar Contraseña</label>
+                        <label for="confirm_password">Confirmar Contraseña</label>
                     </div>
                 </div>
                 <button type="submit" class="waves-effect waves-light btn-large">

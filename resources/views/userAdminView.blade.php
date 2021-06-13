@@ -112,6 +112,19 @@ $token = Session::get('variableName');
             <!--tab Cola-->
             @if ($empty_checker)
                 <h2>Antes debes configurar tu negocio!</h2>
+                <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                        <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#007FB2" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z" id="Polygon-2" stroke="#EF4A5B" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z" id="Polygon-3" stroke="#795D9C" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z" id="Polygon-4" stroke="#F2773F" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z" id="Polygon-5" stroke="#36B455" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                    </g>
+                </svg>
+                <div class="message-box">
+
+
+                </div>
             @else
                 <h2>Parametros de la Cola</h2>
                 <img src="{{ $commerce->image ? url('/') . Storage::url('') . 'commerces/' . $commerce->image : 'https://i.imgur.com/n6bF2Vx.jpeg' }}"
@@ -157,15 +170,9 @@ $token = Session::get('variableName');
                                     <div class="row">
                                         <div class="input-field col s6" id="fixed_capacity_err">
                                             <i class="material-icons prefix">nature_people</i>
-                                            <input id="fixed_capacity" name="fixed_capacity" type="number" min="1"
+                                            <input id="fixed_capacity" name="fixed_capacity" type="number"
                                                 step="1" value="{{ $queue->fixed_capacity }}" class="validate">
                                             <label for="fixed_capacity">Aforo</label>
-                                        </div>
-                                        <div class="input-field col s6" id="password_verification_err">
-                                            <i class="material-icons prefix">lock</i>
-                                            <input id="password_verification" name="password_verification" type="text"
-                                                value="{{ $queue->password_verification }}" class="validate">
-                                            <label for="password_verification">Token</label>
                                         </div>
                                     </div>
                                 </div>
@@ -221,15 +228,17 @@ $token = Session::get('variableName');
                             <div class="row">
                                 <div class="input-field col s6" id="latitude_err">
                                     <i class="material-icons prefix">map</i>
-                                    <input id="latitude" name="latitude" type="number" min="0" step="0.1"
-                                        class="validate">
                                     <label for="latitud">Latitud</label>
+                                    <input id="latitud" name="latitude" type="number"  step="any"
+                                        class="validate">
+
                                 </div>
                                 <div class="input-field col s6" id="longitude_err">
                                     <i class="material-icons prefix">map</i>
-                                    <input id="longitude" name="longitude" type="number" min="0" step="0.1"
-                                        class="validate">
                                     <label for="longitud">Longitud</label>
+                                    <input id="longitud" name="longitude" type="number"  step="any"
+                                        class="validate">
+
                                 </div>
                             </div>
                         </div>
@@ -302,15 +311,15 @@ $token = Session::get('variableName');
                                             <div class="row">
                                                 <div class="input-field col s6" id="latitude_err">
                                                     <i class="material-icons prefix">map</i>
-                                                    <input id="latitude" name="latitude" type="number" min="0"
-                                                        step="0.1" class="validate"
+                                                    <input id="latitude" name="latitude" type="number"
+                                                        step="any" class="validate"
                                                         value="{{ $commerce->latitude }}">
                                                     <label for="latitud">Latitud</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
                                                     <i class="material-icons prefix">map</i>
-                                                    <input id="longitude" name="longitude" type="number" min="0"
-                                                        step="0.1" class="validate"
+                                                    <input id="longitude" name="longitude" type="number"
+                                                        step="any" class="validate"
                                                         value="{{ $commerce->longitude }}">
                                                     <label for="longitud">Longitud</label>
                                                 </div>
