@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CurrentQueue extends Model{
 
@@ -44,5 +45,55 @@ class CurrentQueue extends Model{
     //commerce from queue
     public function commerce(){
         return $this->belongsTo(Commerce::class,'commerce_id');
+    }
+
+    public function positions(){
+        return $this->verifiedUsers()->count() + 1;
+    }
+
+    public function estimatedTime(QueueVerifiedUser $queueUser): string
+    {
+        return Carbon::now()->addMinute($this->average_time * $queueUser->position)->format('Y-m-d H:i:s');
+    }
+    public function alreadyInQueue(User $user)
+    {
+        foreach ($this->verifiedUsers as $queueUser) {
+            if ($queueUser->user_id = $user->id) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function refreshQueue(){
+        $this->refreshPositions($this);
+        $this->refreshEstimatedTimes($this);
+    }
+    private function refreshPositions()
+    {
+        $i = 0;
+        foreach ($this->verifiedUsers()->orderBy('position', 'asc')->get() as $queueUser) {
+            $i++;
+            $queueUser->position = $i;
+            $queueUser->save();
+        }
+    }
+    private function refreshEstimatedTimes()
+    {
+        date_default_timezone_set('Europe/Madrid');
+        foreach ($this->verifiedUsers as $queueUser) {
+            $queueUser->estimated_time = $this->estimatedTime($queueUser, $this);
+            $queueUser->save();
+        }
+    }
+    public function storeStadistics(QueueVerifiedUser $queueUser)
+    {
+        $statistic = new Statistic();
+        $statistic->queue_id = $this->id;
+        $statistic->user_id = $queueUser->user_id;
+        //posicion es igual a la funcion posicion
+        $statistic->position = $this->positions();
+        //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
+        $statistic->estimated_time = $this->estimatedTime($queueUser, $this);
+        $statistic->save();
     }
 }
