@@ -67,6 +67,8 @@ class CurrentQueue extends Model{
     public function refreshQueue(){
         $this->refreshPositions($this);
         $this->refreshEstimatedTimes($this);
+        $this->current_capacity = $this->positions()-1;
+        $this->save();
     }
     private function refreshPositions()
     {
