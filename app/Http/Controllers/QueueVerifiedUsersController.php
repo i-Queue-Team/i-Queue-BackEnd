@@ -43,8 +43,6 @@ class QueueVerifiedUsersController extends Controller
         $queueVerifiedUser = new QueueVerifiedUser();
         $queueVerifiedUser->queue_id = $queue->id;
         $queueVerifiedUser->user_id = $user->id;
-        //name
-        $queueVerifiedUser->name = $queue->commerce->name;
         //posicion es igual a la funcion posicion
         $queueVerifiedUser->position = $queue->positions();
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
@@ -53,7 +51,7 @@ class QueueVerifiedUsersController extends Controller
         $queue->refreshQueue();
         $queue->storeStadistics($queueVerifiedUser);
         if (!is_null($queueVerifiedUser)) {
-            return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
+            return IQResponse::response(Response::HTTP_CREATED,new QueueVerifiedUsersResource($queueVerifiedUser));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
