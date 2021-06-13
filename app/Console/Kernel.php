@@ -6,7 +6,6 @@ use App\Http\Resources\CommerceResource;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\QueueVerifiedUser;
-use App\Utils\Queue\QueueTools;
 use Carbon\Carbon;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\RawMessageFromArray;
@@ -61,8 +60,7 @@ class Kernel extends ConsoleKernel
                     $minutesEstimated = Carbon::parse($queueUser->estimated_time)->diffInSeconds(Carbon::now(),false)/-60;
                     if ($minutesEstimated <= 0){
                         $queueUser->delete();
-                        QueueTools::refresh_position($queueUser->queue->id, $queueUser->position);
-                        QueueTools::refresh_estimated_time($queueUser->queue->id);
+                        $queueUser->queue()->refreshQueue();
                         continue;
                     }
                     if ($minutesEstimated < $minutes){
