@@ -85,7 +85,7 @@ class CurrentQueue extends Model{
             $queueUser->save();
         }
     }
-    public function storeStatistic(QueueVerifiedUser $queueUser)
+    public function storeStadistics(QueueVerifiedUser $queueUser)
     {
         $statistic = new Statistic();
         $statistic->queue_id = $this->id;

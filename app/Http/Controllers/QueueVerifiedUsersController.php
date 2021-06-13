@@ -6,7 +6,6 @@ use App\Http\Resources\QueueVerifiedUsersResource;
 use App\Models\CurrentQueue;
 use Illuminate\Http\Request;
 use App\Models\QueueVerifiedUser;
-use App\Utils\Queue\QueueTools;
 use App\Utils\Responses\IQResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,20 +38,20 @@ class QueueVerifiedUsersController extends Controller
         if ($queueUsers_check_inQueue->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
+        $queue = CurrentQueue::find($request->queue_id);
         //queue instance
         $queueVerifiedUser = new QueueVerifiedUser();
-        $queueVerifiedUser->queue_id = $request->queue_id;
+        $queueVerifiedUser->queue_id = $queue->id;
         $queueVerifiedUser->user_id = $user->id;
         //name
-        $commerce = Commerce::find($request->queue_id);
+        $queueVerifiedUser->name = $queue->commerce->name;
         //posicion es igual a la funcion posicion
-        $queueVerifiedUser->position = QueueTools::position($request->queue_id);
+        $queueVerifiedUser->position = $queue->positions();
         //el tiempo estimado sera el actual con la adicion de los minutos recibidos de la funcion de tiempo estimado
         $queueVerifiedUser->estimated_time = date('Y-m-d H:i:s');
         $queueVerifiedUser->save();
-        QueueTools::refresh_estimated_time($request->queue_id);
-        QueueTools::add_user_to_queue($request->queue_id);
-        QueueTools::storeStatistic($request, $user);
+        $queue->refreshQueue();
+        $queue->storeStadistics($queueVerifiedUser);
         if (!is_null($queueVerifiedUser)) {
             return IQResponse::response(Response::HTTP_CREATED, $queueVerifiedUser);
         } else {
@@ -77,9 +76,7 @@ class QueueVerifiedUsersController extends Controller
             foreach ($queueUsers as $queueUser) {
                 if ($queueUser->id = $queue_id) {
                     $queueUser->delete();
-                    QueueTools::refresh_position($queue_id, $queueUser->position);
-                    QueueTools::refresh_estimated_time($queue_id);
-                    QueueTools::remove_user_to_queue($queue_id);
+                    $queueUser->queue->refreshQueue();
                     return IQResponse::emptyResponse(Response::HTTP_OK, new QueueVerifiedUsersResource($queueUser));
                 }
             }
@@ -101,9 +98,7 @@ class QueueVerifiedUsersController extends Controller
                     //We found user registered in the queue
                     if ($queueUser->position == 1) {
                         $queueUser->delete();
-                        QueueTools::refresh_position($queue_id, 1);
-                        QueueTools::refresh_estimated_time($queue_id);
-                        QueueTools::remove_user_to_queue($queue_id);
+                        $queueUser->refreshQueue();
                         return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
                     }
                 }
@@ -136,8 +131,7 @@ class QueueVerifiedUsersController extends Controller
         //return $queueVerifiedUsersToDelete;
         foreach ($queueVerifiedUsersToDelete as $queueVerifiedUser) {
             $queueVerifiedUser->delete();
-            QueueTools::refresh_position($queueVerifiedUser->queue->id, $queueVerifiedUser->position);
-            QueueTools::refresh_estimated_time($queueVerifiedUser->queue->id);
+            $queueVerifiedUser->queue->refreshQueue();
         }
         //instanciar la libreria de firebase
         $factory = (new Factory)->withServiceAccount(__DIR__ . '/firebase_credentials.json');
