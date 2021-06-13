@@ -19,11 +19,11 @@
                                 alt="android"></a></li>
                     <li>
                         <h5>Redes sociales</h5>
-                        <a class="grey-text text-lighten-3" href="#facebook"><img src="./images/facebook.png"
+                        <a class="grey-text text-lighten-3" href="https://www.facebook.com/profile.php?id=100069247908848"><img src="./images/facebook.png"
                                 alt="facebook"></a>
-                        <a class="grey-text text-lighten-3" href="#email"><img src="./images/correoelectronico.png"
+                        <a class="grey-text text-lighten-3" href="mailto: iqueuemaster@gmail.com"><img src="./images/correoelectronico.png"
                                 alt="email"></a>
-                        <a class="grey-text text-lighten-3" href="#twitter"><img src="./images/gorjeo.png"
+                        <a class="grey-text text-lighten-3" href="https://twitter.com/i_queueApp"><img src="./images/gorjeo.png"
                                 alt="twitter"></a>
                         <a class="grey-text text-lighten-3" href="#instagram"><img src="./images/instagram.png"
                                 alt="instagram"></a>
