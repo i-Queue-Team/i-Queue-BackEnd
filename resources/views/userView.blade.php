@@ -52,7 +52,11 @@
 </head>
 
 <body class="container">
+    @php
+        use App\Models\Commerce;
+        $commerces = Commerce::simplePaginate(4);
 
+    @endphp
 
     <!--menu-->
     <!--nav extendido-->
@@ -71,9 +75,9 @@
         <br>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li class="tab col s3 "><a class="active" href="#test1">Mapa</a></li>
+                <li class="tab col s3 "><a class="active" href="#test1">Comercios</a></li>
                 <li class="tab col s3"><a href="#test2">Colas</a></li>
-                <li class="tab col s3 "><a href="#test3">Comercios</a></li>
+                <li class="tab col s3 "><a href="#test3">Mapa</a></li>
             </ul>
         </div>
     </nav>
@@ -113,9 +117,69 @@
         <li><a href="#!">Configuracion</a></li>
         <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
     </ul>
-    <main class="center-align">
+    <main>
         <!--fin menu-->
         <div id="test1" class="col s12 queue-animate-bottom">
+            <!--tab datos-->
+            <h2 class="center-align">Comercios</h2>
+            <div class="container">
+                <div class="row">
+                    <!-- one .row fixes the issue -->
+
+                    <!-- cards -->
+                    @foreach ($commerces as $commerce)
+                        <div class="col s12 m6 l6 ">
+                            <div class="card large">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator" src="{{ $commerce->imageUrl() }}">
+                                </div>
+                                <div class="card-content">
+                                    <span
+                                        class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
+                                            class="material-icons right">more_vert</i></span>
+                                    <p>{{ $commerce->address }}</p>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Item Name</th>
+                                                <th>Item Price</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>Alvin</td>
+                                                <td>Eclair</td>
+                                                <td>$0.87</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alan</td>
+                                                <td>Jellybean</td>
+                                                <td>$3.76</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jonathan</td>
+                                                <td>Lollipop</td>
+                                                <td>$7.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">{{ $commerce->name }}<i
+                                            class="material-icons right">close</i></span>
+                                    <p>{{ $commerce->info }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                {{ $commerces->links('pagination::simple-materialize-pagination') }}
+            </div>
+        </div>
+        <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab datos-->
             <h2 class="center-align" id="tituloSeccion">Mapa I-Queue</h2>
 
@@ -148,36 +212,7 @@
 
             </ul>
         </div>
-        <div id="test3" class="col s12 queue-animate-bottom">
-            <!--tab datos-->
-            <h2>Comercios</h2>
-            <div class="container">
-                <div class="col-12">
-                    <ul class="collection with-header" style="width: 100%; ">
-                        <li>
-                            <div class="card medium">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="activator"
-                                        src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80">
-                                </div>
-                                <div class="card-content">
-                                    <span class="card-title activator grey-text text-darken-4">Card Title<i
-                                            class="material-icons right">more_vert</i></span>
-                                    <p><a href="#">This is a link</a></p>
-                                </div>
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Card Title<i
-                                            class="material-icons right">close</i></span>
-                                    <p>Here is some more information about this product that is only revealed once
-                                        clicked on.</p>
-                                </div>
-                            </div>
-                        </li>
 
-                    </ul>
-                </div>
-            </div>
-        </div>
 
         <!-- Modal Structure -->
         <div id="modal2" class="modal">
@@ -252,20 +287,12 @@
     L.control.scale().addTo(map);
 
     //marker con click de popup
-    L.marker([38.09620852240139, -3.6383423859866477]).addTo(map)
-        .bindPopup('Mercadona')
+    @foreach ($commerces as $commerce)
+
+        L.marker([{{$commerce->latitude}}, {{$commerce->longitude}} ]).addTo(map)
+        .bindPopup('{{$commerce->name}}')
         .openPopup();
-
-    //marker con click de popup
-    L.marker([39.09620852240239, -3.6383423859866477]).addTo(map)
-        .bindPopup('Alcampo')
-        .openPopup().closePopup();
-
-
-    //evento click del mapa
-    //  map.on('click', function() {
-    // alert("has hecho click en el mapa");
-    // });
+    @endforeach
 
 </script>
 
@@ -438,6 +465,20 @@
         $(".dropdown-trigger").dropdown({
             constrainWidth: false
         });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+            $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+        }
+
+        $(window).on("scroll", function() {
+            localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+        });
+
     });
 
 </script>
