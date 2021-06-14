@@ -19,15 +19,34 @@
             display: flex;
             min-height: 100vh;
             flex-direction: column;
+            min-width: 330px;
         }
 
         main {
             flex: 1 0 auto;
         }
 
+        .collection ul{
+            border-radius: 1.5em;
+        }
+
+        .collection li {
+            background: antiquewhite !important;
+
+        }
+
+        .inline-icon {
+   vertical-align: bottom;
+
+}
+
+.collection .collection-item.avatar{
+    padding-left: 10px !important;
+}
+
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-    <title>User view 1</title>
+    <title>User view</title>
 </head>
 
 <body class="container">
@@ -37,20 +56,19 @@
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">I-queue
-                    User-Panel</span></a>
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" alt=""></span></a>
             <ul class="right hide-on-med-and-down">
 
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
                             class="material-icons right">account_box</i></a></li>
             </ul>
         </div>
-
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="" data-target="slide-out" class="sidenav-trigger"  style="padding-left: 10px; height: 20px;" ><i class="material-icons left">account_box</i>{{ Auth::user()->name }}</a>
+        <br>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab col s3 "><a class="active" href="#test1">Mapa</a></li>
-                <li class="tab col s3"><a href="#test2">Cola</a></li>
+                <li class="tab col s3"><a href="#test2">Colas</a></li>
                 <li class="tab col s3 "><a href="#test3">Comercios</a></li>
             </ul>
         </div>
@@ -73,28 +91,120 @@
             <h2 class="center-align" id="tituloSeccion">Mapa I-Queue</h2>
 
             <section class="container">
-                <div id="map"></div>
+                <div id="map" style="z-index:5;"></div>
             </section>
-
+            <br><br>
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab datos-->
-            <h2>Nombre Cola</h2>
+            <h2>Colas activas</h2>
+
+            <ul class="collection">
+
+                <li class="collection-item avatar">
+                    <img class="responsive-img" src="https://via.placeholder.com/100" style="float: left;" alt="fotonegocio">
+                  <span class="title"><b>Nombre del negocio</b></span>
+                  <p style="margin-right: 75px">Posicion: 5º <p>
+                    <p style="margin-right: 15px"> Tiempo estimado: 20' <br>
+
+  <!-- Modal Trigger -->
+  <a class=" btn modal-trigger" href="#modal1"><i class="material-icons">info</i></a>
+
+
+                  <a href="#!" class="secondary-content" onclick="M.toast({html: 'Has salido de la cola'})"><i class="material-icons red-text" style="margin-top:20px">delete</i></a>
+                </li>
+
+              </ul>
         </div>
         <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab datos-->
-            <h2>Configuracion</h2>
+            <h2>Comercios</h2>
+            <div class="container">
+                <div class="col-12">
+            <ul class="collection with-header" style="width: 100%; " >
+                <li class="collection-header"><h4 class="center-align">Historial</h4></li>
+
+                <li class="collection-item">
+                    Peluquería
+                    <a class="modal-trigger" href="#modal2"><i class="material-icons" style="vertical-align:middle; margin-left:5%">info</i></a>
+                    <a class="btn-floating btn-small waves-effect waves-light green" onclick="M.toast({html: 'Se ha solicitado precola'})" style="float: right; margin-top: -5px;"><i class="material-icons">add</i></a>
+                </li>
+
+                </ul>
+            </div>
         </div>
+    </div>
+
+          <!-- Modal Structure -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Info del negocio</h4>
+
+            <p><i class="inline-icon material-icons">access_alarm</i>Horario: 7:00-14:00</p>
+            <p><i class="inline-icon material-icons">add_location</i>Avd sin nombre nº2</p>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat red white-text">Cerrar</a>
+    </div>
+  </div>
     </main>
 
     <!--fin menu-->
 
     @include('footerLayout')
 
+    <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Info del negocio</h4>
+
+            <p><i class="inline-icon material-icons">access_alarm</i>Horario: 7:00- 14:00</p>
+            <p><i class="inline-icon material-icons">add_location</i>Avd sin nombre nº2</p>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat red white-text">Cerrar</a>
+    </div>
+  </div>
+
+   <!-- contenido sidenav-->
+   <ul id="slide-out" class="sidenav">
+
+
+    <li><div class="user-view" style="z-index:10;">
+      <div class="background">
+        <img src="./images/Orca.jpg">
+      </div>
+      <a class="sidenav-close" href="#!" style="float: right;"><i class="material-icons white">close</i></a>
+      <img class="circle" src="./images/userlogin.png">
+      <span class="white-text name">{{ Auth::user()->name }}</span>
+      <span class="white-text email">{{ Auth::user()->email }}</span>
+    </div></li>
+
+    <li><a href="{{ url('/editProfile') }}">Editar perfil<i class="material-icons">edit</i></a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="waves-effect" href="{{ url('/logout') }}" style="color: red">Cerrar sesión<i class="material-icons red-text ">subdirectory_arrow_left</i></a></li>
+
+  </ul>
+<!--fin sidenav-->
+
 </body>
+<script>
+    //modal
 
+    document.addEventListener('DOMContentLoaded', function() {
+var elems = document.querySelectorAll('.modal');
+var instances = M.Modal.init(elems);
+});
 
+</script>
 
+ <!--sidenav-->
+ <script> document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });</script>
 
 <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 

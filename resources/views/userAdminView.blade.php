@@ -68,7 +68,7 @@ $token = Session::get('variableName');
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align">AdminPanel</span></a>
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" alt=""></span></a>
             <ul class="right hide-on-med-and-down">
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
                             class="material-icons right">account_box</i></a></li>

@@ -18,6 +18,7 @@
         display: flex;
         min-height: 100vh;
         flex-direction: column;
+        min-width: 330px;
     }
 
     main {
@@ -39,7 +40,7 @@
 
 
         <section class="container">
-            <div >
+            <div  style="border-radius: 1rem; background-color: antiquewhite; padding: 10px;">
                 <article class="col s6 offset-s3">
                     <form  method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
@@ -118,6 +119,12 @@
     });
 
 </script>
+
+ <!--sidenav-->
+ <script> document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });</script>
 
 
 <!-- Compiled and minified CSS -->

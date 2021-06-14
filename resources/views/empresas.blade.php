@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="shortcut icon" href="./images/headImg.png"><!--img de cabecera-->
     <!--CHARTS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>I-Queue empresas</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{URL::asset('/images/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{URL::asset('/images/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/images/favicon/favicon-16x16.png')}}">
 </head>
 <style>
     body {
@@ -67,7 +65,7 @@
                             <li>
                                 <p class="left-align"><i class="material-icons"
                                         style="vertical-align: middle; padding:5px">add_location</i>Destaca tu
-                                    establecimiento en nuestro mapa de negocios</p>
+                                    negocio en nuestro mapa</p>
                             </li>
                         </ul>
                     </div>
@@ -156,7 +154,7 @@
             <br>
     </main>
     <!--fin footer-->
-    @include('footerLayout')
+    @include('footerlayout')
 
     <!--fin contenedor-->
 </body>
@@ -180,5 +178,5 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 </body>
-@include('CookieLayout')
+
 </html>
