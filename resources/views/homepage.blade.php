@@ -115,6 +115,15 @@
     });
 
 </script>
+@php
+use App\Models\Commerce;
+$locations = array([]);
+$commerces = Commerce::all();
+foreach ($commerces as $commerce) {
+    array_push($locations,[$commerce->longitude,$commerce->latitude,200]);
+}
+$locations_array = json_encode($locations);
+@endphp
 <script>
     $(document).ready(function() {
         var ROOT_PATH = './images/';
@@ -123,18 +132,7 @@
         var myChart = echarts.init(chartDom);
         var option;
 
-        var data = [
-            [-3.63584,
-                38.0936,
-
-                200
-            ],
-            [
-                -83,
-                76.5,
-                200
-            ]
-        ];
+        var data = {{ $locations_array }};
         data = data.filter(function(dataItem) {
             return dataItem[2] > 0;
         }).map(function(dataItem) {
