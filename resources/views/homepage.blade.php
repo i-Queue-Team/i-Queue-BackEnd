@@ -120,7 +120,7 @@ use App\Models\Commerce;
 $locations = array([]);
 $commerces = Commerce::all();
 foreach ($commerces as $commerce) {
-    array_push($locations,[$commerce->longitude,$commerce->latitude,200]);
+    array_push($locations,[$commerce->longitude,$commerce->latitude,0.1]);
 }
 $locations_array = json_encode($locations);
 @endphp
@@ -163,7 +163,7 @@ $locations_array = json_encode($locations);
                 coordinateSystem: 'globe',
                 data: data,
                 barSize: 0.6,
-                minHeight: 0.2,
+                minHeight: 0.1,
                 silent: true,
                 itemStyle: {
                     color: 'green'
