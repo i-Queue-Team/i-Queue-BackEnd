@@ -114,33 +114,33 @@
                         </div>
                         <div class="collapsible-body"><b>Formulario de contacto</b>
 
-                            <form method="GET" action="{{ url('/contactoempresas') }}">
+                            <form action="mailto:iqueuemaster@gmail.com" method="post" enctype="text/plain">
 
                                 <div class="input-field col s12 m6 ">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input id="icon_prefix" type="text" class="validate">
+                                    <input name="Nombre_completo" id="icon_prefix" required type="text" class="validate">
                                     <label for="icon_prefix">Nombre completo</label>
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <i class="material-icons prefix">email</i>
-                                    <input id="icon_telephone" type="tel" class="validate">
+                                    <input name="email" id="icon_telephone" required type="email" class="validate">
                                     <label for="icon_telephone">Correo electrónico</label>
                                 </div>
 
                                 <div class="input-field col s12 m6">
                                     <i class="material-icons prefix">business</i>
-                                    <input id="icon_prefix" type="text" class="validate">
+                                    <input name="Nombre_de_la_empresa" id="icon_prefix" required type="text" class="validate">
                                     <label for="icon_prefix">Nombre de la empresa</label>
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <i class="material-icons prefix">phone</i>
-                                    <input id="icon_telephone" type="tel" class="validate">
+                                    <input name="telefono" id="icon_telephone" required type="tel" class="validate">
                                     <label for="icon_telephone">Teléfono de contacto</label>
                                 </div>
                                 <b>Explique brevemente su actividad comercial</b>
                                 <div class="input-field col s12 ">
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="comentario" class="materialize-textarea"
+                                    <textarea name="comentario" id="comentario" required class="materialize-textarea"
                                         style="background-color: rgb(208, 240, 230); padding-left:10px"></textarea>
                                 </div>
                                 <p class="center-align">
