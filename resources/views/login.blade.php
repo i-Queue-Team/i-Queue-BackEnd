@@ -139,7 +139,8 @@
             confirm_password.setCustomValidity('');
         }
     }
-
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
     $(document).ready(function() {
 
         $("#rememberPass").submit(function(event) {
@@ -158,6 +159,7 @@
                     var response = jQuery.parseJSON(xhr.responseText);
                     console.log(response.errors);
                     if (response.errors) {
+                        M.toast({html: 'Hubo un error :('})
                         $.each(response.errors, function(index, value) {
                             console.log(index + ": " + value);
                             if (response.errors) {
@@ -177,18 +179,10 @@
                     }
                 }
             }).done(function(data) {
-
                 var url = window.location;
                 var urlString = encodeURIComponent(url);
                 console.log(urlString);
-                if (urlString.includes("configuracion")) {
-                    document.location = url;
-
-                } else {
-                    document.location = url + "#configuracion";
-                }
-                location.reload();
-
+                M.toast({html: 'El correo de recuperacion se envio correctamente'})
 
                 //console.log(data);
             });
