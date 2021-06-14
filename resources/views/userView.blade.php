@@ -141,27 +141,14 @@
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Item Name</th>
-                                                <th>Item Price</th>
+                                                <th>Personas en la tienda</th>
+
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <tr>
-                                                <td>Alvin</td>
-                                                <td>Eclair</td>
-                                                <td>$0.87</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Alan</td>
-                                                <td>Jellybean</td>
-                                                <td>$3.76</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jonathan</td>
-                                                <td>Lollipop</td>
-                                                <td>$7.00</td>
+                                                <td>{{$commerce->queue->current_capacity}} de {{$commerce->queue->fixed_capacity}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -288,7 +275,6 @@
 
     //marker con click de popup
     @foreach ($commerces as $commerce)
-
         L.marker([{{$commerce->latitude}}, {{$commerce->longitude}} ]).addTo(map)
         .bindPopup('{{$commerce->name}}')
         .openPopup();
