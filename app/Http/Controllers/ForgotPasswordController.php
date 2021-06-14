@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
     {
         //delete function
         $validator = Validator::make($request->all(), [
-            "email" =>  "required|email",
+            "email" =>  "required|email|exists:users,email",
         ]);
         if ($validator->fails()) {
             return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
