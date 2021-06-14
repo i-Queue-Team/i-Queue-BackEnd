@@ -24,6 +24,9 @@
         main {
             flex: 1 0 auto;
         }
+        .slider .slides li .caption{
+            top: 5% !important;
+        }
 
     </style>
     <!--contenedor-->
@@ -44,7 +47,7 @@
                     <div class="caption center-align">
                         <h3>Monitoriza tu negocio</h3>
                         <h5>Gestiona la cadencia de clientes y el aforo.</h5>
-                        <img class="responsive-img" src="./images/logo.png" alt="">
+                        <img class="responsive-img" src="./images/logoiqueue.png" style="height:300px;" alt="">
 
                     </div>
                 </li>
@@ -53,7 +56,7 @@
                     <div class="caption center-align">
                         <h3>Ahorra tiempo</h3>
                         <h5>Evita esperas innecesarias solicitando turno con tu smartphone</h5>
-                        <img class="responsive-img" src="./images/time-is-money.png">
+                        <img class="responsive-img"  src="./images/reloj.png" style=" height:300px;">
                     </div>
                 </li>
                 <li>
@@ -61,7 +64,7 @@
                     <div class="caption center-align">
                         <h3>Mapea tu zona</h3>
                         <h5>Encuentra las tiendas y establecimientos que utilizan I-Queue cerca tuyo</h5>
-                        <img class="responsive-img" src="./images/map.png">
+                        <img class="responsive-img"  src="./images/mapa.png" style=" height:300px;">
                     </div>
                 </li>
             </ul>
