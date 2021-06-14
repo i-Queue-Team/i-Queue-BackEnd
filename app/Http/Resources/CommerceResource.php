@@ -22,6 +22,7 @@ class CommerceResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'info' => $this->info,
+            'address' => $this->address,
             'image' => $this->imageUrl(),
             'queueInfo' => $this->queue,
         ];

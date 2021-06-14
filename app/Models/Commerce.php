@@ -28,6 +28,7 @@ public function getIdAttribute($value)
         'longitude',
         'user_id',
         'info',
+        'address',
 
     ];
 

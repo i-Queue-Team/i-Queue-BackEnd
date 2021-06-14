@@ -230,17 +230,14 @@ $token = Session::get('variableName');
                             <div class="row">
                                 <div class="input-field col s6" id="latitude_err">
                                     <i class="material-icons prefix">map</i>
-                                    <label for="latitud">Latitud</label>
-                                    <input id="latitud" name="latitude" type="number"  step="any"
-                                        class="validate">
+                                    <label for="latitude">Latitud</label>
+                                    <input id="latitude" name="latitude" type="number"  step="any"class="validate">
 
                                 </div>
                                 <div class="input-field col s6" id="longitude_err">
                                     <i class="material-icons prefix">map</i>
-                                    <label for="longitud">Longitud</label>
-                                    <input id="longitud" name="longitude" type="number"  step="any"
-                                        class="validate">
-
+                                    <label for="longitude">Longitud</label>
+                                    <input id="longitude" name="longitude" type="number"  step="any" class="validate">
                                 </div>
                             </div>
                         </div>
@@ -249,9 +246,19 @@ $token = Session::get('variableName');
                             <div class="row">
                                 <div class="input-field col s12" id="info_err">
                                     <i class="material-icons prefix">mode_edit</i>
-
-                                    <textarea id="info" name="info" class="materialize-textarea"></textarea>
+                                    <textarea id="info" name="info" class="materialize-textarea validate"></textarea>
                                     <label for="info">Informacion del local</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="row">
+                                <div class="input-field col s12" id="address_err">
+                                    <i class="material-icons prefix">navigation</i>
+                                    <input id="address" name="address" type="text" class="validate">
+                                    <label for="address">Direccion del comercio</label>
                                 </div>
                             </div>
 
@@ -313,27 +320,31 @@ $token = Session::get('variableName');
                                             <div class="row">
                                                 <div class="input-field col s6" id="latitude_err">
                                                     <i class="material-icons prefix">map</i>
-                                                    <input id="latitude" name="latitude" type="number"
-                                                        step="any" class="validate"
-                                                        value="{{ $commerce->latitude }}">
-                                                    <label for="latitud">Latitud</label>
+                                                    <input id="latitude" name="latitude" type="number" step="any" class="validate" value="{{ $commerce->latitude }}">
+                                                    <label for="latitude">Latitud</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
                                                     <i class="material-icons prefix">map</i>
                                                     <input id="longitude" name="longitude" type="number"
                                                         step="any" class="validate"
                                                         value="{{ $commerce->longitude }}">
-                                                    <label for="longitud">Longitud</label>
+                                                    <label for="longitude">Longitud</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="row">
-                                                <div class="input-field col s6" id="latitude_err">
+                                                <div class="input-field col s12" id="latitude_err">
                                                     <i class="material-icons prefix">mode_edit</i>
                                                     <textarea id="info" name="info"
                                                         class="materialize-textarea">{{ $commerce->info }}</textarea>
                                                     <label for="info">Informacion del local</label>
+                                                </div>
+                                                <div class="input-field col s6" id="address_err">
+                                                    <i class="material-icons prefix">mode_edit</i>
+                                                    <textarea id="address" name="address"
+                                                        class="materialize-textarea">{{ $commerce->address }}</textarea>
+                                                    <label for="address">Direccion del local</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
                                                     <button type="submit" class="waves-effect waves-light btn-large">
@@ -497,22 +508,20 @@ $token = Session::get('variableName');
                 processData: false, // tell jQuery not to process the data
                 contentType: false,
                 error: function(xhr, status, error) {
-                    console.log(xhr.responseText);
+                    $(".errorSpan").remove();
                     var response = jQuery.parseJSON(xhr.responseText);
-                    console.log(response.errors);
                     if (response.errors) {
                         $.each(response.errors, function(index, value) {
                             console.log(index + ": " + value);
+
                             if (response.errors) {
-                                if (!$("#" + index).hasClass("invalid")) {
-                                    $("#" + index).addClass("invalid");
-                                    $("#" + index + "_err").append(
-                                        '<span class="helper-text" data-error="' +
-                                        value +
-                                        '" data-success="Pinta Bien!">' +
-                                        value + "</span>"
-                                    );
-                                }
+                                $("#" + index).addClass("invalid");
+                                $("#" + index + "_err").append(
+                                    '<span class="helper-text errorSpan" data-error="' +
+                                    value +
+                                    '" data-success="Pinta Bien!">' +
+                                    value + "</span>"
+                                );
                             } else {
                                 $("#" + index).addClass("success");
                             }
@@ -540,22 +549,20 @@ $token = Session::get('variableName');
                 processData: false, // tell jQuery not to process the data
                 contentType: false,
                 error: function(xhr, status, error) {
-                    console.log(xhr.responseText);
+                    $(".errorSpan").remove();
                     var response = jQuery.parseJSON(xhr.responseText);
-                    console.log(response.errors);
                     if (response.errors) {
                         $.each(response.errors, function(index, value) {
                             console.log(index + ": " + value);
+
                             if (response.errors) {
-                                if (!$("#" + index).hasClass("invalid")) {
-                                    $("#" + index).addClass("invalid");
-                                    $("#" + index + "_err").append(
-                                        '<span class="helper-text" data-error="' +
-                                        value +
-                                        '" data-success="Pinta Bien!">' +
-                                        value + "</span>"
-                                    );
-                                }
+                                $("#" + index).addClass("invalid");
+                                $("#" + index + "_err").append(
+                                    '<span class="helper-text errorSpan" data-error="' +
+                                    value +
+                                    '" data-success="Pinta Bien!">' +
+                                    value + "</span>"
+                                );
                             } else {
                                 $("#" + index).addClass("success");
                             }

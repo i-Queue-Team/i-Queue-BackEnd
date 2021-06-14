@@ -26,6 +26,7 @@ class CommerceFactory extends Factory
         return [
             'name' => $this->faker->company,
             'latitude' => $this->faker->randomFloat(null,0,7),
+            'address' => $this->faker->address,
             'longitude' => $this->faker->randomFloat(null,0,7),
             'user_id'=> User::factory()->admin()->create(),
         ];

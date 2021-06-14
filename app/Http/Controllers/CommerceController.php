@@ -40,6 +40,7 @@ class CommerceController extends Controller
             "latitude"  =>  "required",
             "longitude" =>  "required",
             "info" =>  "required",
+            "address" =>  "required",
             "image"     =>  "required|image|mimes:jpeg,png,jpg|max:2048",
         ]);
         if ($validator->fails()) {
@@ -93,6 +94,9 @@ class CommerceController extends Controller
         }
         if($request->has('longitude')&& !empty($request->input('longitude'))){
             $commerce->longitude = $request->input('longitude');
+        }
+        if($request->has('address')&& !empty($request->input('address'))){
+            $commerce->address = $request->input('address');
         }
         $image = $request->file('image');
         $removedImage = $commerce->image;
