@@ -30,10 +30,11 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('commerces',CommerceController::class);
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
-
-    Route::post('current-queues', [CurrentQueueController::class, 'store']);
-    Route::get('current-queues', [CurrentQueueController::class, 'index']);
-    Route::get('current-queues/{id}', [CurrentQueueController::class, 'show']);
+    Route::apiResource('current-queues',CurrentQueueController::class);
+    //Route::post('current-queues', [CurrentQueueController::class, 'store']);
+    //Route::get('current-queues', [CurrentQueueController::class, 'index']);
+    //Route::get('current-queues/{id}', [CurrentQueueController::class, 'show']);
+    //Route::put('current-queues/{id}', [CurrentQueueController::class, 'update']);
 
     //for testing purposes
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users

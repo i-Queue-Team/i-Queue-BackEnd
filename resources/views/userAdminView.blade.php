@@ -166,12 +166,13 @@ $token = Session::get('variableName');
                         <h3>Editar <i class="material-icons prefix">mode_edit</i></h3>
 
                         <div class="row">
-                            <form class="col s12">
+                            <form class="col s12" id="update_queue">
                                 @csrf
                                 <div class="row">
                                     <div class="row">
                                         <div class="input-field col s6" id="fixed_capacity_err">
                                             <i class="material-icons prefix">nature_people</i>
+                                            <input name="_method" type="hidden" value="PUT">
                                             <input id="fixed_capacity" name="fixed_capacity" type="number"
                                                 step="1" value="{{ $queue->fixed_capacity }}" class="validate">
                                             <label for="fixed_capacity">Aforo</label>
@@ -494,9 +495,7 @@ $token = Session::get('variableName');
 
     $(document).ready(function() {
         $("#commerce_create").submit(function(event) {
-            var formData = new FormData(this);
-
-            console.log(formData);
+            var formData = new FormData(this); 
             $.ajax({
                 type: "POST",
                 url: "{{ URL::to('/') }}/api/commerces",
@@ -570,7 +569,6 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-
                 var url = window.location;
                 var urlString = encodeURIComponent(url);
                 console.log(urlString);
@@ -581,12 +579,63 @@ $token = Session::get('variableName');
                     document.location = url + "#configuracion";
                 }
                 location.reload();
-
-
                 //console.log(data);
             });
             event.preventDefault();
         });
+        $("#update_queue").submit(function(event) {
+            var formData = new FormData(this);
+            formData.append('_method', 'PUT');
+            
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::to('/') }}/api/current-queues/{{ $commerce_id }}",
+                headers: {
+                    'Authorization': 'Bearer {{ $token }}'
+                },
+                data: formData,
+                encode: true,
+                processData: false, // tell jQuery not to process the data
+                contentType: false,
+                error: function(xhr, status, error) {
+                    $(".errorSpan").remove();
+                    var response = jQuery.parseJSON(xhr.responseText);
+                    if (response.errors) {
+                        $.each(response.errors, function(index, value) {
+                            console.log(index + ": " + value);
+
+                            if (response.errors) {
+                                $("#" + index).addClass("invalid");
+                                $("#" + index + "_err").append(
+                                    '<span class="helper-text errorSpan" data-error="' +
+                                    value +
+                                    '" data-success="Pinta Bien!">' +
+                                    value + "</span>"
+                                );
+                            } else {
+                                $("#" + index).addClass("success");
+                            }
+                        });
+                    }
+                }
+            }).done(function(data) {
+
+                var url = window.location;
+                var urlString = encodeURIComponent(url);
+                console.log(urlString);
+                if (urlString.includes("TuCola")) {
+                    document.location = url;
+
+                } else {
+                    document.location = url + "#TuCola";
+                }
+                
+                location.reload();
+                console.log(data);
+            });
+            event.preventDefault();
+        });
+
 
 
         getQueueData();
@@ -603,7 +652,7 @@ $token = Session::get('variableName');
                 'Authorization': 'Bearer {{ $token }}'
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
 
                 $('#fixed_capacity').html(data.data.fixed_capacity);
                 $('#current_capacity').html(data.data.current_capacity);

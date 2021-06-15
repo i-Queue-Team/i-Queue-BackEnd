@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\CurrentQueue;
@@ -49,4 +49,25 @@ class CurrentQueueController extends Controller
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function update($id,Request $request){
+        $queue = CurrentQueue::find($id);
+        $validator  =   Validator::make($request->all(), [
+            "fixed_capacity"  =>  "integer",
+            "average_time"  =>  "integer",
+        ]);
+        if ($validator->fails()) {
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST,$validator->errors());
+        }
+        DB::beginTransaction();
+        if($request->has('fixed_capacity')&& !empty($request->input('fixed_capacity'))){
+            $queue->fixed_capacity = $request->input('fixed_capacity');
+        }
+        if($request->has('average_time')&& !empty($request->input('average_time'))){
+            $queue->average_time = $request->input('average_time');
+        }
+        $queue->save();
+        DB::commit();
+        return IQResponse::response(Response::HTTP_OK,$queue);
+    }
+    
 }
