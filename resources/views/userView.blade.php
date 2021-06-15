@@ -441,7 +441,6 @@ $token = Session::get('variableName');
                 'Authorization': 'Bearer {{ $token }}'
             },
             success: function(data) {
-                console.log(data.data);
                 var $queues_container = $("#queues_container");
                 $queues_container.empty();
                 if (data.data.length == 0) {
@@ -470,12 +469,11 @@ $token = Session::get('variableName');
                         html: 'Colas actualizadas!'
                     })
                 }
-
-
-
             },
             error: function() {
-                console.log("error");
+                M.toast({
+                    html: 'hubo un error!'
+                })
             }
         });
     }
@@ -488,7 +486,6 @@ $token = Session::get('variableName');
                 'Authorization': 'Bearer {{ $token }}'
             },
             success: function(data) {
-                console.log(data.data);
                 getQueueData();
                 //show toast
                 M.toast({
@@ -497,6 +494,9 @@ $token = Session::get('variableName');
             },
             error: function() {
                 console.log("error");
+                M.toast({
+                    html: 'hubo un error!'
+                })
             }
         });
     }
