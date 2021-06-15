@@ -9,7 +9,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="{{URL::asset('/images/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{URL::asset('/images/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/images/favicon/favicon-16x16.png')}}">
 
     <style>
         #map {
@@ -256,11 +258,10 @@
 
     L.control.scale().addTo(map);
 
-    //marker con click de popup
     @foreach ($commerces as $commerce)
-        L.marker([{{ $commerce->latitude }}, {{ $commerce->longitude }} ]).addTo(map)
-        .bindPopup('{{ $commerce->name }}')
-        .openPopup();
+        L.marker([{{$commerce->latitude}}, {{$commerce->longitude}} ]).addTo(map)
+        .bindPopup('{{$commerce->name}}')
+        .openPopup().closePopup();
     @endforeach
 
 </script>

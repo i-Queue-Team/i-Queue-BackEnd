@@ -14,19 +14,19 @@ main {
     position:relative;animation:animatebottom 0.4s}@keyframes animatebottom{from{bottom:-300px;opacity:0} to{bottom:0;opacity:1}
 }
 
-html::-webkit-scrollbar-track
+::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px #64ffdbaf;
 	background-color: #F5F5F5;
 }
 
-html::-webkit-scrollbar
+::-webkit-scrollbar
 {
 	width: 10px;
 	background-color: #F5F5F5;
 }
 
-html::-webkit-scrollbar-thumb
+::-webkit-scrollbar-thumb
 {
 	background-color: #009688;
 	border: 1px solid #64ffdb;
