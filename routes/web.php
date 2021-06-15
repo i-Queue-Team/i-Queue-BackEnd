@@ -54,10 +54,11 @@ Route::get("logout", [UserController::class, 'logout']);
 Route::post("register", [UserController::class, 'registerWeb']);
 Route::post("login", [UserController::class, 'authenticateWeb']);
 Route::get('forgot-password/{id?}', [ForgotPasswordController::class, 'forgotPassword']);
-Route::group( ['middleware' => 'auth' ], function()
-{
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
-
+    Route::get('/editProfile', function () {
+        return view('userEditProfile');
+    });
 });

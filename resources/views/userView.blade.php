@@ -109,12 +109,12 @@
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
 
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuracion</a></li>
         <li class="divider"></li>
         <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
     </ul>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuracion</a></li>
         <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
     </ul>
     <main>
