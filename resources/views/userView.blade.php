@@ -148,7 +148,8 @@
 
                                         <tbody>
                                             <tr>
-                                                <td>{{$commerce->queue->current_capacity}} de {{$commerce->queue->fixed_capacity}}</td>
+                                                <td>{{ $commerce->queue->current_capacity }} de
+                                                    {{ $commerce->queue->fixed_capacity }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -156,7 +157,14 @@
                                 <div class="card-reveal">
                                     <span class="card-title grey-text text-darken-4">{{ $commerce->name }}<i
                                             class="material-icons right">close</i></span>
-                                    <p>{{ $commerce->info }}</p>
+
+                                    <ul style="line-height: 50px;">
+                                        <li>{{ $commerce->address }} </li>
+                                        <li>{{ $commerce->info }} </li>
+                                    </ul>
+                                    <a href="#"><i class="material-icons">gmail</i></a>
+                                    <a href=""><i class="material-icons">facebook</i></a>
+                                    <a href=""><i class="material-icons">call</i></a>
                                 </div>
                             </div>
                         </div>
@@ -275,8 +283,8 @@
 
     //marker con click de popup
     @foreach ($commerces as $commerce)
-        L.marker([{{$commerce->latitude}}, {{$commerce->longitude}} ]).addTo(map)
-        .bindPopup('{{$commerce->name}}')
+        L.marker([{{ $commerce->latitude }}, {{ $commerce->longitude }} ]).addTo(map)
+        .bindPopup('{{ $commerce->name }}')
         .openPopup();
     @endforeach
 
