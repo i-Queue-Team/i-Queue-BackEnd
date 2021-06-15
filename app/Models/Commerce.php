@@ -10,7 +10,6 @@ class Commerce extends Model{
     use HasFactory;
 
     protected $table = 'commerces';
-    public $timestamps = false;
 
     /*
 //HASHED ID !!!!!!!!!!!!!!! TODO
