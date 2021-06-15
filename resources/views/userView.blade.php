@@ -76,18 +76,78 @@
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content"  >
 
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuracion</a></li>
         <li class="divider"></li>
         <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
     </ul>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="#!">Configuracion</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuracion</a></li>
         <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
     </ul>
     <main class="center-align">
         <!--fin menu-->
         <div id="test1" class="col s12 queue-animate-bottom">
             <!--tab datos-->
+<<<<<<< Updated upstream
+=======
+            <h2 class="center-align">Comercios</h2>
+            <div class="container">
+                <div class="row">
+                    <!-- one .row fixes the issue -->
+
+                    <!-- cards -->
+                    @foreach ($commerces as $commerce)
+                        <div class="col s12 m6 l6 ">
+                            <div class="card large">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator" src="{{ $commerce->imageUrl() }}">
+                                </div>
+                                <div class="card-content">
+                                    <span
+                                        class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
+                                            class="material-icons right">more_vert</i></span>
+                                    <p>{{ $commerce->address }}</p>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Personas en la tienda</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>{{$commerce->queue->current_capacity}} de {{$commerce->queue->fixed_capacity}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4">{{ $commerce->name }}<i
+                                            class="material-icons right">close</i></span>
+
+
+                                        <ul style="line-height: 50px;">
+                                            <li>Abierto/Cerrado </li>
+                                            <li>Horario 7:00-14:00 </li>
+                                            <li>Calle sin nombre, 2 </li>
+                                            <li>{{  $commerce->info }} </li>
+                                        </ul>
+                                        <a href="#"><i class="material-icons">gmail</i></a>
+                                        <a href=""><i class="material-icons">facebook</i></a>
+                                        <a href=""><i class="material-icons">call</i></a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+                {{ $commerces->links('pagination::simple-materialize-pagination') }}
+            </div>
+        </div>
+        <div id="test3" class="col s12 queue-animate-bottom">
+            <!--tab datos-->
+>>>>>>> Stashed changes
             <h2 class="center-align" id="tituloSeccion">Mapa I-Queue</h2>
 
             <section class="container">
@@ -97,14 +157,23 @@
         </div>
         <div id="test2" class="col s12 queue-animate-bottom">
             <!--tab datos-->
-            <h2>Colas activas</h2>
+            <h2 class="center-align">Colas activas</h2>
 
             <ul class="collection">
 
                 <li class="collection-item avatar">
+<<<<<<< Updated upstream
                     <img class="responsive-img" src="https://via.placeholder.com/100" style="float: left;" alt="fotonegocio">
                   <span class="title"><b>Nombre del negocio</b></span>
                   <p style="margin-right: 75px">Posicion: 5º <p>
+=======
+                    <div class="center-align">
+                    <img class="responsive-img" src="https://via.placeholder.com/100" style="float: left;"
+                        alt="fotonegocio">
+                    <span class="title"><b>Nombre del negocio</b></span>
+                    <p style="margin-right: 75px">Posicion: 5º
+                    <p>
+>>>>>>> Stashed changes
                     <p style="margin-right: 15px"> Tiempo estimado: 20' <br>
 
   <!-- Modal Trigger -->
@@ -113,8 +182,13 @@
 
                   <a href="#!" class="secondary-content" onclick="M.toast({html: 'Has salido de la cola'})"><i class="material-icons red-text" style="margin-top:20px">delete</i></a>
                 </li>
+<<<<<<< Updated upstream
 
               </ul>
+=======
+            </div>
+            </ul>
+>>>>>>> Stashed changes
         </div>
         <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab datos-->
@@ -209,11 +283,13 @@ var instances = M.Modal.init(elems);
 <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
 <script>
+
+attributionControl: false
     //map configuracion
     var map = L.map('map').
     setView([38.089923966368815, -3.615282093540719],
         15);
-
+        map.attributionControl.setPrefix('Iqueue business map')
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
         maxZoom: 18
@@ -224,6 +300,7 @@ var instances = M.Modal.init(elems);
     L.control.scale().addTo(map);
 
     //marker con click de popup
+<<<<<<< Updated upstream
     L.marker([38.09620852240139, -3.6383423859866477]).addTo(map)
         .bindPopup('Mercadona')
         .openPopup();
@@ -238,6 +315,13 @@ var instances = M.Modal.init(elems);
     //  map.on('click', function() {
     // alert("has hecho click en el mapa");
     // });
+=======
+    @foreach ($commerces as $commerce)
+        L.marker([{{$commerce->latitude}}, {{$commerce->longitude}} ]).addTo(map)
+        .bindPopup('{{$commerce->name}}')
+        .openPopup().closePopup();
+    @endforeach
+>>>>>>> Stashed changes
 
 </script>
 

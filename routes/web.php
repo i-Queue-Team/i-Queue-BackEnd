@@ -49,6 +49,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/editProfile', function () {
+    return view('userEditProfile');
+});
+
 
 Route::get("logout", [UserController::class, 'logout']);
 Route::post("register", [UserController::class, 'registerWeb']);

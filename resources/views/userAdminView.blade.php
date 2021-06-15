@@ -68,13 +68,20 @@ $token = Session::get('variableName');
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
+<<<<<<< Updated upstream
             <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" alt=""></span></a>
+=======
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img
+                src="./images/cabeceraIcon.png" alt=""></span></a>
+>>>>>>> Stashed changes
             <ul class="right hide-on-med-and-down">
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
                             class="material-icons right">account_box</i></a></li>
             </ul>
         </div>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+            class="material-icons left">account_box</i>{{ Auth::user()->name }}</a>
+
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
@@ -92,13 +99,31 @@ $token = Session::get('variableName');
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
 
-        <li><a href="#!">Configuración</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuración</a></li>
         <li class="divider"></li>
         <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
     </ul>
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="#!">Configuración</a></li>
-        <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
+
+        <li>
+            <div class="user-view" style="z-index:10;">
+                <div class="background">
+                    <img src="./images/Orca.jpg">
+                </div>
+                <a class="sidenav-close" href="#!" style="float: right;"><i class="material-icons white">close</i></a>
+                <img class="circle" src="./images/userlogin.png">
+                <span class="white-text name">{{ Auth::user()->name }}</span>
+                <span class="white-text email">{{ Auth::user()->email }}</span>
+            </div>
+        </li>
+
+        <li><a href="{{ url('/editProfile') }}">Editar perfil<i class="material-icons">edit</i></a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="waves-effect" href="{{ url('/logout') }}" style="color: red">Cerrar sesión<i
+                    class="material-icons red-text ">subdirectory_arrow_left</i></a></li>
+
     </ul>
     <main class="center-align">
         <!--fin menu-->
