@@ -74,7 +74,7 @@ $token = Session::get('variableName');
                             class="material-icons right">account_box</i></a></li>
             </ul>
         </div>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
                 <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
@@ -92,14 +92,12 @@ $token = Session::get('variableName');
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
 
-        <li><a href="#!">Configuración</a></li>
+        <li><a href="{{ url('/editProfile') }}">Configuracion</a></li>
         <li class="divider"></li>
         <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
     </ul>
-    <ul class="sidenav" id="mobile-demo">
-        <li><a href="#!">Configuración</a></li>
-        <li><a href="{{ url('/logout') }}"> Cerrar Sesión </a></li>
-    </ul>
+    <!-- sidenav -->
+    @include('userSidenav')
     <main class="center-align">
         <!--fin menu-->
         <div id="test1" class="col s12 queue-animate-bottom">
@@ -495,7 +493,7 @@ $token = Session::get('variableName');
 
     $(document).ready(function() {
         $("#commerce_create").submit(function(event) {
-            var formData = new FormData(this); 
+            var formData = new FormData(this);
             $.ajax({
                 type: "POST",
                 url: "{{ URL::to('/') }}/api/commerces",
@@ -586,7 +584,7 @@ $token = Session::get('variableName');
         $("#update_queue").submit(function(event) {
             var formData = new FormData(this);
             formData.append('_method', 'PUT');
-            
+
             $.ajax({
                 type: "POST",
                 url: "{{ URL::to('/') }}/api/current-queues/{{ $commerce_id }}",
@@ -629,7 +627,7 @@ $token = Session::get('variableName');
                 } else {
                     document.location = url + "#TuCola";
                 }
-                
+
                 location.reload();
                 console.log(data);
             });

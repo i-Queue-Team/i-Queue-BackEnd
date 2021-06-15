@@ -10,6 +10,7 @@
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+
     <style>
         #map {
             width: 100%;
@@ -62,8 +63,8 @@
     <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img
-                        src="./images/cabeceraIcon.png" alt=""></span></a>
+
+            <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" height="50px" style="margin: 5px"  alt=""></span></a>
             <ul class="right hide-on-med-and-down">
 
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
@@ -82,29 +83,7 @@
         </div>
     </nav>
     <!-- contenido sidenav-->
-    <ul id="slide-out" class="sidenav">
-
-
-        <li>
-            <div class="user-view" style="z-index:10;">
-                <div class="background">
-                    <img src="./images/Orca.jpg">
-                </div>
-                <a class="sidenav-close" href="#!" style="float: right;"><i class="material-icons white">close</i></a>
-                <img class="circle" src="./images/userlogin.png">
-                <span class="white-text name">{{ Auth::user()->name }}</span>
-                <span class="white-text email">{{ Auth::user()->email }}</span>
-            </div>
-        </li>
-
-        <li><a href="{{ url('/editProfile') }}">Editar perfil<i class="material-icons">edit</i></a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="waves-effect" href="{{ url('/logout') }}" style="color: red">Cerrar sesión<i
-                    class="material-icons red-text ">subdirectory_arrow_left</i></a></li>
-
-    </ul>
+    @include('userSidenav')
     <!--fin sidenav-->
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">

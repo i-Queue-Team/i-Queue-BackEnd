@@ -1,6 +1,6 @@
 <nav class="nav-extended">
     <div class="nav-wrapper" style="margin-left: 8px;">
-        <a href="{{ url('/') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" height="66px"  alt=""></span></a>
+        <a href="{{ url('/') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" height="50px" style="margin: 5px"  alt=""></span></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ url('/login') }}"><i class="material-icons left">account_circle</i>Login</a></li>
         </ul>
