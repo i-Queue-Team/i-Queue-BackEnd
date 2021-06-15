@@ -60,28 +60,24 @@
     @endphp
 
     <!--menu-->
-    <!--nav extendido-->
     <nav class="nav-extended">
         <div class="nav-wrapper" style="margin-left: 8px;">
-
             <a href="{{ url('/dashboard') }}" class="brand-logo"><span class=".center-align"><img src="./images/cabeceraIcon.png" height="50px" style="margin: 5px"  alt=""></span></a>
             <ul class="right hide-on-med-and-down">
-
                 <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i
                             class="material-icons right">account_box</i></a></li>
             </ul>
         </div>
-        <a href="" data-target="slide-out" class="sidenav-trigger" style="padding-left: 10px; height: 20px;"><i
-                class="material-icons left">account_box</i>{{ Auth::user()->name }}</a>
-        <br>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li class="tab col s3 "><a class="active" href="#test1">Comercios</a></li>
-                <li class="tab col s3"><a href="#test2">Colas</a></li>
-                <li class="tab col s3 "><a href="#test3">Mapa</a></li>
+                    <li class="tab col s3 "><a class="active" href="#test1">Comercios</a></li>
+                    <li class="tab col s3"><a href="#test2">Colas</a></li>
+                    <li class="tab col s3 "><a href="#test3">Mapa</a></li>
             </ul>
         </div>
     </nav>
+
     <!-- contenido sidenav-->
     @include('userSidenav')
     <!--fin sidenav-->
