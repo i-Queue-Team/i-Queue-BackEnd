@@ -2,14 +2,15 @@
 
 namespace App\Exceptions;
 
-use App\Utils\Responses\IQResponse;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\App;
-use Prophecy\Exception\Doubler\MethodNotFoundException;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
+use App\Utils\Responses\IQResponse;
+use Illuminate\Support\Facades\App;
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpFoundation\Response;
+use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +46,7 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (Throwable $e, $request) {
             switch (true) {
+                case $e instanceof NotFoundHttpException:
                 case $e instanceof MethodNotFoundException:
                     return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
                 case $e instanceof MethodNotAllowedHttpException:
