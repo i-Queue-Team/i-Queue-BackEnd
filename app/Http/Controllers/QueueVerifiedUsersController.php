@@ -16,7 +16,7 @@ use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\RawMessageFromArray;
 use Illuminate\Support\Facades\Storage;
-
+use QueueVerifiedUsers;
 
 class QueueVerifiedUsersController extends Controller
 {
@@ -51,7 +51,7 @@ class QueueVerifiedUsersController extends Controller
         $queue->refreshQueue();
         $queue->storeStadistics($queueVerifiedUser);
         if (!is_null($queueVerifiedUser)) {
-            return IQResponse::response(Response::HTTP_CREATED,new QueueVerifiedUsersResource($queueVerifiedUser));
+            return IQResponse::response(Response::HTTP_CREATED, new QueueVerifiedUsersResource($queueVerifiedUser));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -82,28 +82,30 @@ class QueueVerifiedUsersController extends Controller
         return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
     }
     //entry function that checks whether a user can enter the establisment and does so if posible
-    public function entryCheck($user_id, $queue_id)
+    public function entryCheck(Request $request)
     {
-        //Find queue by id
-        $queue = CurrentQueue::find($queue_id);
-        //Return if no queue found
-        if (!$queue) return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
-        // User-registered queues
-        $queueUsers = AuthTools::getAuthUser()->queues;
-        if ($queueUsers) {
-            foreach ($queueUsers as $queueUser) {
-                if ($queueUser->queue_id == $queue_id) {
-                    //We found user registered in the queue
-                    if ($queueUser->position == 1) {
-                        $queueUser->delete();
-                        $queueUser->refreshQueue();
-                        return IQResponse::emptyResponse(Response::HTTP_NO_CONTENT);
-                    }
-                }
-            }
-            return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        $user = AuthTools::getAuthUser();
+
+        //validate request
+        $validator  =   Validator::make($request->all(), [
+            "queue_id"  =>  "required|integer|exists:current_queues,id",
+        ]);
+        if ($validator->fails()) {
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
-        return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        //Find queue by id
+        $queueVerifiedUser = QueueVerifiedUser::where('user_id', $user->id)->where('queue_id', $request->queue_id)->first();
+        //Return if no verified user found
+        if (!$queueVerifiedUser) return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
+        // User-registered queues
+        if ($queueVerifiedUser->position == 1) {
+            $queueVerifiedUser->delete();
+            $queueVerifiedUser->queue->refreshQueue();
+            return IQResponse::emptyResponse(Response::HTTP_OK);
+        }else{
+            return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
+        }
+
     }
     //function to get user info from queue
     public function info($user_id)
