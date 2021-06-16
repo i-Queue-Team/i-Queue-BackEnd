@@ -100,57 +100,60 @@
         <div id="test1" class="col s12 queue-animate-bottom">
             <!--tab datos-->
             <h2 class="center-align">Comercios</h2>
-            <div class="container">
-                <div class="row">
-                    <!-- one .row fixes the issue -->
+            @if ($commerces)
+                <div class="container">
 
-                    <!-- cards -->
-                    @foreach ($commerces as $commerce)
-                        <div class="col s12 m6 l6 ">
-                            <div class="card large">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="activator" src="{{ $commerce->imageUrl() }}">
-                                </div>
-                                <div class="card-content">
-                                    <span
-                                        class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
-                                            class="material-icons right">more_vert</i></span>
-                                    <p>{{ $commerce->address }}</p>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Personas en la tienda</th>
+                    <div class="row">
+                        <!-- one .row fixes the issue -->
+                        <!-- cards -->
+                        @foreach ($commerces as $commerce)
+                            <div class="col s12 m6 l6 ">
+                                <div class="card large">
+                                    <div class="card-image waves-effect waves-block waves-light">
+                                        <img class="activator" src="{{ $commerce->imageUrl() }}">
+                                    </div>
+                                    <div class="card-content">
+                                        <span
+                                            class="card-title activator grey-text text-darken-4">{{ $commerce->name }}<i
+                                                class="material-icons right">more_vert</i></span>
+                                        <p>{{ $commerce->address }}</p>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Personas en la tienda</th>
 
-                                            </tr>
-                                        </thead>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            <tr>
-                                                <td>{{ $commerce->queue->current_capacity }} de
-                                                    {{ $commerce->queue->fixed_capacity }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">{{ $commerce->name }}<i
-                                            class="material-icons right">close</i></span>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ $commerce->queue->current_capacity }} de
+                                                        {{ $commerce->queue->fixed_capacity }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">{{ $commerce->name }}<i
+                                                class="material-icons right">close</i></span>
 
-                                    <ul style="line-height: 50px;">
-                                        <li>{{ $commerce->address }} </li>
-                                        <li>{{ $commerce->info }} </li>
-                                    </ul>
-                                    <a href="#"><i class="material-icons">gmail</i></a>
-                                    <a href=""><i class="material-icons">facebook</i></a>
-                                    <a href=""><i class="material-icons">call</i></a>
+                                        <ul style="line-height: 50px;">
+                                            <li>{{ $commerce->address }} </li>
+                                            <li>{{ $commerce->info }} </li>
+                                        </ul>
+                                        <a href="#"><i class="material-icons">gmail</i></a>
+                                        <a href=""><i class="material-icons">facebook</i></a>
+                                        <a href=""><i class="material-icons">call</i></a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
 
+                    </div>
+                    {{ $commerces->links('pagination::simple-materialize-pagination') }}
                 </div>
-                {{ $commerces->links('pagination::simple-materialize-pagination') }}
-            </div>
+            @endif
+
         </div>
         <div id="test3" class="col s12 queue-animate-bottom">
             <!--tab datos-->
