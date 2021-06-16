@@ -48,7 +48,7 @@ Route::middleware('auth:api')->group(function () {
     //http://localhost/i-Queue-BackEnd/public/api/queue_verified_users
     Route::delete('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'destroy']);
     //check if user can enter establishment (tablet)
-    Route::post('queue-verified-users-check/{queueId}', [QueueVerifiedUsersController::class, 'entryCheck']);
+    Route::post('queue-verified-users-check', [QueueVerifiedUsersController::class, 'entryCheck']);
     //check unser info (phone)
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
