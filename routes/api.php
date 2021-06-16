@@ -52,7 +52,7 @@ Route::middleware('auth:api')->group(function () {
     //check unser info (phone)
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
-    Route::apiResource('users',UserController::class)->only(['show','destroy']);
+    Route::apiResource('users',UserController::class)->only(['show','destroy','update']);
     Route::get('users/{id}/commerce',[UserController::class,'commerce']);
 });
 

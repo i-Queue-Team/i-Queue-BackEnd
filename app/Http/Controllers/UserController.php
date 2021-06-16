@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -24,8 +25,32 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
+        if ($id != Auth()->id()) {
+            return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
+        }
+        $user = User::find($id);
+        $validator  =   Validator::make($request->all(), [
+            "email"  =>  "email|unique:users",
+        ]);
+        if ($validator->fails()) {
+            return IQResponse::errorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
+        }
+
+        DB::beginTransaction();
+        if ($request->has('name') && !empty($request->input('name'))) {
+            $user->name = $request->input('name');
+        }
+        if ($request->has('email') && !empty($request->input('email'))) {
+            $user->email = $request->input('email');
+        }
+        if ($request->has('password') && !empty($request->input('password'))) {
+            $user->password = Hash::make($request->input('password'));
+        }
+        $user->save();
+        DB::commit();
+        return IQResponse::response(Response::HTTP_OK, $user);
     }
 
     public function destroy(User $user)
@@ -81,7 +106,7 @@ class UserController extends Controller
         }
 
         $user = User::where("email", $request->email)->first();
-        $user_update=$user;
+        $user_update = $user;
 
         if (is_null($user)) {
             return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
@@ -92,7 +117,7 @@ class UserController extends Controller
             $token  = $user->createToken('token')->plainTextToken;
             $user->token = $token;
 
-            $user_update->remember_token_firebase=$request->remember_token_firebase;
+            $user_update->remember_token_firebase = $request->remember_token_firebase;
             $user_update->save();
             return IQResponse::response(Response::HTTP_OK, $user);
         } else {
@@ -105,7 +130,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             "email" =>  "required|email|exists:users",
-            'password'=>'required'
+            'password' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -117,7 +142,7 @@ class UserController extends Controller
             $token  = $user->createToken('token')->plainTextToken;
             Session::put('variableName', $token);
             return redirect()->intended('dashboard');
-        }else{
+        } else {
             $validator->getMessageBag()->add('email', 'credenciales erroneas');
             return view('login')->with('errors', $validator->errors())->with('inputs', $request->all());
         }
@@ -140,7 +165,7 @@ class UserController extends Controller
         if (!is_null($user)) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 return redirect()->intended('login');
-            }else {
+            } else {
                 $validator->getMessageBag()->add('email', 'credenciales erroneas');
                 return view('registro')->with('errors', $validator->errors());
             }
@@ -153,16 +178,17 @@ class UserController extends Controller
         // redirect to homepage
         return redirect('/');
     }
-    public function commerce(){
+    public function commerce()
+    {
         $user = AuthTools::getAuthUser();
-        if ($user->role != "ADMIN"){
+        if ($user->role != "ADMIN") {
             return IQResponse::response(Response::HTTP_NOT_FOUND);
-        }else{
+        } else {
             $commerce = $user->commerce;
             //Is admin user
-            if($commerce){
-                return IQResponse::response(Response::HTTP_OK,new CommerceResource($commerce));
-            }else{
+            if ($commerce) {
+                return IQResponse::response(Response::HTTP_OK, new CommerceResource($commerce));
+            } else {
                 return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
             }
         }
