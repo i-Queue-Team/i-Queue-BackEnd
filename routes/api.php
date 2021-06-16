@@ -8,7 +8,7 @@ use App\Http\Controllers\CurrentQueueController;
 use App\Http\Controllers\QueueVerifiedUsersController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ForgotPasswordController;
-
+use App\Http\Controllers\QueueEntryMailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,11 +26,11 @@ use App\Http\Controllers\ForgotPasswordController;
 Route::middleware('auth:api')->group(function () {
     //All secure URL's
     //Header Authorization example :Authorization= "Bearer 9|EFV7swhyHN6VHvT0YV8f3L5MGgCCbkU53NTvGT4I" or "Bearer token"
-    Route::post('commerces/{commerce}/image',[CommerceController::class,'update_image']);
-    Route::apiResource('commerces',CommerceController::class);
+    Route::post('commerces/{commerce}/image', [CommerceController::class, 'update_image']);
+    Route::apiResource('commerces', CommerceController::class);
     //add queue to queues
     //http://localhost/i-Queue-BackEnd/public/api/currentqueues
-    Route::apiResource('current-queues',CurrentQueueController::class);
+    Route::apiResource('current-queues', CurrentQueueController::class);
     //Route::post('current-queues', [CurrentQueueController::class, 'store']);
     //Route::get('current-queues', [CurrentQueueController::class, 'index']);
     //Route::get('current-queues/{id}', [CurrentQueueController::class, 'show']);
@@ -52,8 +52,12 @@ Route::middleware('auth:api')->group(function () {
     //check unser info (phone)
     Route::get('queue-verified-users/{id}', [QueueVerifiedUsersController::class, 'info']);
 
-    Route::apiResource('users',UserController::class)->only(['show','destroy','update']);
-    Route::get('users/{id}/commerce',[UserController::class,'commerce']);
+    Route::apiResource('users', UserController::class)->only(['show', 'destroy', 'update']);
+    Route::get('users/{id}/commerce', [UserController::class, 'commerce']);
+
+
+    //entry mail petition
+    Route::post('queue-entry-mail', [QueueEntryMailController::class, 'queueEntryMail']);
 });
 
 //AUTH login/register
