@@ -77,6 +77,7 @@
                             <span class="helper-text red-text" data-error="wrong"
                                 data-success="right">{{ $errors->first('password') }}</span>
                         @endif
+                        <label for="password">Contraseña</label>
                         <p class="center-align"><button id="loginButtonDiscovery" class="waves-effect waves-light btn"
                                 type="submit"><i class="material-icons right">send</i>entrar</button></p>
                         <p class="center-align"><a class="modal-trigger" href="#modal1">¿Olvidaste tu contraseña?</a>
