@@ -9,10 +9,12 @@
     <!--CHARTS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
+
     <title>I-Queue empresas</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{URL::asset('/images/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{URL::asset('/images/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/images/favicon/favicon-16x16.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::asset('/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ URL::asset('/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('/images/favicon/favicon-16x16.png') }}">
 </head>
 <style>
     body {
@@ -25,6 +27,13 @@
         flex: 1 0 auto;
     }
 
+    .flexbox {
+        display: flex;
+        flew-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
 </style>
 
 <body class="container">
@@ -35,16 +44,20 @@
     @include('navLayout')
     <main>
         <h2 class="center-align"><b>I-Queue Empresas</b></h2>
-
-
-        <div class="center-align">
+        <div>
             <div class="row">
-                <div class="col s12">
+
+                <div class="col s12 center-align"><img class="responsive-img" style="max-height: 400px" src="{{ asset('images/mockup.png') }}">
+                </div>
+
+                <div class="col s12 center-align">
                     <h5><b>Ventajas</b></h5>
                 </div>
 
-                <div class="row">
-                    <div class="col s12 m6 l6">
+
+
+                <div class="row center-align">
+                    <div class="col s12 m6 l6 ">
                         <p>
                         <h5>Para tu negocio</h5>
                         <ul class="collection"
@@ -71,7 +84,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col s12 m6 l6">
+                    <div class="col s12 m6 l6 ">
                         <p>
                         <h5>Para tus clientes</h5>
 
@@ -101,7 +114,7 @@
                     </div>
                 </div>
 
-                <ul class="collapsible popout" style="background-color: antiquewhite">
+                <ul class="collapsible popout center-align" style="background-color: antiquewhite">
                     <li>
                         <div class="collapsible-header" style="background-color: rgb(245, 190, 119)">
 
@@ -118,7 +131,8 @@
 
                                 <div class="input-field col s12 m6 ">
                                     <i class="material-icons prefix">account_circle</i>
-                                    <input name="Nombre_completo" id="icon_prefix" required type="text" class="validate">
+                                    <input name="Nombre_completo" id="icon_prefix" required type="text"
+                                        class="validate">
                                     <label for="icon_prefix">Nombre completo</label>
                                 </div>
                                 <div class="input-field col s12 m6">
@@ -129,7 +143,8 @@
 
                                 <div class="input-field col s12 m6">
                                     <i class="material-icons prefix">business</i>
-                                    <input name="Nombre_de_la_empresa" id="icon_prefix" required type="text" class="validate">
+                                    <input name="Nombre_de_la_empresa" id="icon_prefix" required type="text"
+                                        class="validate">
                                     <label for="icon_prefix">Nombre de la empresa</label>
                                 </div>
                                 <div class="input-field col s12 m6">
@@ -171,8 +186,7 @@
 
 </script>
 
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="./css/materialize.css">
+
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -181,4 +195,5 @@
 
 </body>
 @include('CookieLayout')
+
 </html>
