@@ -10,6 +10,7 @@
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/materialize.css') }}" rel="stylesheet">
     <style>
         #map {
             width: 100%;
@@ -386,8 +387,7 @@ $token = Session::get('variableName');
 </body>
 
 
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="./css/materialize.css">
+
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
