@@ -13,6 +13,8 @@ use App\Models\QueueVerifiedUser;
 use App\Models\CurrentQueue;
 use App\Http\Resources\QueueVerifiedUsersResource;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class QueueEntryMailController extends Controller
 {
@@ -46,7 +48,7 @@ class QueueEntryMailController extends Controller
             $user->save();
         }
         //if in queue already check
-        $queueUsers_check_inQueue = $user->queues->where('queue_id','=',$request->queue_id);
+        $queueUsers_check_inQueue = $user->queues->where('queue_id', '=', $request->queue_id);
         if ($queueUsers_check_inQueue->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
@@ -69,7 +71,7 @@ class QueueEntryMailController extends Controller
         if (!is_null($queueVerifiedUser)) {
             $fromEmail = $user->email;
             $fromName = 'Iqueue-Administration';
-            $commerceName=$queue->commerce->name;
+            $commerceName = $queue->commerce->name;
             //if password exists send password email
             if (isset($password)) {
                 $data = array(
@@ -77,10 +79,10 @@ class QueueEntryMailController extends Controller
                     'email' => $fromEmail,
                     'password' => $password,
                     'commerceName' => $commerceName,
-                    'url'  => url("/login"),
+                    'url'  => url("/login/" . $this::encrypt($fromEmail) . "/" . $this::encrypt($password)),
                 );
-                Mail::send('mail-with-password', $data, function ($message) use ($fromEmail, $fromName) {
-                    $message->to($fromEmail, $fromName)->subject('Bienvenido a i-Queue');
+                Mail::send('mail-with-password', $data, function ($message) use ($fromEmail, $fromName, $commerceName) {
+                    $message->to($fromEmail, $fromName)->subject("Bienvenido a i-Queue, Has entrado en " . $commerceName);
                     $message->from(env('MAIL_USERNAME'), 'Iqueue-Administration');
                 });
             } //if password doesnt exist send no password email
@@ -89,19 +91,56 @@ class QueueEntryMailController extends Controller
                     'name' => $user->name,
                     'email' => $fromEmail,
                     'commerceName' => $queue->commerce->name,
-                    'url'  => url("/login"),
+                    'url'  => url("/login/" . $this::encrypt($fromEmail)),
                 );
-                Mail::send('mail-without-password', $data, function ($message) use ($fromEmail, $fromName,$commerceName) {
-                    $message->to($fromEmail, $fromName)->subject("Hola de nuevo, Has entrado en ".$commerceName);
+                Mail::send('mail-without-password', $data, function ($message) use ($fromEmail, $fromName, $commerceName) {
+                    $message->to($fromEmail, $fromName)->subject("Hola de nuevo, Has entrado en " . $commerceName);
                     $message->from(env('MAIL_USERNAME'), 'Iqueue-Administration');
                 });
             }
-
-
-
             return IQResponse::response(Response::HTTP_CREATED, new QueueVerifiedUsersResource($queueVerifiedUser));
         } else {
             return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+    public function queueEntryMailLogin($email = null, $password = null)
+    {
+
+        if (!empty($email) && !is_null($email) && !empty($password  && !is_null($password))) {
+            //password and email
+            try {
+                //try decryption
+                $email = $this::decrypt($email);
+                $password = $this::decrypt($password);
+                return view('login')->with('credentials', array("emailFromMail" => $email, "passwordFromMail" => $password));
+            } catch (DecryptException $e) {
+                return redirect('/login');
+            }
+        } else if (!empty($email)) {
+            //only email
+            try {
+                //try decryption
+                $email = $this::decrypt($email);
+                return view('login')->with('credentials', array("emailFromMail" => $email, "passwordFromMail" => ""));
+            } catch (DecryptException $e) {
+                return redirect('/login');
+            }
+        } else {
+            //redirect to login as default
+            return redirect('/login');
+        }
+
+        return $email;
+    }
+
+    static private function encrypt($string)
+    {
+        $encrypted = Crypt::encryptString($string);
+        return $encrypted;
+    }
+    static private function decrypt($string)
+    {
+        $decrypt = Crypt::decryptString($string);
+        return $decrypt;
     }
 }
