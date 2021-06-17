@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{URL::asset('/images/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{URL::asset('/images/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/images/favicon/favicon-16x16.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ URL::asset('/images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ URL::asset('/images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('/images/favicon/favicon-16x16.png') }}">
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -78,7 +78,7 @@ $token = Session::get('variableName');
         <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <div class="nav-content">
             <ul class="tabs tabs-transparent">
-                <li class="tab col s3 "><a class="active" href="#test1">Datos</a></li>
+                <li class="tab col s3 "><a class="active" href="#datos">Datos</a></li>
                 <li class="tab col s3"><a href="#TuCola">Tu Cola</a></li>
                 <li class="tab col s3 "><a href="#configuracion">
                         @if ($empty_checker)
@@ -87,6 +87,10 @@ $token = Session::get('variableName');
                             Configuración
                         @endif
                     </a></li>
+
+                @if (!$empty_checker)
+                    <li class="tab col s3 "><a href="#mostrador">Tu Mostrador</a></li>
+                @endif
             </ul>
         </div>
     </nav>
@@ -101,7 +105,7 @@ $token = Session::get('variableName');
     @include('userSidenav')
     <main class="center-align">
         <!--fin menu-->
-        <div id="test1" class="col s12 queue-animate-bottom">
+        <div id="datos" class="col s12 queue-animate-bottom">
             <!--tab datos-->
             <h2>Datos</h2>
             <canvas id="myChart" width="400" height="200"></canvas>
@@ -113,13 +117,25 @@ $token = Session::get('variableName');
             <!--tab Cola-->
             @if ($empty_checker)
                 <h2>Antes debes configurar tu negocio!</h2>
-                <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-                        <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#007FB2" stroke-width="6" sketch:type="MSShapeGroup"></path>
-                        <path d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z" id="Polygon-2" stroke="#EF4A5B" stroke-width="6" sketch:type="MSShapeGroup"></path>
-                        <path d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z" id="Polygon-3" stroke="#795D9C" stroke-width="6" sketch:type="MSShapeGroup"></path>
-                        <path d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z" id="Polygon-4" stroke="#F2773F" stroke-width="6" sketch:type="MSShapeGroup"></path>
-                        <path d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z" id="Polygon-5" stroke="#36B455" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path
+                            d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z"
+                            id="Polygon-1" stroke="#007FB2" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path
+                            d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z"
+                            id="Polygon-2" stroke="#EF4A5B" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path
+                            d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z"
+                            id="Polygon-3" stroke="#795D9C" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path
+                            d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z"
+                            id="Polygon-4" stroke="#F2773F" stroke-width="6" sketch:type="MSShapeGroup"></path>
+                        <path
+                            d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z"
+                            id="Polygon-5" stroke="#36B455" stroke-width="6" sketch:type="MSShapeGroup"></path>
                     </g>
                 </svg>
                 <div class="message-box">
@@ -172,8 +188,8 @@ $token = Session::get('variableName');
                                         <div class="input-field col s6" id="fixed_capacity_err">
                                             <i class="material-icons prefix">nature_people</i>
                                             <input name="_method" type="hidden" value="PUT">
-                                            <input id="fixed_capacity" name="fixed_capacity" type="number"
-                                                step="1" value="{{ $queue->fixed_capacity }}" class="validate">
+                                            <input id="fixed_capacity" name="fixed_capacity" type="number" step="1"
+                                                value="{{ $queue->fixed_capacity }}" class="validate">
                                             <label for="fixed_capacity">Aforo</label>
                                         </div>
                                     </div>
@@ -199,7 +215,6 @@ $token = Session::get('variableName');
                 </div>
             @endif
         </div>
-
         <div id="configuracion" class="col s12 queue-animate-bottom">
             <!--tab negocio-->
             <h2>Configuración</h2>
@@ -231,13 +246,13 @@ $token = Session::get('variableName');
                                 <div class="input-field col s6" id="latitude_err">
                                     <i class="material-icons prefix">map</i>
                                     <label for="latitude">Latitud</label>
-                                    <input id="latitude" name="latitude" type="number"  step="any"class="validate">
+                                    <input id="latitude" name="latitude" type="number" step="any" class="validate">
 
                                 </div>
                                 <div class="input-field col s6" id="longitude_err">
                                     <i class="material-icons prefix">map</i>
                                     <label for="longitude">Longitud</label>
-                                    <input id="longitude" name="longitude" type="number"  step="any" class="validate">
+                                    <input id="longitude" name="longitude" type="number" step="any" class="validate">
                                 </div>
                             </div>
                         </div>
@@ -320,14 +335,14 @@ $token = Session::get('variableName');
                                             <div class="row">
                                                 <div class="input-field col s6" id="latitude_err">
                                                     <i class="material-icons prefix">map</i>
-                                                    <input id="latitude" name="latitude" type="number" step="any" class="validate" value="{{ $commerce->latitude }}">
+                                                    <input id="latitude" name="latitude" type="number" step="any"
+                                                        class="validate" value="{{ $commerce->latitude }}">
                                                     <label for="latitude">Latitud</label>
                                                 </div>
                                                 <div class="input-field col s6" id="longitude_err">
                                                     <i class="material-icons prefix">map</i>
-                                                    <input id="longitude" name="longitude" type="number"
-                                                        step="any" class="validate"
-                                                        value="{{ $commerce->longitude }}">
+                                                    <input id="longitude" name="longitude" type="number" step="any"
+                                                        class="validate" value="{{ $commerce->longitude }}">
                                                     <label for="longitude">Longitud</label>
                                                 </div>
                                             </div>
@@ -376,7 +391,73 @@ $token = Session::get('variableName');
 
             @endif
         </div>
+        @if (!$empty_checker)
+            <div id="mostrador" class="col s12 queue-animate-bottom">
+                <h2>App Mostrador</h2>
+                <div class="row">
+                    <div class="col s12 center-align"><img class="responsive-img" style="max-height: 400px"
+                            src="{{ asset('images/mockup_2.png') }}">
+                    </div>
+                    <div class="col s12  center-align">
+                        <h5><b>Caracteristicas</b></h5>
+                    </div>
+                    <div class="col s12  center-align">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Requiere</th>
+                                    <th>Tamaño</th>
+                                    <th>Versión</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <tr>
+                                    <td>Android 6 o Posterior</td>
+                                    <td>Menor de 50mb</td>
+                                    <td>1.0</td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th>Actualizada</th>
+                                    <th>Desarrollador</th>
+                                    <th>Requisitos</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>20 de junio de 2021</td>
+                                    <td>i-queue</td>
+                                    <td>Conexión a internet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col s12" style="margin-top: 50px" >
+
+                        <a id="download-button" class="waves-effect waves-light btn-large"><i
+                                class="material-icons right">file_download</i>Descargar</a>
+                        <a id="download-cancel"
+                            onclick="request.abort(); $('#download-button').show('slow');$('#download-cancel').hide('slow'); "
+                            style="display: none;" class="waves-effect waves-light btn-large"><i
+                                class="material-icons right">close</i>Cancelar</a>
+                        <a id="save-file" class="waves-effect waves-light btn-large" style="display: none;"><i
+                                class="material-icons right">save</i>Guardar Apk</a>
+                        <div class="progress">
+                            <div id="progress" class="determinate" style="width: 0%"></div>
+                        </div>
+                        <span id="progress-text"></span>
+                        <span id="download-progress-text"></span>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        @endif
 
 
         <!--fin login-->
@@ -526,7 +607,7 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-                window.location.replace("{{url('/dashboard#configuracion')}}");
+                window.location.replace("{{ url('/dashboard#configuracion') }}");
                 location.reload();
 
                 //console.log(data);
@@ -569,7 +650,7 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-                window.location.replace("{{url('/dashboard#configuracion')}}");
+                window.location.replace("{{ url('/dashboard#configuracion') }}");
                 location.reload();
                 //console.log(data);
             });
@@ -611,7 +692,7 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-                window.location.replace("{{url('/dashboard#TuCola')}}");
+                window.location.replace("{{ url('/dashboard#TuCola') }}");
                 location.reload();
             });
             event.preventDefault();
@@ -637,8 +718,11 @@ $token = Session::get('variableName');
 
                 $('#fixed_capacity').html(data.data.fixed_capacity);
                 $('#current_capacity').html(data.data.current_capacity);
-                $('#current_queue').html(getCurrentQueueValue(data.data.fixed_capacity,data.data.current_capacity));
-                M.toast({html: 'Datos actualizados!'})
+                $('#current_queue').html(getCurrentQueueValue(data.data.fixed_capacity, data.data
+                    .current_capacity));
+                M.toast({
+                    html: 'Datos actualizados!'
+                })
             },
             error: function() {
                 console.log("error");
@@ -646,14 +730,62 @@ $token = Session::get('variableName');
         });
     }
 
-    function getCurrentQueueValue(fixed_capacity,current_capacity){
-        if(current_capacity<fixed_capacity){
+    function getCurrentQueueValue(fixed_capacity, current_capacity) {
+        if (current_capacity < fixed_capacity) {
             return 0;
-        }else{
-            return current_capacity -fixed_capacity;
+        } else {
+            return current_capacity - fixed_capacity;
         }
     }
 
 </script>
+<!-- dowload -->
+<script>
+    var fileName = '{{ asset('apps/mostrador-app-iqueue.apk') }}';
+    var progress = $("#progress");
+    var progressText = document.getElementById("progress-text");
+    var downloadProgressText = document.getElementById("download-progress-text");
+    var startTime = new Date().getTime();
+    document.querySelector('#download-button')
+        .addEventListener('click', function() {
+            $("#download-button").hide("slow");
+            $("#download-cancel").show("slow");
+            request = new XMLHttpRequest();
+            request.responseType = 'blob';
+            request.open('get', fileName, true);
+            request.send();
+            request.onprogress = function(e) {
+
+                var percent_complete = (e.loaded / e.total) * 100;
+                percent_complete = Math.floor(percent_complete);
+                progress.width(percent_complete + "%");
+                progressText.innerHTML = percent_complete + "%";
+                var duration = (new Date().getTime() - startTime) / 1000;
+                var bps = e.loaded / duration;
+                var kbps = bps / 1024;
+                kbps = Math.floor(kbps);
+
+                downloadProgressText.innerHTML = kbps + " KB / s";
+            };
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var obj = window.URL.createObjectURL(this.response);
+                    document.getElementById('save-file').setAttribute('href', obj);
+                    $("#download-cancel").hide("slow");
+                    $("#save-file").show("slow");
+                    document.getElementById('save-file').setAttribute('download', fileName);
+                    setTimeout(function() {
+                        window.URL.revokeObjectURL(obj);
+                    }, 60 * 1000);
+                }
+            };
+        });
+
+</script>
+
+
+
+
 @include('CookieLayout')
+
 </html>
