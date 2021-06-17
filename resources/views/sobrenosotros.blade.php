@@ -8,7 +8,8 @@
     <!--iconos material icon-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--css tarjetas hoover-->
-    <link rel="stylesheet" href="./css/aboutUsCards.css">
+    <link rel="stylesheet" href="{{ asset('css/materialize.css') }}">
+    <link rel="stylesheet" href="css/aboutUsCards.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>Sobre nosotros</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{URL::asset('/images/favicon/apple-touch-icon.png')}}">
@@ -34,16 +35,7 @@
         flex: 1 0 auto;
     }
 
-    body {
 
-        line-height: 1.5;
-        color: #323232;
-        font-size: 15px;
-        font-weight: 400;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-font-smoothing: antialiased;
-    }
     .heading-title {
         margin-bottom: 100px;
     }
@@ -175,31 +167,31 @@
             <div class="">
                 <div class="row text-center">
                     <div class="col s12">
-
-                    </div><!-- /.col l12 -->
-                    <div class="row" style="min-width: 261px; max-width:100%">
                         <div class="heading-title text-center">
                             <h2 class="center-align"><b>Nuestro equipo</b></h2>
                         </div>
+                    </div><!-- /.col l12 -->
+                    <div class="row" style="">
+
 
                         <!--Zamora-->
                         <div class="col s12 m6 l4">
                             <div class="team-member">
                                 <div class="team-img">
-                                    <img src="./images/ios.png" class="responsive-img" alt="team member" style="display:block;margin:auto;">
+                                    <img src="{{ asset('images/ios.png') }}" class="responsive-img" alt="team member" style="display:block;margin:auto;">
                                 </div>
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel teal lighten-3" style="display:block;margin:auto; heigth:100%;">
-                                            <img src='./images/zamora.PNG' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px"/>
+                                            <img src='{{ asset('images/zamora.PNG') }}' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px"/>
                                             <p>He desarrollado la aplicación móvil para terminales iOS.</p>
 
                                         </div>
                                     </div>
                                     <div class="s-link">
-                                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                                        <a href="#"><img src="./images/github.png" alt=""></a>
+                                        <a href="#"><img src="{{ asset('images/linkedin.png') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('images/correoelectronico.png') }}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('images/github.png') }}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -210,17 +202,17 @@
                         </div>
                         <!--Zamora-->
                           <!--Pepelu-->
-                          <div class="col s12 m6 l4 offset-l2">
+                          <div class="col s12 m6 l4">
                             <div class="team-member">
                                 <div class="team-img">
-                                    <img src="./images/android.png"  class="responsive-img" alt="team member" style="display:block;margin:auto;">
+                                    <img src="{{asset('images/android.png ')}}"  class="responsive-img" alt="team member" style="display:block;margin:auto;">
                                 </div>
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel green lighten-3" style="display:block;margin:auto;">
 
                                             <div class="content">
-                                                <img src='./images/pepelu.PNG' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px" />
+                                                <img src='images/pepelu.PNG' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px" />
                                                 <p>He desarrollado la aplicación para terminales Android.</p>
                                             </div>
                                         </div>
@@ -228,9 +220,9 @@
 
                                     </div>
                                     <div class="s-link">
-                                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                                        <a href="#"><img src="./images/github.png" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/linkedin.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/correoelectronico.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/github.png')}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -242,22 +234,22 @@
                        <br><br><br>
                         <!--Pepelu-->
                         <!--Felix-->
-                        <div class="col s12 m6 l4 ">
+                        <div class="col s12 m6  l4">
                             <div class="team-member">
                                 <div class="team-img">
-                                    <img src="./images/backend.png" class="responsive-img" alt="team member">
+                                    <img src="{{asset('images/backend.png')}}" class="responsive-img" alt="team member">
                                 </div>
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel deep-purple lighten-5">
-                                            <img src='./images/felix.png' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
+                                            <img src='{{asset('images/felix.png')}}' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
                                             <p>He desarrollado el backend utilizando el framework Laravel</p>
                                         </div>
                                     </div>
                                     <div class="s-link">
-                                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                                        <a href="#"><img src="./images/github.png" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/linkedin.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/correoelectronico.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/github.png')}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -267,22 +259,22 @@
                             </div>
                         </div>
                         <!--Felix-->
-                        <div class="col s12 m6 l4">
+                        <div class="col s12 m6 l4 offset-l2">
                             <div class="team-member">
                                 <div class="team-img">
-                                    <img src="./images/front.png" class="responsive-img" alt="team member">
+                                    <img src="{{asset('images/front.png')}}" class="responsive-img" alt="team member">
                                 </div>
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel  blue lighten-3">
-                                            <img src='./images/dani.png' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
+                                            <img src='{{asset('images/dani.png')}}' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
                                             <p>He diseñado las interfaces y desarrollado el frontend de la app </p>
                                         </div>
                                     </div>
                                     <div class="s-link" >
-                                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                                        <a href="#"><img src="./images/github.png" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/linkedin.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/correoelectronico.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/github.png')}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -294,19 +286,19 @@
                         <div class="col s12 m6 l4">
                             <div class="team-member">
                                 <div class="team-img">
-                                    <img src="./images/backend.png" class="responsive-img" alt="team member">
+                                    <img src="images/backend.png" class="responsive-img" alt="team member">
                                 </div>
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel deep-purple lighten-5">
-                                            <img src='./images/vicente.jpg' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
+                                            <img src='images/vicente.jpg' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
                                             <p>He desarrollado el backend utilizando el framework Laravel.</p>
                                         </div>
                                     </div>
                                     <div class="s-link">
-                                        <a href="#"><img src="./images/linkedin.png" alt=""></a>
-                                        <a href="#"><img src="./images/correoelectronico.png" alt=""></a>
-                                        <a href="#"><img src="./images/github.png" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/linkedin.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/correoelectronico.png')}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/github.png')}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +310,7 @@
 
 
 
-                            </div>
+
                     </div><!-- /.container -->
                 </div><!-- /.row -->
             </div><!-- /.container -->
@@ -333,7 +325,7 @@
 </body>
 
 <!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="./css/materialize.css">
+
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
