@@ -18,6 +18,6 @@
 </nav>
 <ul class="sidenav" id="mobile-demo">
     <li><a href="{{ url('/login') }}">Login</a></li>
-    <li><a href="{{ url('/register') }}">Registro</a></li>
+    <li><a href="{{ url('/registro') }}">Registro</a></li>
 
 </ul>
