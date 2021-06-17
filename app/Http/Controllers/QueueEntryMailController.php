@@ -41,12 +41,12 @@ class QueueEntryMailController extends Controller
             //username will be the email without domain
             $user->name =  preg_replace("/[^a-zA-Z]+/", "", substr($request->email, 0, strrpos($request->email, '@')));
             //random string password
-            $password = Str::random(5);
+            $password = Str::random(10);
             $user->password = Hash::make($password);
             $user->save();
         }
         //if in queue already check
-        $queueUsers_check_inQueue = QueueVerifiedUser::where('user_id', '=', $user->id)->where('queue_id', '=', $request->queue_id)->get();
+        $queueUsers_check_inQueue = $user->queues->where('queue_id','=',$request->queue_id);
         if ($queueUsers_check_inQueue->count() > 0) {
             return IQResponse::emptyResponse(Response::HTTP_CONFLICT);
         }
