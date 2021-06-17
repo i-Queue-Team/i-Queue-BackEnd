@@ -55,6 +55,7 @@ a:hover{
 .team-member {
   margin: 15px 0;
   padding: 0;
+  min-width: 272px;
 }
 
 .team-member figure {
