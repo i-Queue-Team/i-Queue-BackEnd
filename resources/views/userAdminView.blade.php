@@ -526,7 +526,9 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
+                window.location.replace("{{url('/dashboard#configuracion')}}");
                 location.reload();
+
                 //console.log(data);
             });
             event.preventDefault();
@@ -567,15 +569,7 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-                var url = window.location;
-                var urlString = encodeURIComponent(url);
-                console.log(urlString);
-                if (urlString.includes("configuracion")) {
-                    document.location = url;
-
-                } else {
-                    document.location = url + "#configuracion";
-                }
+                window.location.replace("{{url('/dashboard#configuracion')}}");
                 location.reload();
                 //console.log(data);
             });
@@ -617,19 +611,8 @@ $token = Session::get('variableName');
                     }
                 }
             }).done(function(data) {
-
-                var url = window.location;
-                var urlString = encodeURIComponent(url);
-                console.log(urlString);
-                if (urlString.includes("TuCola")) {
-                    document.location = url;
-
-                } else {
-                    document.location = url + "#TuCola";
-                }
-
+                window.location.replace("{{url('/dashboard#TuCola')}}");
                 location.reload();
-                console.log(data);
             });
             event.preventDefault();
         });
