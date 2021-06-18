@@ -281,8 +281,10 @@
             <div class="col s12  center-align contan">
                 <p></p>
                 <ul class="collection">
-                    <li class="collection-item"><strong>Tienes </strong>a tu dispoción un extenso catalogo de funciones!</li>
-                    <li class="collection-item"><strong>Puedes</strong> Desarrollar tus propias apps basadas en i-queue</li>
+                    <li class="collection-item"><strong>Tienes </strong>a tu dispoción un extenso catalogo de funciones!
+                    </li>
+                    <li class="collection-item"><strong>Puedes</strong> Desarrollar tus propias apps basadas en i-queue
+                    </li>
 
                 </ul>
             </div>
@@ -339,8 +341,36 @@
                     </div>
                 </div>
             </div>
+            <div class="col s12">
+                <h5 class="center-align">Metodos de pago Aceptados</h5>
+                <br>
+                <div class="row center-align">
+                    <div class="col s3">
+                        <img style="height:80px" src="{{ asset('images/Bitcoin-Logo.png') }}" alt="" >
+                        <h6 style="color:#26a69a ">Bitcoin</h6>
 
 
+                    </div>
+                    <div class="col s3">
+                        <img style="height:80px" src="{{ asset('images/Ethereum-Logo.png') }}" alt="" >
+                        <h6 style="color:#26a69a ">Ethereum</h6>
+
+                    </div>
+                    <div class="col s3">
+                        <img style="height:80px" src="{{ asset('images/Doge-Logo.png') }}" alt="" >
+                        <h6 style="color:#26a69a ">DogeCoin</h6>
+
+                    </div>
+                    <div class="col s3">
+                        <img style="height:80px" src="{{ asset('images/Paypal-Logo.png') }}" alt="" >
+                        <h6 style="color:#26a69a ">Paypal</h6>
+
+                    </div>
+
+
+                </div>
+
+            </div>
 
         </div>
 
