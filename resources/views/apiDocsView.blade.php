@@ -52,6 +52,90 @@
         color: #00796b;
     }
 
+    .pricing-table {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: min(1600px, 100%);
+        margin: auto;
+    }
+
+    .pricing-card {
+        flex: 1;
+        max-width: 360px;
+        background-color: #fff;
+        margin: 20px 10px;
+        text-align: center;
+        cursor: pointer;
+        overflow: hidden;
+        color: #2d2d2d;
+        transition: .3s linear;
+    }
+
+    .pricing-card-header {
+        background-color: #80cbc4;
+        display: inline-block;
+        color: #fff;
+        padding: 12px 30px;
+        border-radius: 0 0 20px 20px;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: 600;
+        transition: .4s linear;
+    }
+
+    .pricing-card:hover .pricing-card-header {
+        box-shadow: 0 0 0 26em #80cbc4;
+    }
+
+    .price {
+        font-size: 70px;
+        color: #1de9b6;
+        margin: 40px 0;
+        transition: .2s linear;
+    }
+
+    .price sup,
+    .price span {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .pricing-card:hover,
+    .pricing-card:hover .price {
+        color: #fff;
+    }
+
+    .pricing-card li {
+        font-size: 16px;
+        padding: 10px 0;
+        text-transform: uppercase;
+    }
+
+    .order-btn {
+        display: inline-block;
+        margin-bottom: 40px;
+        margin-top: 80px;
+        border: 2px solid #1de9b6;
+        color: #1de9b6;
+        padding: 18px 40px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        font-weight: 500;
+        transition: .3s linear;
+    }
+
+    .order-btn:hover {
+        background-color: #1de9b6;
+        color: #fff;
+    }
+
+    @media screen and (max-width:1100px) {
+        .pricing-card {
+            flex: 50%;
+        }
+    }
+
 </style>
 
 <body>
@@ -79,8 +163,18 @@
 
     <!-- LEFT SIDEBAR	 -->
     <ul id="sidenav-1" class="sidenav sidenav-fixed">
+        <div class="center-align">
+            <img src="{{ asset('images/propuestalogo.png') }}" height="90px" style="margin:10px" alt="">
+        </div>
         <li><a class="subheader">¡Bienvenido Desarrollador!🖥️🥤</a></li>
-        <li><a href="" onclick="">Autenticación</a></li>
+
+        <li><a class="waves-effect waves-teal btn-flat" onclick="routeHide();$('#home-api').show('slow');"><i
+                    class="material-icons">lens</i>Inicio</a></li>
+        <li><a class="waves-effect waves-teal btn-flat" onclick=""><i class="material-icons">lock</i>Autenticación</a>
+        </li>
+        <div class="divider"></div>
+        <li><a class="subheader">¡Rutas!</a></li>
+
         <!-- menu collapsible	 -->
         <li>
             <ul class="collapsible">
@@ -116,6 +210,11 @@
                 <li>
                     <div class="collapsible-header"><i class="material-icons">people</i>api/users</div>
                     <div class="collapsible-body">
+                        <a onclick="routeHide();$('#user-login').show('slow');" class="waves-effect waves-teal btn-flat"
+                            style="width: 100%">Autenticar usuario <strong style="color:#a69926 ">POST</strong></a>
+                        <a onclick="routeHide();$('#user-register').show('slow');"
+                            class="waves-effect waves-teal btn-flat" style="width: 100%">Registrar usuario <strong
+                                style="color:#a69926 ">POST</strong></a>
                         <a onclick="routeHide();$('#user-delete').show('slow');"
                             class="waves-effect waves-teal btn-flat" style="width: 100%">Eliminar Usuarios <strong
                                 style="color:#a63126 ">DELETE</strong></a>
@@ -135,6 +234,10 @@
                         <a onclick="routeHide();$('#verified-user-mail-post').show('slow');"
                             class="waves-effect waves-teal btn-flat" style="width: 100%">usuario a la cola (email)
                             <strong style="color:#a69926 ">POST</strong></a>
+                        <a onclick="routeHide();$('#verified-user-entry-check-post').show('slow');"
+                            class="waves-effect waves-teal btn-flat" style="width: 100%">usuario entra al local
+                            <strong style="color:#a69926 ">POST</strong></a>
+
                         <a onclick="routeHide();$('#verified-user-delete').show('slow');"
                             class="waves-effect waves-teal btn-flat" style="width: 100%">Eliminar usuario de la cola
                             <strong style="color:#a63126 ">DELETE</strong></a>
@@ -142,6 +245,8 @@
                 </li>
             </ul>
         </li>
+
+
 
     </ul>
 
@@ -159,12 +264,93 @@
         <h1 class="center">
             i-Queue Api Docs</h1>
 
+
+        <!-- home-->
+        <div class="row route-hide " id="home-api">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>Inicio</h4>
+                <h5><strong style="color:#26a69a ">Nuestra mision</strong></h5>
+                <blockquote>Creemos que hay una cantidad asombrosa de valor sin explotar que podría liberarse con API
+                    bien construidas, conectadas fácilmente a plataformas de terceros, todas respaldadas por datos.
+                    <br>
+                    Con nuestra api podras desarrollar sistemas de gestion de colas para tus establecimientos
+                </blockquote>
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12  center-align contan">
+                <p></p>
+                <ul class="collection">
+                    <li class="collection-item"><strong>Tienes </strong>a tu dispoción un extenso catalogo de funciones!</li>
+                    <li class="collection-item"><strong>Puedes</strong> Desarrollar tus propias apps basadas en i-queue</li>
+
+                </ul>
+            </div>
+            <div class="col s12">
+                <div class="pricing-table">
+                    <div class="pricing-card">
+                        <h3 class="pricing-card-header">Personal</h3>
+                        <div class="price"><sup>€</sup>0</div>
+                        <ul>
+
+                            <li><strong>TODAS</strong> las peticiones gratis</li>
+                            <li><strong>SIN LIMITE</strong> de peticiones</li>
+                            <li><strong>1</strong> solo comercio</li>
+                            <li>----------------------------------------</li>
+
+                        </ul>
+                        <a href="{{ url('/registro') }}" class="order-btn">Unete yá como comercio!</a>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3 class="pricing-card-header">Professional</h3>
+                        <div class="price"><sup>€</sup>30<span>/MES</span></div>
+                        <ul>
+                            <li><strong>TODAS</strong> las peticiones gratis</li>
+                            <li><strong>SIN LIMITE</strong> de peticiones</li>
+                            <li><strong>1</strong> Tablet "HUAWEI MatePad T 10s"</li>
+                            <li><strong>Asistencia Tecnica</strong> dias laborales</li>
+                        </ul>
+                        <a href="mailto: iqueuemaster@gmail.com" class="order-btn">Contacta con nosotros</a>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3 class="pricing-card-header">Premium</h3>
+                        <div class="price"><sup>€</sup>50<span>/MES</span></div>
+                        <ul>
+                            <li><strong>TODAS</strong> las peticiones gratis</li>
+                            <li><strong>SIN LIMITE</strong> de peticiones</li>
+                            <li><strong>5</strong> Tablet "HUAWEI MatePad T 10s"</li>
+                            <li><strong>Asistencia Tecnica</strong> dias laborales</li>
+                        </ul>
+                        <a href="mailto: iqueuemaster@gmail.com" class="order-btn">Contacta con nosotros</a>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3 class="pricing-card-header">Ultimate</h3>
+                        <div class="price"><sup>€</sup>400<span>/MES</span></div>
+                        <ul>
+                            <li><strong>HOSTEA</strong> tu propio nodo de i-queue</li>
+                            <li><strong>TABLETS A MEDIDA</strong> Tablet "HUAWEI MatePad"</li>
+                            <li><strong>Nuevas</strong> Funciones para tu negocio</li>
+                            <li><strong>Asistencia Tecnica</strong> 12h/ 7 dias a la semana</li>
+                        </ul>
+                        <a href="mailto: iqueuemaster@gmail.com" class="order-btn">Contacta con nosotros</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
         <!-- get-->
         <div class="row route-hide" id="commerce-get" style="display: none">
             <!-- centre	 -->
             <div class="col s12 center-align">
                 <h4>api/commerces/{id?}</h4>
                 <h5><strong style="color:#26a69a ">Get</strong></h5>
+
             </div>
             <!-- izquierda	 -->
             <div class="col s12 m6 center-align">
@@ -478,6 +664,101 @@
             </div>
         </div>
 
+        <!-- create	 users-->
+        <div class="row route-hide" id="user-login" style="display: none">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>api/login</h4>
+                <h5><strong style="color:#a69926 ">POST</strong></h5>
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12 m6 center-align">
+                <h5>Parametros de Peticion</h5>
+                <ul class="collection ">
+                    <li class="collection-item"><strong>email </strong>| email del usuario (string)</li>
+                    <li class="collection-item"><strong>password </strong>| contraseña del usuario (string)</li>
+                    <li class="collection-item">|opcional <strong>remember_token_firebase</strong>| necesario para las
+                        notificaciones (string)</li>
+                </ul>
+                <br>
+                <div class="container">
+                    <blockquote>
+                        ¡Si el token de firebase no es pasado por parametro,no recibiras notificaciones!
+                        <hr>
+                        "Realizando login obtienes el <strong>token</strong> para autorizarte en la api"
+                    </blockquote>
+                </div>
+
+            </div>
+            <!-- derecha	 -->
+            <div class="col s12 m6">
+                <h5 class="center-align">Json Example</h5>
+                <pre>{
+                    "code": 200,
+                    "message": "OK",
+                    "data": {
+                        "id": 27,
+                        "name": "pedrito",
+                        "remember_token_firebase": "wea",
+                        "email": "ragor71w927@bbsaili.com",
+                        "email_verified_at": null,
+                        "role": "ADMIN",
+                        "created_at": "2021-06-17T23:38:27.000000Z",
+                        "updated_at": "2021-06-17T23:39:39.000000Z",
+                        "token": "233|TkxEFnfj2IyePpcrQnHCZFl4t9XCsYvVctbE2LlR"
+                    }
+                }</pre>
+            </div>
+        </div>
+        <!-- create	 users-->
+        <div class="row route-hide" id="user-register" style="display: none">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>api/register</h4>
+                <h5><strong style="color:#a69926 ">POST</strong></h5>
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12 m6 center-align">
+                <h5>Parametros de Peticion</h5>
+                <ul class="collection ">
+                    <li class="collection-item"><strong>email </strong>| email del usuario (string)</li>
+                    <li class="collection-item"><strong>name </strong>| nombre del usuario (string)</li>
+                    <li class="collection-item"><strong>password </strong>| contraseña del usuario (string)</li>
+                    <li class="collection-item">|opcional<strong>role </strong>| rol del usuario
+                        ENUM['ADMIN','USER'](string)</li>
+
+                </ul>
+                <br>
+                <div class="container">
+                    <blockquote>
+                        ¡El rol es muy importante para diferenciar usuarios normales a empresas!
+                        <hr>
+                        "Este parametro es usuario ("USER") por defecto y por lo tanto es opcional"
+                    </blockquote>
+                </div>
+
+            </div>
+            <!-- derecha	 -->
+            <div class="col s12 m6">
+                <h5 class="center-align">Json Example</h5>
+                <pre>{
+                            "code": 200,
+                            "message": "OK",
+                            "data": {
+                                "id": 27,
+                                "name": "pedrito",
+                                "remember_token_firebase": "wea",
+                                "email": "ragor71w927@bbsaili.com",
+                                "email_verified_at": null,
+                                "role": "ADMIN",
+                                "created_at": "2021-06-17T23:38:27.000000Z",
+                                "updated_at": "2021-06-17T23:39:39.000000Z",
+                                "token": "233|TkxEFnfj2IyePpcrQnHCZFl4t9XCsYvVctbE2LlR"
+                            }
+                        }</pre>
+            </div>
+        </div>
+
         <!-- update	 users-->
         <div class="row route-hide" id="user-update" style="display: none">
             <!-- centre	 -->
@@ -644,6 +925,42 @@
                             "image": "bussines_image.png"
                         }
                     }</pre>
+            </div>
+        </div>
+
+        <!-- queue verified userentry check	 -->
+        <div class="row route-hide" id="verified-user-entry-check-post" style="display: none">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>/api/queue-entry-mail</h4>
+                <h5><strong style="color:#a69926 ">POST</strong></h5>
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12 m6 center-align">
+                <h5>Parametros de Peticion</h5>
+                <ul class="collection">
+                    <li class="collection-item"><strong>queue_id </strong>| id de la cola (int)</li>
+
+                </ul>
+                <br>
+                <div class="container">
+                    <blockquote>
+                        Cuando el usuario vuelve a escanear el codigo qr y este esta en primera posicion, es posible
+                        entrar al establecimiento
+                        <hr>
+                        En caso contrario se mostrará error.
+                        <hr>
+                        "Unicamente usuarios con posicion 1 pueden realizar esta accion con exito".
+                    </blockquote>
+                </div>
+            </div>
+            <!-- derecha	 -->
+            <div class="col s12 m6">
+                <h5 class="center-align">Json Example</h5>
+                <pre>{
+                    "code": 200,
+                    "message": "OK"
+                }</pre>
             </div>
         </div>
 
