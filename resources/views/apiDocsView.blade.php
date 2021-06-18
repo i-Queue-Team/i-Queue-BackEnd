@@ -147,10 +147,7 @@
             <div class="nav-wrapper">
                 <div class="row">
                     <div class="col s12">
-                        <ul id="nav-mobile" class="left ">
-                            <li><a href="{{ url('/') }}"> <i class="material-icons">chevron_left</i></a></li>
 
-                        </ul>
                         <a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i
                                 class="material-icons">menu</i></a>
 
