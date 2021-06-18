@@ -351,23 +351,23 @@
                 <h5 class="center-align">Metodos de pago Aceptados</h5>
                 <br>
                 <div class="row center-align">
-                    <div class="col s3 offset-m2 m2">
+                    <div class="col s3 offset-m2 m2 hvr-grow">
                         <img style="height:80px" src="{{ asset('images/Bitcoin-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Bitcoin</h6>
 
 
                     </div>
-                    <div class="col s3 m2 ">
+                    <div class="col s3 m2 hvr-grow">
                         <img style="height:80px" src="{{ asset('images/Ethereum-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Ethereum</h6>
 
                     </div>
-                    <div class="col s3 m2">
+                    <div class="col s3 m2 hvr-grow">
                         <img style="height:80px" src="{{ asset('images/Doge-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">DogeCoin</h6>
 
                     </div>
-                    <div class="col s3 m2">
+                    <div class="col s3 m2 hvr-grow">
                         <img style="height:80px" src="{{ asset('images/Paypal-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Paypal</h6>
 

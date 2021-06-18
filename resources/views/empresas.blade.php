@@ -160,7 +160,7 @@
                                         style="background-color: rgb(208, 240, 230); padding-left:10px"></textarea>
                                 </div>
                                 <p class="center-align">
-                                    <button class="waves-effect waves-light btn" type="submit"><i
+                                    <button class="waves-effect waves-light btn " type="submit"><i
                                             class="material-icons right">send</i>Enviar solicitud</button>
                                 </p>
                             </form>
@@ -173,7 +173,7 @@
                 <div class="center-align ">
 
 
-                    <a class="waves-effect waves-light btn-large" href="{{ url('/i-queue-api-docs') }}"><i class="material-icons right">euro_symbol</i>¡Consulta nuestros
+                    <a class="waves-effect waves-light btn-large hvr-bounce-in" href="{{ url('/i-queue-api-docs') }}"><i class="material-icons right">euro_symbol</i>¡Consulta nuestros
                         precios y servicios!</a>
 
                 </div>

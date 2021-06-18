@@ -16,20 +16,20 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Descárgate la app</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="#DescargaparaiOS"><img src="{{ asset('images/appstore.PNG') }}"
+                    <li><a class="grey-text text-lighten-3 hvr-grow-rotate" href="#DescargaparaiOS"><img src="{{ asset('images/appstore.PNG') }}"
                                 alt="iOS"></a></li>
                     <br>
-                    <li><a class="grey-text text-lighten-3" href="#DescargaAndroid"><img src="{{ asset('images/androidstore.PNG') }}"
+                    <li><a class="grey-text text-lighten-3 hvr-grow-rotate" href="#DescargaAndroid"><img src="{{ asset('images/androidstore.PNG') }}"
                                 alt="android"></a></li>
                     <li>
                         <h5>Redes sociales</h5>
-                        <a class="grey-text text-lighten-3" href="https://www.facebook.com/profile.php?id=100069247908848"><img src="{{ asset('images/facebook.png') }}"
+                        <a class="grey-text text-lighten-3 hvr-bounce-in" href="https://www.facebook.com/profile.php?id=100069247908848"><img src="{{ asset('images/facebook.png') }}"
                                 alt="facebook"></a>
-                        <a class="grey-text text-lighten-3" href="mailto: iqueuemaster@gmail.com"><img src="{{ asset('images/correoelectronico.png') }}"
+                        <a class="grey-text text-lighten-3 hvr-bounce-in" href="mailto: iqueuemaster@gmail.com"><img src="{{ asset('images/correoelectronico.png') }}"
                                 alt="email"></a>
-                        <a class="grey-text text-lighten-3" href="https://twitter.com/i_queueApp"><img src="{{ asset('images/gorjeo.png') }}"
+                        <a class="grey-text text-lighten-3 hvr-bounce-in" href="https://twitter.com/i_queueApp"><img src="{{ asset('images/gorjeo.png') }}"
                                 alt="twitter"></a>
-                        <a class="grey-text text-lighten-3" href="#instagram"><img src="{{ asset('images/instagram.png') }}"
+                        <a class="grey-text text-lighten-3 hvr-bounce-in" href="#instagram"><img src="{{ asset('images/instagram.png') }}"
                                 alt="instagram"></a>
                     </li>
                 </ul>
