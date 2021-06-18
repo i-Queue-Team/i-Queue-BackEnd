@@ -153,8 +153,7 @@
                         </ul>
                         <a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i
                                 class="material-icons">menu</i></a>
-                        <a href="#" data-target="sidenav-2" class="right sidenav-trigger show-on-medium-and-up"><i
-                                class="material-icons">menu</i></a>
+
                         <a href="" target="_blank" class="brand-logo">i-Queue Api Docs</a>
 
                     </div>
@@ -258,13 +257,7 @@
     </ul>
 
 
-    <!-- RIGHT SIDEBAR	 -->
-    <ul id="sidenav-2" class="sidenav">
-        <li><a class="subheader">Subheader</a></li>
-        <li><a href="https://github.com/dogfalo/materialize/" target="_blank">Github</a></li>
-        <li><a href="https://twitter.com/MaterializeCSS" target="_blank">Twitter</a></li>
-        <li><a href="http://next.materializecss.com/getting-started.html" target="_blank">Docs</a></li>
-    </ul>
+
 
 
     <main>
