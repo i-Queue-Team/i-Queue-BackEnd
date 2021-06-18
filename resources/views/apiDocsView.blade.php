@@ -147,11 +147,16 @@
             <div class="nav-wrapper">
                 <div class="row">
                     <div class="col s12">
+                        <ul id="nav-mobile" class="left ">
+                            <li><a href="{{ url('/') }}"> <i class="material-icons">chevron_left</i></a></li>
+
+                        </ul>
                         <a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i
                                 class="material-icons">menu</i></a>
                         <a href="#" data-target="sidenav-2" class="right sidenav-trigger show-on-medium-and-up"><i
                                 class="material-icons">menu</i></a>
                         <a href="" target="_blank" class="brand-logo">i-Queue Api Docs</a>
+
                     </div>
                 </div>
             </div>
@@ -390,15 +395,21 @@
             <div class="col s12 m6 center-align">
                 <h5>¿Como funciona?</h5>
                 <ul class="collection">
-                    <li class="collection-item"><strong>Al hacer Login </strong> Obtienes un token personal e intrasferible con el cual puedes realizar peticiones a la API</li>
-                    <li class="collection-item"><strong>Muy importante</strong>  Tu token es TUYO y te identifica dentro de la API, nunca des tu token a nadie!</li>
-                    <li class="collection-item"><strong>Con el token</strong>  Puedes realizar cualquier tipo de peticion a la API, siempre y cuando seas el dueño del elemento del cual intentas realizar un cambio.</li>
-                    <li class="collection-item"><strong>¿El token Caduca?</strong>  ¡El token dura un año y es sobreescrito cada vez que inicies sesion!</li>
+                    <li class="collection-item"><strong>Al hacer Login </strong> Obtienes un token personal e
+                        intrasferible con el cual puedes realizar peticiones a la API</li>
+                    <li class="collection-item"><strong>Muy importante</strong> Tu token es TUYO y te identifica dentro
+                        de la API, nunca des tu token a nadie!</li>
+                    <li class="collection-item"><strong>Con el token</strong> Puedes realizar cualquier tipo de peticion
+                        a la API, siempre y cuando seas el dueño del elemento del cual intentas realizar un cambio.</li>
+                    <li class="collection-item"><strong>¿El token Caduca?</strong> ¡El token dura un año y es
+                        sobreescrito cada vez que inicies sesion!</li>
                 </ul>
                 <br>
                 <div class="container">
                     <blockquote>
-                        <strong style="color:#26a69a "><h5>TOKEN</h5></strong>
+                        <strong style="color:#26a69a ">
+                            <h5>TOKEN</h5>
+                        </strong>
                         <hr>
                         <strong>Tu token se parecerá a este:</strong>
                         <br>
@@ -409,7 +420,8 @@
             <!-- derecha	 -->
             <div class="col s12 m6">
                 <h5 class="center-align">Sanctum</h5>
-                <p class="container flow-text">El sistema de API de la aplicación utiliza Sanctum para realizar la verificación al
+                <p class="container flow-text">El sistema de API de la aplicación utiliza Sanctum para realizar la
+                    verificación al
                     momento de
                     realizar peticiones.
                     <br>
@@ -426,8 +438,8 @@
                     (años), pero el usuario puede revocarlos manualmente en cualquier momento.
                 </p>
                 <br>
-                <div class="center-align"><img style="height:80px; border-radius: 10%;" src="{{ asset('images/Sanctum-Logo.png') }}"
-                        alt=""></div>
+                <div class="center-align"><img style="height:80px; border-radius: 10%;"
+                        src="{{ asset('images/Sanctum-Logo.png') }}" alt=""></div>
 
             </div>
         </div>
