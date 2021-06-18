@@ -49,6 +49,9 @@ Route::get('/registro', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/i-queue-api-docs', function () {
+    return view('apiDocsView');
+});
 
 
 Route::get("logout", [UserController::class, 'logout']);
