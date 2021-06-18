@@ -47,7 +47,8 @@
         <div>
             <div class="row">
 
-                <div class="col s12 center-align"><img class="responsive-img" style="max-height: 400px" src="{{ asset('images/mockup.png') }}">
+                <div class="col s12 center-align"><img class="responsive-img" style="max-height: 400px"
+                        src="{{ asset('images/mockup.png') }}">
                 </div>
 
                 <div class="col s12 center-align">
@@ -121,7 +122,7 @@
                             <div class="container">
 
                                 <i class="material-icons">work</i>
-                                <h5><b>Solicitar unirse a IQueue Empresas</b></h5>
+                                <h5><b>Solicitar información a IQueue Empresas</b></h5>
                             </div>
 
                         </div>
@@ -167,6 +168,15 @@
                         </div>
                     </li>
                 </ul>
+                <div class="divider"></div>
+                <br><br>
+                <div class="center-align ">
+
+
+                    <a class="waves-effect waves-light btn-large" href="{{ url('/i-queue-api-docs') }}"><i class="material-icons right">euro_symbol</i>¡Consulta nuestros
+                        precios y servicios!</a>
+
+                </div>
             </div>
             <br>
     </main>

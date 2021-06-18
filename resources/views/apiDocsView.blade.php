@@ -248,6 +248,10 @@
                 </li>
             </ul>
         </li>
+        <div class="divider"></div>
+        <li><a class="waves-effect waves-teal btn-flat" href="{{ url('/') }}"><i
+            class="material-icons">chevron_left
+        </i>Atras</a></li>
 
 
 
@@ -258,9 +262,10 @@
 
 
     <main>
-        <h1 class="center">
-            i-Queue Api Docs</h1>
 
+        <h1 class="center">
+            i-Queue Api Docs
+        </h1>
 
         <!-- home-->
         <div class="row route-hide " id="home-api">

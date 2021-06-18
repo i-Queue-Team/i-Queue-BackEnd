@@ -1,13 +1,17 @@
 <footer class="page-footer">
     <div class="container">
         <div class="row">
-            <div class="col l6 s12">
+            <div class="col l6 s12 ">
                 <h5 class="center-align">Info</h5>
                 <p class="grey-text text-lighten-4"> I-Queue es la aplicación multiplataforma desarrollada por
                     el equipo de la promoción 2020-2021 de Escuela Estech del Grado Superior en Desarrollo de
                     Aplicaciones multiplataforma. La idea está basada en la digitalización, monitorización y
                     adaptación de la misma para una gran cantidad de modelos de negocio de cara a la mejora e
                     implementación de sus servicios de cara al público.</p>
+                    <br>
+                    <div class="center-align"><a class="waves-effect waves-teal btn "href="{{ url('/i-queue-api-docs') }}"><i
+                        class="material-icons">desktop_windows</i><strong style="color:white"> Para desarrolladores</strong></a></div>
+
             </div>
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Descárgate la app</h5>
