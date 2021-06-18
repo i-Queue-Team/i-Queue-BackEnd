@@ -212,7 +212,7 @@
                                         <div class="card-panel green lighten-3" style="display:block;margin:auto;">
 
                                             <div class="content">
-                                                <img src='images/pepelu.PNG' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px" />
+                                                <img src='images/pepelu.png' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:60px" />
                                                 <p>He desarrollado la aplicación para terminales Android.</p>
                                             </div>
                                         </div>
@@ -267,7 +267,7 @@
                                 <div class="team-hover">
                                     <div class="desk">
                                         <div class="card-panel  blue lighten-3">
-                                            <img src='{{asset('images/dani.png')}}' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
+                                            <img src='{{asset('images/daniel.png')}}' class="responsive-img" style="border-radius:140px;border:4px solid #666;margin-top:70px" />
                                             <p>He diseñado las interfaces y desarrollado el frontend de la app </p>
                                         </div>
                                     </div>
