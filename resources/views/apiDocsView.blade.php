@@ -170,7 +170,8 @@
 
         <li><a class="waves-effect waves-teal btn-flat" onclick="routeHide();$('#home-api').show('slow');"><i
                     class="material-icons">lens</i>Inicio</a></li>
-        <li><a class="waves-effect waves-teal btn-flat" onclick=""><i class="material-icons">lock</i>Autenticación</a>
+        <li><a class="waves-effect waves-teal btn-flat" onclick="routeHide();$('#auth-section ').show('slow');"><i
+                    class="material-icons">lock</i>Autenticación</a>
         </li>
         <div class="divider"></div>
         <li><a class="subheader">¡Rutas!</a></li>
@@ -208,6 +209,7 @@
                     </div>
                 </li>
                 <li>
+
                     <div class="collapsible-header"><i class="material-icons">people</i>api/users</div>
                     <div class="collapsible-body">
                         <a onclick="routeHide();$('#user-login').show('slow');" class="waves-effect waves-teal btn-flat"
@@ -347,23 +349,23 @@
                 <br>
                 <div class="row center-align">
                     <div class="col s3 offset-m2 m2">
-                        <img style="height:80px" src="{{ asset('images/Bitcoin-Logo.png') }}" alt="" >
+                        <img style="height:80px" src="{{ asset('images/Bitcoin-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Bitcoin</h6>
 
 
                     </div>
                     <div class="col s3 m2 ">
-                        <img style="height:80px" src="{{ asset('images/Ethereum-Logo.png') }}" alt="" >
+                        <img style="height:80px" src="{{ asset('images/Ethereum-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Ethereum</h6>
 
                     </div>
                     <div class="col s3 m2">
-                        <img style="height:80px" src="{{ asset('images/Doge-Logo.png') }}" alt="" >
+                        <img style="height:80px" src="{{ asset('images/Doge-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">DogeCoin</h6>
 
                     </div>
                     <div class="col s3 m2">
-                        <img style="height:80px" src="{{ asset('images/Paypal-Logo.png') }}" alt="" >
+                        <img style="height:80px" src="{{ asset('images/Paypal-Logo.png') }}" alt="">
                         <h6 style="color:#26a69a ">Paypal</h6>
 
                     </div>
@@ -374,7 +376,61 @@
             </div>
 
         </div>
+        <!-- auth-section-->
+        <div class="row route-hide" id="auth-section" style="display: none">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>Auth</h4>
+                <h5><strong style="color:#26a69a ">[HEADER] 'Authorization: </strong><strong style="color:#26a69a ">
+                        Bearer</strong><span style="color: #1de9b6"> $TU_TOKEN</span><strong
+                        style="color:#26a69a ">'</strong> </h5>
 
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12 m6 center-align">
+                <h5>¿Como funciona?</h5>
+                <ul class="collection">
+                    <li class="collection-item"><strong>Al hacer Login </strong> Obtienes un token personal e intrasferible con el cual puedes realizar peticiones a la API</li>
+                    <li class="collection-item"><strong>Muy importante</strong>  Tu token es TUYO y te identifica dentro de la API, nunca des tu token a nadie!</li>
+                    <li class="collection-item"><strong>Con el token</strong>  Puedes realizar cualquier tipo de peticion a la API, siempre y cuando seas el dueño del elemento del cual intentas realizar un cambio.</li>
+                    <li class="collection-item"><strong>¿El token Caduca?</strong>  ¡El token dura un año y es sobreescrito cada vez que inicies sesion!</li>
+                </ul>
+                <br>
+                <div class="container">
+                    <blockquote>
+                        <strong style="color:#26a69a "><h5>TOKEN</h5></strong>
+                        <hr>
+                        <strong>Tu token se parecerá a este:</strong>
+                        <br>
+                        <h6><span style="color: #1de9b6">233|TkxEFnfj2IyePpcrQnHCZFl4t9XCsYvVctbE2LlR</span></h6>
+                    </blockquote>
+                </div>
+            </div>
+            <!-- derecha	 -->
+            <div class="col s12 m6">
+                <h5 class="center-align">Sanctum</h5>
+                <p class="container flow-text">El sistema de API de la aplicación utiliza Sanctum para realizar la verificación al
+                    momento de
+                    realizar peticiones.
+                    <br>
+                    Laravel Sanctum proporciona un sistema de autenticación ligero para SPA (aplicaciones de una sola
+                    página), aplicaciones móviles y API simples basadas en tokens. Sanctum permite que cada usuario de
+                    su aplicación genere múltiples tokens API para su cuenta. A estos tokens se les pueden otorgar
+                    habilidades / alcances que especifican qué acciones pueden realizar los tokens.
+                    <br>
+                    Sanctum es un paquete simple que puede usar para emitir tokens API a sus usuarios sin la
+                    complicación de OAuth. Esta función está inspirada en GitHub y otras aplicaciones que emiten "tokens
+                    de acceso personal". Por ejemplo, imagine que la "configuración de la cuenta" de su aplicación tiene
+                    una pantalla donde un usuario puede generar un token API para su cuenta. Puede usar Sanctum para
+                    generar y administrar esos tokens. Estos tokens suelen tener un tiempo de caducidad muy largo
+                    (años), pero el usuario puede revocarlos manualmente en cualquier momento.
+                </p>
+                <br>
+                <div class="center-align"><img style="height:80px; border-radius: 10%;" src="{{ asset('images/Sanctum-Logo.png') }}"
+                        alt=""></div>
+
+            </div>
+        </div>
         <!-- get-->
         <div class="row route-hide" id="commerce-get" style="display: none">
             <!-- centre	 -->
