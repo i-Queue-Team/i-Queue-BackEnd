@@ -231,6 +231,9 @@
                     <div class="collapsible-header"><i class="material-icons">verified_user</i>api/queue-verified-users
                     </div>
                     <div class="collapsible-body">
+                        <a onclick="routeHide();$('#user-verified-get').show('slow');"
+                        class="waves-effect waves-teal btn-flat" style="width: 100%">Informacion usuario en la cola <strong
+                            style="color:#26a69a ">Get</strong></a>
                         <a onclick="routeHide();$('#verified-user-post').show('slow');"
                             class="waves-effect waves-teal btn-flat" style="width: 100%">Añadir usuario a la cola
                             <strong style="color:#a69926 ">POST</strong></a>
@@ -250,8 +253,8 @@
         </li>
         <div class="divider"></div>
         <li><a class="waves-effect waves-teal btn-flat" href="{{ url('/') }}"><i
-            class="material-icons">chevron_left
-        </i>Atras</a></li>
+                    class="material-icons">chevron_left
+                </i>Atras</a></li>
 
 
 
@@ -1058,6 +1061,57 @@
             </div>
         </div>
 
+
+        <!-- get-->
+        <div class="row route-hide" id="user-verified-get" style="display: none">
+            <!-- centre	 -->
+            <div class="col s12 center-align">
+                <h4>api/commerces/{id?}</h4>
+                <h5><strong style="color:#26a69a ">Get</strong></h5>
+
+            </div>
+            <!-- izquierda	 -->
+            <div class="col s12 m6 center-align">
+                <h5>Parametros de Peticion</h5>
+                <ul class="collection">
+                    <li class="collection-item"><strong>/{id?} </strong>| Obtienes un unico objeto "commerce" y su
+                        objeto cola "queue" </li>
+                    <li class="collection-item"><strong>/</strong> | Obtienes un array de objetos "commerce"</li>
+
+                </ul>
+                <br>
+                <div class="container">
+                    <blockquote>
+                        Con esta peticion puedes obtener el tiempo estimado en el cual el usuario tiene que estar en un futuro en el comercio
+                        <hr>
+                        Puedes tambien supervisar la posicion del mismo
+                        <hr>
+                        "Unicamente se mostraran las colas del usuario en cuestion en relacion a su token".
+                    </blockquote>
+                </div>
+            </div>
+            <!-- derecha	 -->
+            <div class="col s12 m6">
+                <h5 class="center-align">Json Example</h5>
+                <pre>{
+                    "code": 200,
+                    "message": "OK",
+                    "data": [
+                        {
+                            "id": 33,
+                            "name": "Grimes-Quitzon",
+                            "position": 2,
+                            "estimated_time": "2021-06-18 19:21:22",
+                            "created_at": "2021-06-18T17:05:22.000000Z",
+                            "updated_at": "2021-06-18T17:05:22.000000Z",
+                            "queue_id": 2,
+                            "user_id": 59,
+                            "image": "img.png"
+                        }
+                    ]
+                }</pre>
+            </div>
+        </div>
 
     </main>
 
