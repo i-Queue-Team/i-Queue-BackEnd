@@ -168,7 +168,7 @@
                 <div class="row text-center">
                     <div class="col s12">
                         <div class="heading-title text-center">
-                            <h2 class="center-align"><b>Nuestro equipo</b></h2>
+                            <h2 class="center-align" style="color:rgb(53, 175, 114);"><b>Nuestro equipo</b></h2>
                         </div>
                     </div><!-- /.col l12 -->
                     <div class="row" style="">

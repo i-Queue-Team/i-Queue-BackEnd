@@ -19,20 +19,7 @@ body {
     filter: invert(4%) sepia(63%) saturate(320%) hue-rotate(100deg) brightness(70%) contrast(70%);
 }
  */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 20px 0;
-  text-transform: none;
-  color: rgb(53, 175, 114);
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  line-height: 1.5;
-}
+
 
 a:link,
 a:active,
