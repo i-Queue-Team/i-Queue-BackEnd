@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Swift_TransportException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
@@ -46,15 +47,17 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (Throwable $e, $request) {
             switch (true) {
+                case $e instanceof Swift_TransportException:
+                    return IQResponse::emptyResponse(Response::HTTP_INTERNAL_SERVER_ERROR);
                 case $e instanceof NotFoundHttpException:
                 case $e instanceof MethodNotFoundException:
-                    return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+                    return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
                 case $e instanceof MethodNotAllowedHttpException:
                 case $e instanceof AuthenticationException:
-                    return IQResponse::errorResponse(Response::HTTP_FORBIDDEN);
+                    return IQResponse::emptyResponse(Response::HTTP_FORBIDDEN);
                 default:
                     if (App::environment('production')) {
-                        return IQResponse::errorResponse(Response::HTTP_NOT_FOUND);
+                        return IQResponse::emptyResponse(Response::HTTP_NOT_FOUND);
                     }
             }
         });
